@@ -1,5 +1,5 @@
 var extend = require('extend');
-extend(global, require("./elizadata"));
+extend(global, require('./elizadata'));
 /*
   elizabot.js v.1.1 - ELIZA JS library (N.Landsteiner 2005)
   Eliza is a mock Rogerian psychotherapist.
@@ -53,7 +53,7 @@ function ElizaBot(noRandomFlag) {
 	this.capitalizeFirstLetter=true;
 	this.debug=false;
 	this.memSize=20;
-	this.version="1.1 (original)";
+	this.version='1.2 (modified)';
 	if (!this._dataParsed) this._init();
 	this.reset();
 }
