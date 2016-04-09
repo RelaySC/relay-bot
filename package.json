@@ -1,0 +1,18 @@
+{
+  "name": "inn-bot",
+  "version": "0.1.0",
+  "description": "Discord Bot for use in the Imperial News Network channel.",
+  "main": "run.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bot",
+    "discord",
+    "INN",
+    "star",
+    "citizen"
+  ],
+  "author": "WangPhat",
+  "license": "ISC"
+}
