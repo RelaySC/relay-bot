@@ -16,6 +16,7 @@
   "author": "WangPhat",
   "license": "ISC",
   "dependencies": {
-    "discordie": "^0.4.4"
+    "discordie": "^0.4.4",
+    "extend": "^3.0.0"
   }
 }
