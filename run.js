@@ -1,3 +1,4 @@
+var elizabot = require("./elizabot");
 var Discordie = require("discordie");
 var client = new Discordie();
 
@@ -5,6 +6,8 @@ if (process.argv.length != 3) {
   console.log('ERROR: You must supply a Discord API Token.');
   process.exit(1);
 }
+
+var eliza = new elizabot.ElizaBot();
 
 client.connect({
   token: process.argv[2]  // This should be the supplied API token.
@@ -26,7 +29,13 @@ client.Dispatcher.on("MESSAGE_CREATE", e => {
       return;
   }
 
-  if (client.User.isMentioned(e.message) || e.message.isPrivate) {  // If our bot was mentioned or sent a DM.
-    e.message.channel.sendMessage("Hey!");
+  if ((client.User.isMentioned(e.message) || e.message.isPrivate)
+      && e.message.author.id !== client.User.id
+      && !e.message.author.bot) {
+    // If our bot was mentioned or the message was in a DM. Also checks that
+    // it didn't send the message and that the author of the message is not
+    // another bot.
+    var response = eliza.transform(e.message.content);
+    e.message.channel.sendMessage(response);
   }
 });
