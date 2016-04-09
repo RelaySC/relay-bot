@@ -27,6 +27,27 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
                           client.User.id + '&scope=bot';
       e.message.channel.sendMessage(inviteMessage);
       return;
+    case '!about':
+      var aboutMessage = 'I\'m INNBot, a Rogerian psychotherapist hired by' +
+                         ' the Imperial News Network. You can chat for' +
+                         ' a therapy session or tell me some commands. I\'m' +
+                         ' an open source psychotherapist too, check my' +
+                         ' source out here: ' +
+                         'https://github.com/ImperialNewsNetwork/inn-bot.' +
+                         ' You can find out about the Imperial News Network' +
+                         ' here: http://imperialnews.network.' +
+                         '\n\nTo find the commands I can run, type !help.';
+      e.message.channel.sendMessage(aboutMessage);
+      return;
+    case '!help':
+      var helpMessage = 'Here\'s all of my commands:\n\n' +
+                        '!help - Display this page.\n' +
+                        '!about - Find out about me.\n' +
+                        '!funds - Find out Star Citizen\'s funding level.\n' +
+                        '!citizen - Find out Star Citizen\'s citizen count.\n' +
+                        '!uee - Find out Star Citizen\'s ship count.\n' +
+                        '!invite - Learn how to get me on your server.\n';
+      e.message.channel.sendMessage(helpMessage);
   }
 
   if ((client.User.isMentioned(e.message) || e.message.isPrivate)

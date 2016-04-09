@@ -11,3 +11,5 @@ below.
 `!citizens` - displays total no. of citizens for Star Citizen and delta since last check.
 `!uee` - displays total no. of ships sold for Star Citizen and delta since last check.
 '!invite' - gives instructions on how to add this bot to your server.
+'!about' - gives information on the bot.
+'!help' - gives list of all possible commands.
