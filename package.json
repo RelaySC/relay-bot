@@ -14,5 +14,8 @@
     "citizen"
   ],
   "author": "WangPhat",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "discordie": "^0.4.4"
+  }
 }
