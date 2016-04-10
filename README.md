@@ -17,6 +17,16 @@ below.
 
 `!inntwitch` - follow INN on Twitch!
 
+`!rsitwitter` - follow Star Citizen on Twitter!
+
+`!rsifb` - like Star Citizen on Facebook!
+
+`!rsiyt` - subcribe to Star Citizen on YouTube!
+
+`!rsitwitch` - follow Star Citizen on Twitch!
+
+`!rsicommunitytwitch` - follow CIG Community on Twitch!
+
 `!time` - check the current time at CIG studios.
 
 `!invite` - gives instructions on how to add this bot to your server.

@@ -35,6 +35,26 @@ var commands = {
     fn: innTwitchCommand,
     help: 'Follow INN on Twitch!'
   },
+  rsifb: {
+    fn: rsiFacebookCommand,
+    help: 'Like Star Citizen on Facebook!'
+  },
+  rsitwitter: {
+    fn: rsiTwitterCommand,
+    help: 'Follow Star Citizen on Twitter!'
+  },
+  rsiyt: {
+    fn: rsiYouTubeCommand,
+    help: 'Subcribe to Star Citizen on YouTube!'
+  },
+  rsitwitch: {
+    fn: rsiTwitchCommand,
+    help: 'Follow Star Citizen on Twitch!'
+  },
+  rsicommunitytwitch: {
+    fn: rsiCommunityTwitchCommand,
+    help: 'Follow CIG Community on Twitch!'
+  },
   time: {
     fn: timeCommand,
     help: 'Check the current time at CIG studios.'
@@ -76,6 +96,36 @@ function innFacebookCommand(bot, callback) {
 function innTwitchCommand(bot, callback) {
   var message = 'You can find and follow INN on Twitch here: ' +
                 'https://twitch.tv/innlive';
+  callback(message);
+}
+
+function rsiYouTubeCommand(bot, callback) {
+  var message = 'You can find and subscribe to Star Citizen on YouTube here: ' +
+                'https://www.youtube.com/user/RobertsSpaceInd';
+  callback(message);
+}
+
+function rsiTwitterCommand(bot, callback) {
+  var message = 'You can find and follow Star Citizen on Twitter here: ' +
+                'https://twitter.com/RobertsSpaceInd';
+  callback(message);
+}
+
+function rsiFacebookCommand(bot, callback) {
+  var message = 'You can find and like Star Citizen on Facebook here: ' +
+                'https://www.facebook.com/RobertsSpaceIndustries/';
+  callback(message);
+}
+
+function rsiTwitchCommand(bot, callback) {
+  var message = 'You can find and follow Star Citizen on Twitch here: ' +
+                'https://twitch.tv/starcitizen';
+  callback(message);
+}
+
+function rsiCommunityTwitchCommand(bot, callback) {
+  var message = 'You can find and follow CIG Community on Twitch here: ' +
+                'https://twitch.tv/cigcommunity';
   callback(message);
 }
 
