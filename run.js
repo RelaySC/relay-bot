@@ -1,4 +1,4 @@
-var elizabot = require('./elizabot');
+var eliza = require('./eliza/elizabot');
 var funding = require('./funding');
 var Discordie = require('discordie');
 var client = new Discordie();
@@ -7,8 +7,6 @@ if (process.argv.length != 3) {
   console.log('ERROR: You must supply a Discord API Token.');
   process.exit(1);
 }
-
-var eliza = new elizabot.ElizaBot();
 
 client.connect({
   token: process.argv[2]  // This should be the supplied API token.
