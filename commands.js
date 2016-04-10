@@ -87,6 +87,11 @@ var commands = {
     fn: statusCommand,
     help: 'Check the bot is still running.',
     hidden: true
+  },
+  org: {
+    fn: orgCommand,
+    help: 'Get a link to the INN organization.',
+    hidden: false
   }
 };
 
@@ -104,6 +109,12 @@ function inviteCommand(bot, callback) {
                 ' the \"Manage Server\" permission to visit this page:\n' +
                 'https://discordpp.com/oauth2/authorize?client_id=' +
                 bot.id + '&scope=bot';
+  callback(message);
+}
+
+function orgCommand(bot, callback) {
+  var message = 'You can check out the INN Organization on RSI here: ' +
+                'https://robertsspaceindustries.com/orgs/INN';
   callback(message);
 }
 

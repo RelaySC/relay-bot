@@ -11,6 +11,8 @@ below.
 
 `!issue` - report an issue to the Issue Council.
 
+`!org` - get a link to the INN Org on RSI.
+
 `!inntwitter` - follow INN on Twitter!
 
 `!innfb` - like INN on Facebook!
