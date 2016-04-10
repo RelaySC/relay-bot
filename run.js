@@ -57,8 +57,18 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
 
   if (client.User.isMentioned(e.message) || e.message.isPrivate) {
     // If our bot was mentioned or the message was in a DM.
-    console.log(e.message.content);
-    var response = eliza.transform(e.message.content);
+
+    var messageContent = e.message.content;
+
+    if (!e.message.isPrivate) {
+      // Non-private messages always have a <@bot_id> in order to mention the
+      // bot. We want to remove this so it doesn't get included in the
+      // responses.
+      var mention = '<@' + client.User.id + '>';
+      messageContent = messageContent.replace(mention, '').trim();
+    }
+
+    var response = eliza.transform(messageContent);
     e.message.channel.sendMessage(response);
   }
 });
