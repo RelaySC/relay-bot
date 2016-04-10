@@ -18,6 +18,11 @@ client.Dispatcher.on('GATEWAY_READY', e => {
 });
 
 client.Dispatcher.on('MESSAGE_CREATE', e => {
+  if (e.message.author.id === client.User.id || e.message.author.bot) {
+    // Don't reply to yourself or other bots.
+    return;
+  }
+
   switch (e.message.content) {
     case '!invite':
       var inviteMessage = 'You can add me to your server by instructing' +
@@ -50,12 +55,9 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
       e.message.channel.sendMessage(helpMessage);
   }
 
-  if ((client.User.isMentioned(e.message) || e.message.isPrivate)
-      && e.message.author.id !== client.User.id
-      && !e.message.author.bot) {
-    // If our bot was mentioned or the message was in a DM. Also checks that
-    // it didn't send the message and that the author of the message is not
-    // another bot.
+  if (client.User.isMentioned(e.message) || e.message.isPrivate) {
+    // If our bot was mentioned or the message was in a DM.
+    console.log(e.message.content);
     var response = eliza.transform(e.message.content);
     e.message.channel.sendMessage(response);
   }
