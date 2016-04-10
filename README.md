@@ -3,6 +3,20 @@ Discord Bot for use in the Imperial News Network channel. Makes use of [elizabot
 
 More information coming soon. **This project is currently a work in progress.**
 
+## How to Use
+In order to use this you'll need at least NodeJS installed. It helps to have Git to clone the repository.
+```
+$ git clone https://github.com/ImperialNewsNetwork/inn-bot.git
+$ cd inn-bot
+$ npm install
+$ node run.js <bot_token>
+```
+Replace `<bot_token>` with your Bot User Token from [Discord Developer](https://discordapp.com/developers/applications/me). You can use the url below, replacing `<bot_id>` with the Bot User ID from the Developer page, to add it to a server you have 'Manage Server' permissions on.
+```
+https://discordapp.com/oauth2/authorize?&client_id=<bot_id>&scope=bot
+```
+You can then use the `!invite` command to get the URL in future.
+
 ## Command List
 Some commands may not yet be implemented. But all currently planned commands are listed
 below.
