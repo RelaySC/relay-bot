@@ -13,7 +13,9 @@ below.
 
 `!innfb` - like INN on Facebook!
 
-`!innyt` - Subcribe to INN on YouTube!
+`!innyt` - subcribe to INN on YouTube!
+
+`!inntwitch` - follow INN on Twitch!
 
 `!time` - check the current time at CIG studios.
 

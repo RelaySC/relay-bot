@@ -31,6 +31,10 @@ var commands = {
     fn: innYouTubeCommand,
     help: 'Subcribe to INN on YouTube!'
   },
+  inntwitch: {
+    fn: innTwitchCommand,
+    help: 'Follow INN on Twitch!'
+  },
   time: {
     fn: timeCommand,
     help: 'Check the current time at CIG studios.'
@@ -66,6 +70,12 @@ function innTwitterCommand(bot, callback) {
 function innFacebookCommand(bot, callback) {
   var message = 'You can find and like INN on Facebook here: ' +
                 'https://www.facebook.com/ImperialNewsNetworkSC';
+  callback(message);
+}
+
+function innTwitchCommand(bot, callback) {
+  var message = 'You can find and follow INN on Twitch here: ' +
+                'https://twitch.tv/innlive';
   callback(message);
 }
 
