@@ -1,4 +1,7 @@
+'use strict';
+
 var funding = require('./funding');
+var starmap = require('./starmap');
 var moment = require('moment-timezone');
 var format = require('format');
 
@@ -92,6 +95,11 @@ var commands = {
     fn: orgCommand,
     help: 'Get a link to the INN organization.',
     hidden: false
+  },
+  starmap: {
+    fn: starmapCommand,
+    help: 'Check out the ARK Starmap!',
+    hidden: false
   }
 };
 
@@ -102,6 +110,22 @@ function statsCommand(bot, args, callback) {
                                        moment('2012-10-18').fromNow(true));
     callback(message + extraMessageFormatted);
   });
+}
+
+function starmapCommand(bot, args, callback) {
+  if (args.length === 0) {
+    callback('You can check out the ARK Starmap at: ' +
+             'https://robertsspaceindustries.com/starmap');
+  } else if (args.length === 1) {
+    starmap(args[0], undefined, function(message) {
+      callback(message);
+    });
+  } else {
+    let celestialObjectName = args.slice(1).join(' ');
+    starmap(args[0], celestialObjectName, function(message) {
+      callback(message);
+    });
+  }
 }
 
 function inviteCommand(bot, args, callback) {
