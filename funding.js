@@ -32,7 +32,7 @@ function get(callback) {
     var fundingFormat = formatNumber({prefix: '$'});
     var otherFormat = formatNumber({});
 
-    var funds = data['funds'];
+    var funds = data['funds'] / 100;
     var citizens = data['fans'];
     var fleet = parseInt(data['fleet']);
 
