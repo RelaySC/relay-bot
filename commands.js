@@ -1,4 +1,5 @@
 var funding = require('./funding');
+var moment = require('moment-timezone');
 var format = require('format');
 
 var commands = {
@@ -25,6 +26,10 @@ var commands = {
   inntwitter: {
     fn: innTwitterCommand,
     help: 'Follow INN on Twitter!'
+  },
+  time: {
+    fn: timeCommand,
+    help: 'Check the current time at CIG studios.'
   }
 };
 
@@ -74,6 +79,40 @@ function helpCommand(bot, callback) {
     message += format('!%s - %s\n', commandName, otherInfo.help);
   });
   callback(message);
+}
+
+function timeCommand(bot, callback) {
+  var message = 'It it is currently %s UTC. And it is,\n\n' +
+                '%s at CIG LA in Los Angeles, California (%s),\n' +
+                '%s at CIG Austin in Austin, Texas (%s),\n' +
+                '%s at F42 UK in Manchester, England (%s),\n' +
+                '%s at F42 DE in Frankfurt, Germany (%s),\n' +
+                '%s at Turbulent in Montreal, Canada (%s).';
+
+  var utc = moment().tz('UTC').format('hh:mma');
+
+  var cigLA = moment().tz('America/Los_Angeles').format('hh:mma');
+  var cigLAZoneName = moment().tz('America/Los_Angeles').format('z');
+
+  var cigAustin = moment().tz('America/Chicago').format('hh:mma');
+  var cigAustinZoneName = moment().tz('America/Chicago').format('z');
+
+  var f42UK = moment().tz('Europe/London').format('hh:mma');
+  var f42UKZoneName = moment().tz('Europe/London').format('z');
+
+  var f42DE = moment().tz('Europe/Berlin').format('hh:mma');
+  var f42DEZoneName = moment().tz('Europe/Berlin').format('z');
+
+  var turbulent = moment().tz('America/Montreal').format('hh:mma');
+  var turbulentZoneName = moment().tz('America/Montreal').format('z');
+
+  var formattedMessage = format(message, utc,
+                                cigLA, cigLAZoneName,
+                                cigAustin, cigAustinZoneName,
+                                f42UK, f42UKZoneName,
+                                f42DE, f42DEZoneName,
+                                turbulent, turbulentZoneName);
+  callback(formattedMessage);
 }
 
 function run(messageContent, bot, callback) {
