@@ -82,6 +82,11 @@ var commands = {
     fn: timeCommand,
     help: 'Check the current time at CIG studios.',
     hidden: false
+  },
+  status: {
+    fn: statusCommand,
+    help: 'Check the bot is still running.',
+    hidden: true
   }
 };
 
@@ -184,6 +189,14 @@ function helpCommand(bot, callback) {
     }
   });
   callback(message);
+}
+
+function statusCommand(bot, callback) {
+  var message = 'I\'m doing great! I\'ve been running for %s without a hitch.' +
+                ' For more information about me, type !about.';
+  var formattedMessage = format(message,
+                                moment.duration(process.uptime()).humanize());
+  callback(formattedMessage);
 }
 
 function timeCommand(bot, callback) {
