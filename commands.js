@@ -87,7 +87,10 @@ var commands = {
 
 function statsCommand(bot, callback) {
   funding(function(message) {
-    callback(message);
+    var extraMessage = ' It has been %s since the Star Citizen kickstarter.';
+    var extraMessageFormatted = format(extraMessage,
+                                       moment('2012-10-18').fromNow(true));
+    callback(message + extraMessageFormatted);
   });
 }
 
