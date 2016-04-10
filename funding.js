@@ -3,7 +3,7 @@ var formatNumber = require('format-number');
 var moment = require('moment');
 var request = require('request');
 
-function get(history, callback) {
+function get(callback) {
   var url = 'https://robertsspaceindustries.com/api/stats/getCrowdfundStats';
   var errorMessage = 'I wasn\'t able to get that for you. Try again later.';
   var rsiNoSuccess = 'There\'s an issue with the RSI site. Try again later.';
@@ -56,27 +56,21 @@ function get(history, callback) {
                                    otherFormat(fleetDiff), fleetSince);
 
     var now = moment().format();
-    var updatedHistory = {
+    history = {
       funds: { value: funds, when: now },
       citizens: { value: citizens, when: now },
       fleet: { value: fleet, when: now }
     };
 
-    callback(formattedResponse, updatedHistory);
+    callback(formattedResponse);
   });
 }
 
-var now = moment().format();
 var history = {
-  funds: { value: 0, when: now },
-  citizens: { value: 0, when: now },
-  fleet: { value: 0, when: now }
+  funds: { value: 0, when: '1900-01-01T00:00:00-00:00' },
+  citizens: { value: 0, when: '1900-01-01T00:00:00-00:00' },
+  fleet: { value: 0, when: '1900-01-01T00:00:00-00:00' }
 };
-get(history, function(message, updatedHistory) {
-  history = updatedHistory;
-});
+get(function(message) {});
 
-module.exports = {
-  get: get,
-  history: history
-};
+module.exports = get;

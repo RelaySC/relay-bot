@@ -1,5 +1,5 @@
 var eliza = require('./eliza/elizabot');
-var funding = require('./funding');
+var commands = require('./commands');
 var Discordie = require('discordie');
 var client = new Discordie();
 
@@ -22,53 +22,9 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
     return;
   }
 
-  switch (e.message.content) {
-    case '!stats':
-      funding.get(funding.history, function(message, updatedHistory) {
-        e.message.channel.sendMessage(message);
-        funding.history = updatedHistory;
-      });
-      break;
-    case '!inntwitter':
-      var inntwitterMessage = 'You can find and follow INN on Twitter here: ' +
-                              'https://twitter.com/inn_starcitizen';
-      e.message.channel.sendMessage(inntwitterMessage);
-      break;
-    case '!innfb':
-      var innfbMessage = 'You can find and like INN on Facebook here: ' +
-                              'https://www.facebook.com/ImperialNewsNetworkSC';
-      e.message.channel.sendMessage(innfbMessage);
-      break;
-    case '!invite':
-      var inviteMessage = 'You can add me to your server by instructing' +
-                          ' someone with the \"Manage Server\" permission to' +
-                          ' visit this page:\n' +
-                          'https://discordpp.com/oauth2/authorize?client_id=' +
-                          client.User.id + '&scope=bot';
-      e.message.channel.sendMessage(inviteMessage);
-      return;
-    case '!about':
-      var aboutMessage = 'I\'m INNBot, a Rogerian psychotherapist hired by' +
-                         ' the Imperial News Network. You can chat for' +
-                         ' a therapy session or tell me some commands. I\'m' +
-                         ' an open source psychotherapist too, check my' +
-                         ' source out here: ' +
-                         'https://github.com/ImperialNewsNetwork/inn-bot.' +
-                         ' You can find out about the Imperial News Network' +
-                         ' here: http://imperialnews.network.' +
-                         '\n\nTo find the commands I can run, type !help.';
-      e.message.channel.sendMessage(aboutMessage);
-      return;
-    case '!help':
-      var helpMessage = 'Here\'s all of my commands:\n\n' +
-                        '!help - Display this page.\n' +
-                        '!about - Find out about me.\n' +
-                        '!stats - Find out Star Citizen\'s stats.\n' +
-                        '!inntwitter - Follow INN on Twitter.\n' +
-                        '!innfb - Like INN on Facebook.\n' +
-                        '!invite - Learn how to get me on your server.\n';
-      e.message.channel.sendMessage(helpMessage);
-  }
+  commands(e.message.content, client.User, function(message) {
+    e.message.channel.sendMessage(message);
+  })
 
   if (client.User.isMentioned(e.message) || e.message.isPrivate) {
     // If our bot was mentioned or the message was in a DM.
