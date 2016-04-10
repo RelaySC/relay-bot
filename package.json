@@ -14,17 +14,18 @@
     "citizen"
   ],
   "author": {
-      "name": "WangPhat",
-      "email": "hello@davidtw.co",
-      "url": "https://davidtw.co"
+    "name": "WangPhat",
+    "email": "hello@davidtw.co",
+    "url": "https://davidtw.co"
   },
   "license": "AGPL-3.0",
   "dependencies": {
     "discordie": "^0.4.4",
-    "extend": "^3.0.0"
+    "extend": "^3.0.0",
+    "request": "^2.70.0"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/ImperialNewsNetwork/inn-bot.git"
+    "type": "git",
+    "url": "https://github.com/ImperialNewsNetwork/inn-bot.git"
   }
 }
