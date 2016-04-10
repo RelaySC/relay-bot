@@ -23,6 +23,7 @@
     "discordie": "^0.4.4",
     "extend": "^3.0.0",
     "format": "^0.2.2",
+    "format-number": "^2.0.1",
     "request": "^2.70.0"
   },
   "repository": {
