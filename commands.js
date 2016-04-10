@@ -5,63 +5,83 @@ var format = require('format');
 var commands = {
   invite: {
     fn: inviteCommand,
-    help: 'Learn how to get this bot on your server!'
+    help: 'Learn how to get this bot on your server!',
+    hidden: false
   },
   help: {
     fn: helpCommand,
-    help: 'Learn how to get this bot on your server!'
+    help: 'Learn how to get this bot on your server!',
+    hidden: false
   },
   about: {
     fn: aboutCommand,
-    help: 'Find out more about this bot.'
+    help: 'Find out more about this bot.',
+    hidden: false
   },
   stats: {
     fn: statsCommand,
-    help: 'Check Star Citizen\'s funding levels, citizen and ship count.'
+    help: 'Check Star Citizen\'s funding levels, citizen and ship count.',
+    hidden: false
   },
   innfb: {
     fn: innFacebookCommand,
-    help: 'Like INN on Facebook!'
+    help: 'Like INN on Facebook!',
+    hidden: false
   },
   inntwitter: {
     fn: innTwitterCommand,
-    help: 'Follow INN on Twitter!'
+    help: 'Follow INN on Twitter!',
+    hidden: false
   },
   innyt: {
     fn: innYouTubeCommand,
-    help: 'Subcribe to INN on YouTube!'
+    help: 'Subcribe to INN on YouTube!',
+    hidden: false
   },
   inntwitch: {
     fn: innTwitchCommand,
-    help: 'Follow INN on Twitch!'
+    help: 'Follow INN on Twitch!',
+    hidden: false
   },
   rsifb: {
     fn: rsiFacebookCommand,
-    help: 'Like Star Citizen on Facebook!'
+    help: 'Like Star Citizen on Facebook!',
+    hidden: false
   },
   rsitwitter: {
     fn: rsiTwitterCommand,
-    help: 'Follow Star Citizen on Twitter!'
+    help: 'Follow Star Citizen on Twitter!',
+    hidden: false
   },
   rsiyt: {
     fn: rsiYouTubeCommand,
-    help: 'Subcribe to Star Citizen on YouTube!'
+    help: 'Subcribe to Star Citizen on YouTube!',
+    hidden: false
   },
   rsitwitch: {
     fn: rsiTwitchCommand,
-    help: 'Follow Star Citizen on Twitch!'
+    help: 'Follow Star Citizen on Twitch!',
+    hidden: false
   },
   rsicommunitytwitch: {
     fn: rsiCommunityTwitchCommand,
-    help: 'Follow CIG Community on Twitch!'
+    help: 'Follow CIG Community on Twitch!',
+    hidden: false
   },
   issue: {
     fn: issueCouncilCommand,
-    help: 'Report a bug/issue to the Issue Council!'
+    help: 'Report a bug/issue to the Issue Council!',
+    hidden: false
+  },
+  bug: {
+    fn: issueCouncilCommand,
+    help: 'Report a bug/issue to the Issue Council!',
+    hidden: true
   },
   time: {
     fn: timeCommand,
-    help: 'Check the current time at CIG studios.'
+    help: 'Check the current time at CIG studios.',
+    hidden: false
   }
 };
 
@@ -156,7 +176,9 @@ function helpCommand(bot, callback) {
   Object.keys(commands).forEach(function(commandName) {
     var otherInfo = commands[commandName];
 
-    message += format('!%s - %s\n', commandName, otherInfo.help);
+    if (!otherInfo.hidden) {
+      message += format('!%s - %s\n', commandName, otherInfo.help);
+    }
   });
   callback(message);
 }
