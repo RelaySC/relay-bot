@@ -9,6 +9,8 @@ below.
 
 `!stats` - displays total funding, no. of citizens and no. of ships sold for Star Citizen and delta for each since last check.
 
+`!issue` - report an issue to the Issue Council.
+
 `!inntwitter` - follow INN on Twitter!
 
 `!innfb` - like INN on Facebook!

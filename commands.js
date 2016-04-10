@@ -55,6 +55,10 @@ var commands = {
     fn: rsiCommunityTwitchCommand,
     help: 'Follow CIG Community on Twitch!'
   },
+  issue: {
+    fn: issueCouncilCommand,
+    help: 'Report a bug/issue to the Issue Council!'
+  },
   time: {
     fn: timeCommand,
     help: 'Check the current time at CIG studios.'
@@ -72,6 +76,12 @@ function inviteCommand(bot, callback) {
                 ' the \"Manage Server\" permission to visit this page:\n' +
                 'https://discordpp.com/oauth2/authorize?client_id=' +
                 bot.id + '&scope=bot';
+  callback(message);
+}
+
+function issueCouncilCommand(bot, callback) {
+  var message = 'You can report a in-game bug or issue to the Issue Council: ' +
+                'https://robertsspaceindustries.com/community/issue-council';
   callback(message);
 }
 
