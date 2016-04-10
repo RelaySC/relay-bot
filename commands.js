@@ -13,7 +13,7 @@ var commands = {
   },
   help: {
     fn: helpCommand,
-    help: 'Learn how to get this bot on your server!',
+    help: 'What can this bot do?',
     hidden: false
   },
   about: {
