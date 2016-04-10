@@ -9,6 +9,10 @@ below.
 
 `!stats` - displays total funding, no. of citizens and no. of ships sold for Star Citizen and delta for each since last check.
 
+`!inntwitter` - follow INN on Twitter!
+
+`!innfb` - like INN on Facebook!
+
 `!invite` - gives instructions on how to add this bot to your server.
 
 `!about` - gives information on the bot.

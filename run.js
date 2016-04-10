@@ -29,6 +29,16 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
         funding.history = updatedHistory;
       });
       break;
+    case '!inntwitter':
+      var inntwitterMessage = 'You can find and follow INN on Twitter here: ' +
+                              'https://twitter.com/inn_starcitizen';
+      e.message.channel.sendMessage(inntwitterMessage);
+      break;
+    case '!innfb':
+      var innfbMessage = 'You can find and like INN on Facebook here: ' +
+                              'https://www.facebook.com/ImperialNewsNetworkSC';
+      e.message.channel.sendMessage(innfbMessage);
+      break;
     case '!invite':
       var inviteMessage = 'You can add me to your server by instructing' +
                           ' someone with the \"Manage Server\" permission to' +
@@ -54,6 +64,8 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
                         '!help - Display this page.\n' +
                         '!about - Find out about me.\n' +
                         '!stats - Find out Star Citizen\'s stats.\n' +
+                        '!inntwitter - Follow INN on Twitter.\n' +
+                        '!innfb - Like INN on Facebook.\n' +
                         '!invite - Learn how to get me on your server.\n';
       e.message.channel.sendMessage(helpMessage);
   }
