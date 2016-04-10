@@ -26,6 +26,21 @@ var commands = {
     help: 'Check Star Citizen\'s funding levels, citizen and ship count.',
     hidden: false
   },
+  funds: {
+    fn: statsCommand,
+    help: 'Check Star Citizen\'s funding levels, citizen and ship count.',
+    hidden: true
+  },
+  citizens: {
+    fn: statsCommand,
+    help: 'Check Star Citizen\'s funding levels, citizen and ship count.',
+    hidden: true
+  },
+  uee: {
+    fn: statsCommand,
+    help: 'Check Star Citizen\'s funding levels, citizen and ship count.',
+    hidden: true
+  },
   innfb: {
     fn: innFacebookCommand,
     help: 'Like INN on Facebook!',
