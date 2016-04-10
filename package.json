@@ -13,10 +13,18 @@
     "star",
     "citizen"
   ],
-  "author": "WangPhat",
-  "license": "ISC",
+  "author": {
+      "name": "WangPhat",
+      "email": "hello@davidtw.co",
+      "url": "https://davidtw.co"
+  },
+  "license": "AGPL-3.0",
   "dependencies": {
     "discordie": "^0.4.4",
     "extend": "^3.0.0"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/ImperialNewsNetwork/inn-bot.git"
   }
 }
