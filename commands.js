@@ -27,6 +27,10 @@ var commands = {
     fn: innTwitterCommand,
     help: 'Follow INN on Twitter!'
   },
+  innyt: {
+    fn: innYouTubeCommand,
+    help: 'Subcribe to INN on YouTube!'
+  },
   time: {
     fn: timeCommand,
     help: 'Check the current time at CIG studios.'
@@ -44,6 +48,12 @@ function inviteCommand(bot, callback) {
                 ' the \"Manage Server\" permission to visit this page:\n' +
                 'https://discordpp.com/oauth2/authorize?client_id=' +
                 bot.id + '&scope=bot';
+  callback(message);
+}
+
+function innYouTubeCommand(bot, callback) {
+  var message = 'You can find and subscribe to INN on YouTube here: ' +
+                'https://www.youtube.com/channel/UCCNuWjBJHxtwMCQosW-zicQ';
   callback(message);
 }
 

@@ -13,6 +13,8 @@ below.
 
 `!innfb` - like INN on Facebook!
 
+`!innyt` - Subcribe to INN on YouTube!
+
 `!time` - check the current time at CIG studios.
 
 `!invite` - gives instructions on how to add this bot to your server.
