@@ -95,7 +95,7 @@ var commands = {
   }
 };
 
-function statsCommand(bot, callback) {
+function statsCommand(bot, args, callback) {
   funding(function(message) {
     var extraMessage = ' It has been %s since the Star Citizen kickstarter.';
     var extraMessageFormatted = format(extraMessage,
@@ -104,7 +104,7 @@ function statsCommand(bot, callback) {
   });
 }
 
-function inviteCommand(bot, callback) {
+function inviteCommand(bot, args, callback) {
   var message = 'You can add me to your server by instructing someone with' +
                 ' the \"Manage Server\" permission to visit this page:\n' +
                 'https://discordpp.com/oauth2/authorize?client_id=' +
@@ -112,73 +112,73 @@ function inviteCommand(bot, callback) {
   callback(message);
 }
 
-function orgCommand(bot, callback) {
+function orgCommand(bot, args, callback) {
   var message = 'You can check out the INN Organization on RSI here: ' +
                 'https://robertsspaceindustries.com/orgs/INN';
   callback(message);
 }
 
-function issueCouncilCommand(bot, callback) {
+function issueCouncilCommand(bot, args, callback) {
   var message = 'You can report a in-game bug or issue to the Issue Council: ' +
                 'https://robertsspaceindustries.com/community/issue-council';
   callback(message);
 }
 
-function innYouTubeCommand(bot, callback) {
+function innYouTubeCommand(bot, args, callback) {
   var message = 'You can find and subscribe to INN on YouTube here: ' +
                 'https://www.youtube.com/channel/UCCNuWjBJHxtwMCQosW-zicQ';
   callback(message);
 }
 
-function innTwitterCommand(bot, callback) {
+function innTwitterCommand(bot, args, callback) {
   var message = 'You can find and follow INN on Twitter here: ' +
                 'https://twitter.com/inn_starcitizen';
   callback(message);
 }
 
-function innFacebookCommand(bot, callback) {
+function innFacebookCommand(bot, args, callback) {
   var message = 'You can find and like INN on Facebook here: ' +
                 'https://www.facebook.com/ImperialNewsNetworkSC';
   callback(message);
 }
 
-function innTwitchCommand(bot, callback) {
+function innTwitchCommand(bot, args, callback) {
   var message = 'You can find and follow INN on Twitch here: ' +
                 'https://twitch.tv/innlive';
   callback(message);
 }
 
-function rsiYouTubeCommand(bot, callback) {
+function rsiYouTubeCommand(bot, args, callback) {
   var message = 'You can find and subscribe to Star Citizen on YouTube here: ' +
                 'https://www.youtube.com/user/RobertsSpaceInd';
   callback(message);
 }
 
-function rsiTwitterCommand(bot, callback) {
+function rsiTwitterCommand(bot, args, callback) {
   var message = 'You can find and follow Star Citizen on Twitter here: ' +
                 'https://twitter.com/RobertsSpaceInd';
   callback(message);
 }
 
-function rsiFacebookCommand(bot, callback) {
+function rsiFacebookCommand(bot, args, callback) {
   var message = 'You can find and like Star Citizen on Facebook here: ' +
                 'https://www.facebook.com/RobertsSpaceIndustries/';
   callback(message);
 }
 
-function rsiTwitchCommand(bot, callback) {
+function rsiTwitchCommand(bot, args, callback) {
   var message = 'You can find and follow Star Citizen on Twitch here: ' +
                 'https://twitch.tv/starcitizen';
   callback(message);
 }
 
-function rsiCommunityTwitchCommand(bot, callback) {
+function rsiCommunityTwitchCommand(bot, args, callback) {
   var message = 'You can find and follow CIG Community on Twitch here: ' +
                 'https://twitch.tv/cigcommunity';
   callback(message);
 }
 
-function aboutCommand(bot, callback) {
+function aboutCommand(bot, args, callback) {
   var message = 'I\'m INNBot, a Rogerian psychotherapist hired by the' +
                 ' Imperial News Network. You can chat for a therapy session' +
                 ' or tell me some commands. I\'m an open source' +
@@ -190,7 +190,7 @@ function aboutCommand(bot, callback) {
   callback(message);
 }
 
-function helpCommand(bot, callback) {
+function helpCommand(bot, args, callback) {
   var message = 'Here\'s all of my commands:\n\n';
   Object.keys(commands).forEach(function(commandName) {
     var otherInfo = commands[commandName];
@@ -202,7 +202,7 @@ function helpCommand(bot, callback) {
   callback(message);
 }
 
-function statusCommand(bot, callback) {
+function statusCommand(bot, args, callback) {
   var message = 'I\'m doing great! I\'ve been running for %s without a hitch.' +
                 ' For more information about me, type !about.';
   var formattedMessage = format(message,
@@ -210,7 +210,7 @@ function statusCommand(bot, callback) {
   callback(formattedMessage);
 }
 
-function timeCommand(bot, callback) {
+function timeCommand(bot, args, callback) {
   var message = 'It it is currently %s UTC. And it is,\n\n' +
                 '%s at CIG LA in Los Angeles, California (%s),\n' +
                 '%s at CIG Austin in Austin, Texas (%s),\n' +
@@ -250,7 +250,7 @@ function run(messageContent, bot, callback) {
     var commandName = parts[0].substring(1);
 
     if (commands.hasOwnProperty(commandName)) {
-      commands[commandName].fn(bot, function(message) {
+      commands[commandName].fn(bot, parts.slice(1), function(message) {
         callback(message);
       });
     } else {
