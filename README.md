@@ -7,11 +7,7 @@ More information coming soon. **This project is currently a work in progress.**
 Some commands may not yet be implemented. But all currently planned commands are listed
 below.
 
-`!funds` - displays total funding for Star Citizen and delta since last check.
-
-`!citizens` - displays total no. of citizens for Star Citizen and delta since last check.
-
-`!uee` - displays total no. of ships sold for Star Citizen and delta since last check.
+`!stats` - displays total funding, no. of citizens and no. of ships sold for Star Citizen and delta for each since last check.
 
 `!invite` - gives instructions on how to add this bot to your server.
 

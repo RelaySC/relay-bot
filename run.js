@@ -1,4 +1,8 @@
 var elizabot = require('./elizabot');
+var format = require('format');
+var formatNumber = require('format-number');
+var moment = require('moment');
+var request = require('request');
 var Discordie = require('discordie');
 var client = new Discordie();
 
@@ -8,6 +12,79 @@ if (process.argv.length != 3) {
 }
 
 var eliza = new elizabot.ElizaBot();
+
+function getStats(history, callback) {
+  var url = 'https://robertsspaceindustries.com/api/stats/getCrowdfundStats';
+  var errorMessage = 'I wasn\'t able to get that for you. Try again later.';
+  var rsiNoSuccess = 'There\'s an issue with the RSI site. Try again later.';
+  request.post(url).form({
+    chart: "day",
+    fans: true,
+    funds: true,
+    alpha_slots: true,
+    fleet: true
+  }).on('error', function(error) {
+    callback(errorMessage);
+  }).on('response', function(response) {
+    if (response.statusCode !== 200) {
+      callback(errorMessage);
+    }
+  }).on('data', function(body) {
+    var content = JSON.parse(body);
+
+    if (content['success'] !== 1) {
+      callback(rsiNoSuccess);
+      return;
+    }
+
+    var data = content['data'];
+
+    var fundingFormat = formatNumber({prefix: '$'});
+    var otherFormat = formatNumber({});
+
+    var funds = data['funds'];
+    var citizens = data['fans'];
+    var fleet = parseInt(data['fleet']);
+
+    var fundsDiff = funds - history.funds.value;
+    var citizensDiff = citizens - history.citizens.value;
+    var fleetDiff = fleet - history.fleet.value;
+
+    var fundsSince = moment(history.funds.when).fromNow();
+    var citizensSince = moment(history.citizens.when).fromNow();
+    var fleetSince = moment(history.fleet.when).fromNow();
+
+    var response = 'Star Citizen is currently %s funded (+%s since %s).' +
+                   ' There are %s citizens (+%s since %s) and the UEE fleet' +
+                   ' is %s strong (+%s since %s).';
+    var formattedResponse = format(response,
+                                   fundingFormat(funds),
+                                   fundingFormat(fundsDiff), fundsSince,
+                                   otherFormat(citizens),
+                                   otherFormat(citizensDiff), citizensSince,
+                                   otherFormat(fleet),
+                                   otherFormat(fleetDiff), fleetSince);
+
+    var now = moment().format();
+    var updatedHistory = {
+      funds: { value: funds, when: now },
+      citizens: { value: citizens, when: now },
+      fleet: { value: fleet, when: now }
+    };
+
+    callback(formattedResponse, updatedHistory);
+  });
+}
+
+var now = moment().format();
+var fundingHistory = {
+  funds: { value: 0, when: now },
+  citizens: { value: 0, when: now },
+  fleet: { value: 0, when: now }
+};
+getStats(fundingHistory, function(message, updatedHistory) {
+  fundingHistory = updatedHistory;
+});
 
 client.connect({
   token: process.argv[2]  // This should be the supplied API token.
@@ -24,6 +101,12 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
   }
 
   switch (e.message.content) {
+    case '!stats':
+      getStats(fundingHistory, function(message, updatedHistory) {
+        e.message.channel.sendMessage(message);
+        fundingHistory = updatedHistory;
+      });
+      break;
     case '!invite':
       var inviteMessage = 'You can add me to your server by instructing' +
                           ' someone with the \"Manage Server\" permission to' +
@@ -48,9 +131,7 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
       var helpMessage = 'Here\'s all of my commands:\n\n' +
                         '!help - Display this page.\n' +
                         '!about - Find out about me.\n' +
-                        '!funds - Find out Star Citizen\'s funding level.\n' +
-                        '!citizen - Find out Star Citizen\'s citizen count.\n' +
-                        '!uee - Find out Star Citizen\'s ship count.\n' +
+                        '!stats - Find out Star Citizen\'s stats.\n' +
                         '!invite - Learn how to get me on your server.\n';
       e.message.channel.sendMessage(helpMessage);
   }
