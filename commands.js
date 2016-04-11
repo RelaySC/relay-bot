@@ -135,7 +135,7 @@ function statsCommand(bot, args, callback) {
 
 function innCommand(bot, args, callback) {
   feed('http://imperialnews.network/feed/', message => {
-    let extraMessage = '\n*Check out the rest of INN\'s content at:* ' +
+    let extraMessage = '\n**Check out the rest of INN\'s content at:** ' +
                        'http://imperialnews.network/';
     callback(message + extraMessage);
   });

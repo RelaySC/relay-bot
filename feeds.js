@@ -38,17 +38,17 @@ function get(url, callback) {
   });
 
   feedparser.on('end', () => {
-    let item = items[0];
+    let itemsForDisplay = items.slice(0, 9);
 
-    let pubDate = moment(item.pubDate).fromNow();
+    let message = '**Check out some recent content:**\n';
 
-    let message = '**Latest Post:**\n' +
-                  '%s - written by %s %s.\n\n' +
-                  '*Read the article by clicking here:* %s';
-    let messageFormatted = format(message, item.title, item.author,
-                                  pubDate, item.link);
+    for (let item of itemsForDisplay) {
+      let pubDate = moment(item.pubDate).fromNow();
+      message += format('%s *written %s by %s.*\n',
+                        item.title, pubDate, item.author);
+    }
 
-    callback(messageFormatted);
+    callback(message);
   });
 }
 
