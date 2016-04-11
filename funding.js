@@ -1,12 +1,16 @@
-var format = require('format');
-var formatNumber = require('format-number');
-var moment = require('moment');
-var request = require('request');
+'use strict';
+
+const format = require('format');
+const formatNumber = require('format-number');
+const moment = require('moment');
+const request = require('request');
+
+const errorMessage = 'I wasn\'t able to get that for you. Try again later.';
+const rsiSuccessError = 'There\'s an issue with the RSI site. Try again later.';
 
 function get(callback) {
-  var url = 'https://robertsspaceindustries.com/api/stats/getCrowdfundStats';
-  var errorMessage = 'I wasn\'t able to get that for you. Try again later.';
-  var rsiNoSuccess = 'There\'s an issue with the RSI site. Try again later.';
+  const url = 'https://robertsspaceindustries.com/api/stats/getCrowdfundStats';
+  let buffer = '';
   request.post(url).form({
     chart: "day",
     fans: true,
@@ -20,34 +24,36 @@ function get(callback) {
       callback(errorMessage);
     }
   }).on('data', function(body) {
-    var content = JSON.parse(body);
+    buffer += body;
+  }).on('end', function() {
+    let content = JSON.parse(buffer);
 
     if (content['success'] !== 1) {
-      callback(rsiNoSuccess);
+      callback(rsiSuccessError);
       return;
     }
 
-    var data = content['data'];
+    let data = content['data'];
 
-    var fundingFormat = formatNumber({prefix: '$'});
-    var otherFormat = formatNumber({});
+    let fundingFormat = formatNumber({prefix: '$'});
+    let otherFormat = formatNumber({});
 
-    var funds = data['funds'] / 100;
-    var citizens = data['fans'];
-    var fleet = parseInt(data['fleet']);
+    let funds = data['funds'] / 100;
+    let citizens = data['fans'];
+    let fleet = parseInt(data['fleet']);
 
-    var fundsDiff = funds - history.funds.value;
-    var citizensDiff = citizens - history.citizens.value;
-    var fleetDiff = fleet - history.fleet.value;
+    let fundsDiff = funds - history.funds.value;
+    let citizensDiff = citizens - history.citizens.value;
+    let fleetDiff = fleet - history.fleet.value;
 
-    var fundsSince = moment(history.funds.when).fromNow();
-    var citizensSince = moment(history.citizens.when).fromNow();
-    var fleetSince = moment(history.fleet.when).fromNow();
+    let fundsSince = moment(history.funds.when).fromNow();
+    let citizensSince = moment(history.citizens.when).fromNow();
+    let fleetSince = moment(history.fleet.when).fromNow();
 
-    var response = 'Star Citizen is currently %s funded (+%s since %s).' +
+    let response = 'Star Citizen is currently %s funded (+%s since %s).' +
                    ' There are %s citizens (+%s since %s) and the UEE fleet' +
                    ' is %s strong (+%s since %s).';
-    var formattedResponse = format(response,
+    let formattedResponse = format(response,
                                    fundingFormat(funds),
                                    fundingFormat(fundsDiff), fundsSince,
                                    otherFormat(citizens),
@@ -55,7 +61,7 @@ function get(callback) {
                                    otherFormat(fleet),
                                    otherFormat(fleetDiff), fleetSince);
 
-    var now = moment().format();
+    let now = moment().format();
     history = {
       funds: { value: funds, when: now },
       citizens: { value: citizens, when: now },
@@ -66,7 +72,7 @@ function get(callback) {
   });
 }
 
-var history = {
+let history = {
   funds: { value: 0, when: '1900-01-01T00:00:00-00:00' },
   citizens: { value: 0, when: '1900-01-01T00:00:00-00:00' },
   fleet: { value: 0, when: '1900-01-01T00:00:00-00:00' }
