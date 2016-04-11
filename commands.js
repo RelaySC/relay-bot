@@ -332,7 +332,7 @@ function run(message, bot, callback) {
     if (commands.hasOwnProperty(commandName)) {
       commands[commandName].fn(message.author, bot,
                                parts.slice(1), message => {
-        callback(message);
+        callback(message, commandName);
       });
     } else {
       callback('Command does not exist. Refer to !help for list of commands.');

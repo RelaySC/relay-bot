@@ -3,6 +3,7 @@
 const eliza = require('./eliza/elizabot');
 const commands = require('./commands');
 const Discordie = require('discordie');
+const format = require('format');
 const client = new Discordie();
 
 if (process.argv.length != 3) {
@@ -24,7 +25,11 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
     return;
   }
 
-  commands(e.message, client.User, message => {
+  commands(e.message, client.User, (message, commandName) => {
+    console.log(format('Received "%s" command from "%s" (%s) in #%s on "%s."',
+                       commandName, e.message.author.username,
+                       e.message.author.id, e.message.channel.name,
+                       e.message.guild.name));
     e.message.channel.sendMessage(message);
   })
 
@@ -40,6 +45,10 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
       let mention = '<@' + client.User.id + '>';
       messageContent = messageContent.replace(mention, '').trim();
     }
+
+    console.log(format('Message recieved from "%s" (%s) in #%s on "%s".',
+                       e.message.author.username, e.message.author.id,
+                       e.message.channel.name, e.message.guild.name));
 
     let response = eliza.transform(messageContent);
     e.message.channel.sendMessage(response);
