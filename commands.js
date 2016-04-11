@@ -2,6 +2,7 @@
 
 const funding = require('./funding');
 const starmap = require('./starmap');
+const feed = require('./feeds');
 const moment = require('moment-timezone');
 const format = require('format');
 
@@ -115,6 +116,11 @@ const commands = {
     fn: starmapCommand,
     help: 'Check out the ARK Starmap!',
     hidden: false
+  },
+  inn: {
+    fn: innCommand,
+    help: 'Get the latest INN post.',
+    hidden: false
   }
 };
 
@@ -124,6 +130,14 @@ function statsCommand(bot, args, callback) {
     let extraMessageFormatted = format(extraMessage,
                                        moment('2012-10-18').fromNow(true));
     callback(message + extraMessageFormatted);
+  });
+}
+
+function innCommand(bot, args, callback) {
+  feed('http://imperialnews.network/feed/', message => {
+    let extraMessage = '\n*Check out the rest of INN\'s content at:* ' +
+                       'http://imperialnews.network/';
+    callback(message + extraMessage);
   });
 }
 
