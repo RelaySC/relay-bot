@@ -43,8 +43,13 @@ function get(url, callback) {
 
     for (let item of itemsForDisplay) {
       let pubDate = moment(item.pubDate).fromNow();
-      message += format('%s\t*written %s by %s.*\n',
-                        item.title, pubDate, item.author);
+      if (item.author === null) {
+        message += format('%s\t*posted %s.*\n',
+                          item.title, pubDate, item.author);
+      } else {
+        message += format('%s\t*written %s by %s.*\n',
+                          item.title, pubDate, item.author);
+      }
     }
 
     callback(message);
