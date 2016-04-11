@@ -119,7 +119,12 @@ const commands = {
   },
   inn: {
     fn: innCommand,
-    help: 'Get the latest INN post.',
+    help: 'Get the latest INN posts.',
+    hidden: false
+  },
+  rsi: {
+    fn: rsiCommand,
+    help: 'Get the latest RSI posts.',
     hidden: false
   }
 };
@@ -137,6 +142,14 @@ function innCommand(bot, args, callback) {
   feed('http://imperialnews.network/feed/', message => {
     let extraMessage = '\n**Check out the rest of INN\'s content at:** ' +
                        'http://imperialnews.network/';
+    callback(message + extraMessage);
+  });
+}
+
+function rsiCommand(bot, args, callback) {
+  feed('https://robertsspaceindustries.com/comm-link/rss', message => {
+    let extraMessage = '\n**Check out the rest of the Comm-Link content at:** ' +
+                       'https://robertsspaceindustries.com/comm-link/';
     callback(message + extraMessage);
   });
 }
