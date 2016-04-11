@@ -24,7 +24,7 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
     return;
   }
 
-  commands(e.message.content, client.User, message => {
+  commands(e.message, client.User, message => {
     e.message.channel.sendMessage(message);
   })
 
