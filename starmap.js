@@ -122,24 +122,32 @@ function getListOfCelestialBodies(system) {
 function get(systemName, celestialObjectName, callback) {
   const url = 'https://robertsspaceindustries.com/api/starmap/star-systems/';
   let data = '';
-  request.post(url + systemName.toUpperCase()).on('error', error => {
+  let req = request.post(url + systemName.toUpperCase());
+
+  req.on('error', error => {
     callback(errorMessage);
-  }).on('response', response => {
+  });
+
+  req.on('response', response => {
     if (response.statusCode !== 200) {
-      callback(errorMessage);
+      req.emit('error', new Error(errorMessage));
     }
-  }).on('data', body => {
+  });
+
+  req.on('data', body => {
     data += body;
-  }).on('end', () => {
+  });
+
+  req.on('end', () => {
     let content = JSON.parse(data);
 
     if (content['success'] !== 1) {
-      callback(rsiSuccessError);
+      req.emit('error', new Error(errorMessage));
       return;
     }
 
     if (content['data']['rowcount'] === 0) {
-      callback(existsError);
+      req.emit('error', new Error(errorMessage));
       return;
     }
 

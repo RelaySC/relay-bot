@@ -6,7 +6,6 @@ const moment = require('moment');
 const request = require('request');
 
 const errorMessage = 'I wasn\'t able to get that for you. Try again later.';
-const rsiSuccessError = 'There\'s an issue with the RSI site. Try again later.';
 
 const fundingFormat = formatNumber({prefix: '$'});
 const otherFormat = formatNumber({});
@@ -14,25 +13,33 @@ const otherFormat = formatNumber({});
 function get(callback) {
   const url = 'https://robertsspaceindustries.com/api/stats/getCrowdfundStats';
   let buffer = '';
-  request.post(url).form({
+  let req = request.post(url).form({
     chart: "day",
     fans: true,
     funds: true,
     alpha_slots: true,
     fleet: true
-  }).on('error', error => {
+  });
+
+  req.on('error', error => {
     callback(errorMessage);
-  }).on('response', response => {
+  });
+
+  req.on('response', response => {
     if (response.statusCode !== 200) {
-      callback(errorMessage);
+      req.emit('error', new Error(errorMessage));
     }
-  }).on('data', body => {
+  });
+
+  req.on('data', body => {
     buffer += body;
-  }).on('end', () => {
+  });
+
+  req.on('end', () => {
     let content = JSON.parse(buffer);
 
     if (content['success'] !== 1) {
-      callback(rsiSuccessError);
+      req.emit('error', new Error(errorMessage));
       return;
     }
 
