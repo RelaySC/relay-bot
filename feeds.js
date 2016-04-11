@@ -5,12 +5,11 @@ const format = require('format');
 const moment = require('moment-timezone');
 const FeedParser = require('feedparser');
 
-let feedparser = new FeedParser();
-
 const errorMessage = 'I wasn\'t able to get that for you. Try again later.';
 
 function get(url, callback) {
   let req = request(url);
+  let feedparser = new FeedParser();
   req.on('error', error => {
     callback(errorMessage);
   });
@@ -44,7 +43,7 @@ function get(url, callback) {
 
     for (let item of itemsForDisplay) {
       let pubDate = moment(item.pubDate).fromNow();
-      message += format('%s *written %s by %s.*\n',
+      message += format('%s\t*written %s by %s.*\n',
                         item.title, pubDate, item.author);
     }
 
