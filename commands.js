@@ -283,6 +283,9 @@ function statusCommand(sender, bot, args, callback) {
 
 function loveMeCommand(sender, bot, args, callback) {
   let message = 'I will never love you %s. You are a dick.';
+  if (sender.id === '104895277856501760') {
+    message = 'I will always love you, creator.';
+  }
   callback(format(message, sender.username));
 }
 
