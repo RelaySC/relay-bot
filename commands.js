@@ -1,11 +1,11 @@
 'use strict';
 
-var funding = require('./funding');
-var starmap = require('./starmap');
-var moment = require('moment-timezone');
-var format = require('format');
+const funding = require('./funding');
+const starmap = require('./starmap');
+const moment = require('moment-timezone');
+const format = require('format');
 
-var commands = {
+const commands = {
   invite: {
     fn: inviteCommand,
     help: 'Learn how to get this bot on your server!',
@@ -119,9 +119,9 @@ var commands = {
 };
 
 function statsCommand(bot, args, callback) {
-  funding(function(message) {
-    var extraMessage = ' It has been %s since the Star Citizen kickstarter.';
-    var extraMessageFormatted = format(extraMessage,
+  funding(message => {
+    let extraMessage = ' It has been %s since the Star Citizen kickstarter.';
+    let extraMessageFormatted = format(extraMessage,
                                        moment('2012-10-18').fromNow(true));
     callback(message + extraMessageFormatted);
   });
@@ -132,19 +132,19 @@ function starmapCommand(bot, args, callback) {
     callback('You can check out the ARK Starmap at: ' +
              'https://robertsspaceindustries.com/starmap');
   } else if (args.length === 1) {
-    starmap(args[0], undefined, function(message) {
+    starmap(args[0], undefined, message => {
       callback(message);
     });
   } else {
     let celestialObjectName = args.slice(1).join(' ');
-    starmap(args[0], celestialObjectName, function(message) {
+    starmap(args[0], celestialObjectName, message => {
       callback(message);
     });
   }
 }
 
 function inviteCommand(bot, args, callback) {
-  var message = 'You can add me to your server by instructing someone with' +
+  let message = 'You can add me to your server by instructing someone with' +
                 ' the \"Manage Server\" permission to visit this page:\n' +
                 'https://discordpp.com/oauth2/authorize?client_id=' +
                 bot.id + '&scope=bot';
@@ -152,73 +152,73 @@ function inviteCommand(bot, args, callback) {
 }
 
 function orgCommand(bot, args, callback) {
-  var message = 'You can check out the INN Organization on RSI here: ' +
+  let message = 'You can check out the INN Organization on RSI here: ' +
                 'https://robertsspaceindustries.com/orgs/INN';
   callback(message);
 }
 
 function issueCouncilCommand(bot, args, callback) {
-  var message = 'You can report a in-game bug or issue to the Issue Council: ' +
+  let message = 'You can report a in-game bug or issue to the Issue Council: ' +
                 'https://robertsspaceindustries.com/community/issue-council';
   callback(message);
 }
 
 function innYouTubeCommand(bot, args, callback) {
-  var message = 'You can find and subscribe to INN on YouTube here: ' +
+  let message = 'You can find and subscribe to INN on YouTube here: ' +
                 'https://www.youtube.com/channel/UCCNuWjBJHxtwMCQosW-zicQ';
   callback(message);
 }
 
 function innTwitterCommand(bot, args, callback) {
-  var message = 'You can find and follow INN on Twitter here: ' +
+  let message = 'You can find and follow INN on Twitter here: ' +
                 'https://twitter.com/inn_starcitizen';
   callback(message);
 }
 
 function innFacebookCommand(bot, args, callback) {
-  var message = 'You can find and like INN on Facebook here: ' +
+  let message = 'You can find and like INN on Facebook here: ' +
                 'https://www.facebook.com/ImperialNewsNetworkSC';
   callback(message);
 }
 
 function innTwitchCommand(bot, args, callback) {
-  var message = 'You can find and follow INN on Twitch here: ' +
+  let message = 'You can find and follow INN on Twitch here: ' +
                 'https://twitch.tv/innlive';
   callback(message);
 }
 
 function rsiYouTubeCommand(bot, args, callback) {
-  var message = 'You can find and subscribe to Star Citizen on YouTube here: ' +
+  let message = 'You can find and subscribe to Star Citizen on YouTube here: ' +
                 'https://www.youtube.com/user/RobertsSpaceInd';
   callback(message);
 }
 
 function rsiTwitterCommand(bot, args, callback) {
-  var message = 'You can find and follow Star Citizen on Twitter here: ' +
+  let message = 'You can find and follow Star Citizen on Twitter here: ' +
                 'https://twitter.com/RobertsSpaceInd';
   callback(message);
 }
 
 function rsiFacebookCommand(bot, args, callback) {
-  var message = 'You can find and like Star Citizen on Facebook here: ' +
+  let message = 'You can find and like Star Citizen on Facebook here: ' +
                 'https://www.facebook.com/RobertsSpaceIndustries/';
   callback(message);
 }
 
 function rsiTwitchCommand(bot, args, callback) {
-  var message = 'You can find and follow Star Citizen on Twitch here: ' +
+  let message = 'You can find and follow Star Citizen on Twitch here: ' +
                 'https://twitch.tv/starcitizen';
   callback(message);
 }
 
 function rsiCommunityTwitchCommand(bot, args, callback) {
-  var message = 'You can find and follow CIG Community on Twitch here: ' +
+  let message = 'You can find and follow CIG Community on Twitch here: ' +
                 'https://twitch.tv/cigcommunity';
   callback(message);
 }
 
 function aboutCommand(bot, args, callback) {
-  var message = 'I\'m INNBot, a Rogerian psychotherapist hired by the' +
+  let message = 'I\'m INNBot, a Rogerian psychotherapist hired by the' +
                 ' Imperial News Network. You can chat for a therapy session' +
                 ' or tell me some commands. I\'m an open source' +
                 ' psychotherapist too, check my source out here:' +
@@ -230,9 +230,9 @@ function aboutCommand(bot, args, callback) {
 }
 
 function helpCommand(bot, args, callback) {
-  var message = 'Here\'s all of my commands:\n\n';
-  Object.keys(commands).forEach(function(commandName) {
-    var otherInfo = commands[commandName];
+  let message = 'Here\'s all of my commands:\n\n';
+  Object.keys(commands).forEach(commandName => {
+    let otherInfo = commands[commandName];
 
     if (!otherInfo.hidden) {
       message += format('!%s - %s\n', commandName, otherInfo.help);
@@ -242,39 +242,39 @@ function helpCommand(bot, args, callback) {
 }
 
 function statusCommand(bot, args, callback) {
-  var message = 'I\'m doing great! I\'ve been running for %s without a hitch.' +
+  let message = 'I\'m doing great! I\'ve been running for %s without a hitch.' +
                 ' For more information about me, type !about.';
-  var formattedMessage = format(message,
+  let formattedMessage = format(message,
                                 moment.duration(process.uptime()).humanize());
   callback(formattedMessage);
 }
 
 function timeCommand(bot, args, callback) {
-  var message = 'It it is currently %s UTC. And it is,\n\n' +
+  let message = 'It it is currently %s UTC. And it is,\n\n' +
                 '%s at CIG LA in Los Angeles, California (%s),\n' +
                 '%s at CIG Austin in Austin, Texas (%s),\n' +
                 '%s at F42 UK in Manchester, England (%s),\n' +
                 '%s at F42 DE in Frankfurt, Germany (%s),\n' +
                 '%s at Turbulent in Montreal, Canada (%s).';
 
-  var utc = moment().tz('UTC').format('hh:mma');
+  let utc = moment().tz('UTC').format('hh:mma');
 
-  var cigLA = moment().tz('America/Los_Angeles').format('hh:mma');
-  var cigLAZoneName = moment().tz('America/Los_Angeles').format('z');
+  let cigLA = moment().tz('America/Los_Angeles').format('hh:mma');
+  let cigLAZoneName = moment().tz('America/Los_Angeles').format('z');
 
-  var cigAustin = moment().tz('America/Chicago').format('hh:mma');
-  var cigAustinZoneName = moment().tz('America/Chicago').format('z');
+  let cigAustin = moment().tz('America/Chicago').format('hh:mma');
+  let cigAustinZoneName = moment().tz('America/Chicago').format('z');
 
-  var f42UK = moment().tz('Europe/London').format('hh:mma');
-  var f42UKZoneName = moment().tz('Europe/London').format('z');
+  let f42UK = moment().tz('Europe/London').format('hh:mma');
+  let f42UKZoneName = moment().tz('Europe/London').format('z');
 
-  var f42DE = moment().tz('Europe/Berlin').format('hh:mma');
-  var f42DEZoneName = moment().tz('Europe/Berlin').format('z');
+  let f42DE = moment().tz('Europe/Berlin').format('hh:mma');
+  let f42DEZoneName = moment().tz('Europe/Berlin').format('z');
 
-  var turbulent = moment().tz('America/Montreal').format('hh:mma');
-  var turbulentZoneName = moment().tz('America/Montreal').format('z');
+  let turbulent = moment().tz('America/Montreal').format('hh:mma');
+  let turbulentZoneName = moment().tz('America/Montreal').format('z');
 
-  var formattedMessage = format(message, utc,
+  let formattedMessage = format(message, utc,
                                 cigLA, cigLAZoneName,
                                 cigAustin, cigAustinZoneName,
                                 f42UK, f42UKZoneName,
@@ -285,11 +285,11 @@ function timeCommand(bot, args, callback) {
 
 function run(messageContent, bot, callback) {
   if (messageContent.startsWith('!')) {
-    var parts = messageContent.split(' ');
-    var commandName = parts[0].substring(1);
+    let parts = messageContent.split(' ');
+    let commandName = parts[0].substring(1);
 
     if (commands.hasOwnProperty(commandName)) {
-      commands[commandName].fn(bot, parts.slice(1), function(message) {
+      commands[commandName].fn(bot, parts.slice(1), message => {
         callback(message);
       });
     } else {

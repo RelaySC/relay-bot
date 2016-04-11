@@ -1,19 +1,19 @@
 'use strict';
 
-var request = require('request');
-var format = require('format');
-var formatNumber = require('format-number');
+const request = require('request');
+const format = require('format');
+const formatNumber = require('format-number');
 
-let existsError = 'Sorry, I wasn\'t able to find this. Use the same ' +
+const existsError = 'Sorry, I wasn\'t able to find this. Use the same ' +
                   ' name and spelling as the ARC Starmap here:' +
                   ' https://robertsspaceindustries.com/starmap';
-let errorMessage = 'I wasn\'t able to get that for you. Try again later.';
-let rsiSuccessError = 'There\'s an issue with the RSI site. Try again later.';
+const errorMessage = 'I wasn\'t able to get that for you. Try again later.';
+const rsiSuccessError = 'There\'s an issue with the RSI site. Try again later.';
 
-let sizeFormat = formatNumber({suffix: 'AU'});
-let otherFormat = formatNumber({});
+const sizeFormat = formatNumber({suffix: 'AU'});
+const otherFormat = formatNumber({});
 
-let types = {
+const types = {
   'SINGLE_STAR': {singular: 'single star', plural: 'Single Stars'},
   'BINARY': {singular: 'binary star', plural: 'Binary Stars'},
   'JUMPPOINT': {singular: 'jump point', plural: 'Jump Points'},
@@ -120,17 +120,17 @@ function getListOfCelestialBodies(system) {
 }
 
 function get(systemName, celestialObjectName, callback) {
-  let url = 'https://robertsspaceindustries.com/api/starmap/star-systems/';
+  const url = 'https://robertsspaceindustries.com/api/starmap/star-systems/';
   let data = '';
-  request.post(url + systemName.toUpperCase()).on('error', function(error) {
+  request.post(url + systemName.toUpperCase()).on('error', error => {
     callback(errorMessage);
-  }).on('response', function(response) {
+  }).on('response', response => {
     if (response.statusCode !== 200) {
       callback(errorMessage);
     }
-  }).on('data', function(body) {
+  }).on('data', body => {
     data += body;
-  }).on('end', function() {
+  }).on('end', () => {
     let content = JSON.parse(data);
 
     if (content['success'] !== 1) {

@@ -8,6 +8,9 @@ const request = require('request');
 const errorMessage = 'I wasn\'t able to get that for you. Try again later.';
 const rsiSuccessError = 'There\'s an issue with the RSI site. Try again later.';
 
+const fundingFormat = formatNumber({prefix: '$'});
+const otherFormat = formatNumber({});
+
 function get(callback) {
   const url = 'https://robertsspaceindustries.com/api/stats/getCrowdfundStats';
   let buffer = '';
@@ -17,15 +20,15 @@ function get(callback) {
     funds: true,
     alpha_slots: true,
     fleet: true
-  }).on('error', function(error) {
+  }).on('error', error => {
     callback(errorMessage);
-  }).on('response', function(response) {
+  }).on('response', response => {
     if (response.statusCode !== 200) {
       callback(errorMessage);
     }
-  }).on('data', function(body) {
+  }).on('data', body => {
     buffer += body;
-  }).on('end', function() {
+  }).on('end', () => {
     let content = JSON.parse(buffer);
 
     if (content['success'] !== 1) {
@@ -34,9 +37,6 @@ function get(callback) {
     }
 
     let data = content['data'];
-
-    let fundingFormat = formatNumber({prefix: '$'});
-    let otherFormat = formatNumber({});
 
     let funds = data['funds'] / 100;
     let citizens = data['fans'];
@@ -77,6 +77,6 @@ let history = {
   citizens: { value: 0, when: '1900-01-01T00:00:00-00:00' },
   fleet: { value: 0, when: '1900-01-01T00:00:00-00:00' }
 };
-get(function(message) {});
+get(message => {});
 
 module.exports = get;
