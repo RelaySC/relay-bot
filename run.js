@@ -5,6 +5,7 @@ const commands = require('./commands');
 const Discordie = require('discordie');
 const format = require('format');
 const moment = require('moment');
+const fs = require('fs');
 const client = new Discordie();
 
 if (process.argv.length != 3) {
@@ -19,6 +20,7 @@ client.connect({
 client.Dispatcher.on('GATEWAY_READY', e => {
   console.log('Connected as: ' + client.User.username);
   client.User.setGame({name: 'imperialnews.network'});
+  client.User.edit(null, null, fs.readFileSync('bot-avatar.jpg'));
 });
 
 client.Dispatcher.on('MESSAGE_CREATE', e => {
