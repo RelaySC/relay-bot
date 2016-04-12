@@ -4,6 +4,7 @@ const funding = require('./funding');
 const starmap = require('./starmap');
 const feed = require('./feeds');
 const moment = require('moment-timezone');
+const humanizeDuration = require('humanize-duration');
 const format = require('format');
 
 const commands = {
@@ -147,8 +148,11 @@ const commands = {
 function statsCommand(sender, bot, extraInfo, args, callback) {
   funding(message => {
     let extraMessage = ' It has been %s since the Star Citizen kickstarter.';
-    let extraMessageFormatted = format(extraMessage,
-                                       moment('2012-10-18').fromNow(true));
+
+    let duration = moment.duration(moment().diff(moment('2012-10-18')));
+    let humanizedDuration = humanizeDuration(duration.asMilliseconds());
+
+    let extraMessageFormatted = format(extraMessage, humanizedDuration);
     callback(message + extraMessageFormatted);
   });
 }
