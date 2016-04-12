@@ -1,8 +1,6 @@
 # inn-bot
 Discord Bot for use in the Imperial News Network channel. Makes use of [elizabot.js](http://www.masswerk.at/elizabot/) to have natural language conversations and fetches data from [Roberts Space Industries](https://robertsspaceindustries.com/) for Star Citizen funding, citizens and UEE commands.
 
-More information coming soon. **This project is currently a work in progress.**
-
 ## How to Use
 In order to use this you'll need at least NodeJS installed. It helps to have Git to clone the repository.
 ```
