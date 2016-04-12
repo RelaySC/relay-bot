@@ -88,6 +88,11 @@ const commands = {
     help: 'Follow CIG Community on Twitch!',
     hidden: false
   },
+  subreddit: {
+    fn: subredditCommand,
+    help: 'Check out Star Citizen on reddit!',
+    hidden: false
+  },
   issue: {
     fn: issueCouncilCommand,
     help: 'Report a bug/issue to the Issue Council!',
@@ -267,6 +272,12 @@ function rsiTwitchCommand(sender, bot, extraInfo, args, callback) {
 function rsiCommunityTwitchCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can find and follow CIG Community on Twitch here: ' +
                 'https://twitch.tv/cigcommunity';
+  callback(message);
+}
+
+function subredditCommand(sender, bot, extraInfo, args, callback) {
+  let message = 'You can find the Star Citizen subreddit here: ' +
+                'https://reddit.com/r/starcitizen';
   callback(message);
 }
 

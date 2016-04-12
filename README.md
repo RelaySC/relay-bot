@@ -31,6 +31,8 @@ below.
 
 `!starmap` - check out the ARK Starmap!
 
+`!subreddit` - check out the Star Citizen subreddit!
+
 `!inntwitter` - follow INN on Twitter!
 
 `!innfb` - like INN on Facebook!
