@@ -144,7 +144,7 @@ const commands = {
   }
 };
 
-function statsCommand(sender, bot, args, callback) {
+function statsCommand(sender, bot, extraInfo, args, callback) {
   funding(message => {
     let extraMessage = ' It has been %s since the Star Citizen kickstarter.';
     let extraMessageFormatted = format(extraMessage,
@@ -153,7 +153,7 @@ function statsCommand(sender, bot, args, callback) {
   });
 }
 
-function innCommand(sender, bot, args, callback) {
+function innCommand(sender, bot, extraInfo, args, callback) {
   feed('http://imperialnews.network/feed/', message => {
     let extraMessage = '\n**Check out the rest of INN\'s content at:** ' +
                        'http://imperialnews.network/';
@@ -161,7 +161,7 @@ function innCommand(sender, bot, args, callback) {
   });
 }
 
-function rsiCommand(sender, bot, args, callback) {
+function rsiCommand(sender, bot, extraInfo, args, callback) {
   feed('https://robertsspaceindustries.com/comm-link/rss', message => {
     let extraMessage = '\n**Check out the rest of the Comm-Link content at:** ' +
                        'https://robertsspaceindustries.com/comm-link/';
@@ -169,7 +169,7 @@ function rsiCommand(sender, bot, args, callback) {
   });
 }
 
-function starmapCommand(sender, bot, args, callback) {
+function starmapCommand(sender, bot, extraInfo, args, callback) {
   if (args.length === 0) {
     callback('You can check out the ARK Starmap at: ' +
              'https://robertsspaceindustries.com/starmap');
@@ -185,87 +185,87 @@ function starmapCommand(sender, bot, args, callback) {
   }
 }
 
-function inviteCommand(sender, bot, args, callback) {
+function inviteCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can add me to your server by instructing someone with' +
                 ' the \"Manage Server\" permission to visit this page:\n' +
                 'https://discordapp.com/oauth2/authorize?client_id=' +
-                bot.id + '&scope=bot';
+                extraInfo.appID + '&scope=bot';
   callback(message);
 }
 
-function orgCommand(sender, bot, args, callback) {
+function orgCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can check out the INN Organization on RSI here: ' +
                 'https://robertsspaceindustries.com/orgs/INN';
   callback(message);
 }
 
-function githubCommand(sender, bot, args, callback) {
+function githubCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can check out the INN\'s open source projects here: ' +
                 'https://github.com/ImperialNewsNetwork/inn-bot';
   callback(message);
 }
 
-function issueCouncilCommand(sender, bot, args, callback) {
+function issueCouncilCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can report a in-game bug or issue to the Issue Council: ' +
                 'https://robertsspaceindustries.com/community/issue-council';
   callback(message);
 }
 
-function innYouTubeCommand(sender, bot, args, callback) {
+function innYouTubeCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can find and subscribe to INN on YouTube here: ' +
                 'https://www.youtube.com/channel/UCCNuWjBJHxtwMCQosW-zicQ';
   callback(message);
 }
 
-function innTwitterCommand(sender, bot, args, callback) {
+function innTwitterCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can find and follow INN on Twitter here: ' +
                 'https://twitter.com/inn_starcitizen';
   callback(message);
 }
 
-function innFacebookCommand(sender, bot, args, callback) {
+function innFacebookCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can find and like INN on Facebook here: ' +
                 'https://www.facebook.com/ImperialNewsNetworkSC';
   callback(message);
 }
 
-function innTwitchCommand(sender, bot, args, callback) {
+function innTwitchCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can find and follow INN on Twitch here: ' +
                 'https://twitch.tv/innlive';
   callback(message);
 }
 
-function rsiYouTubeCommand(sender, bot, args, callback) {
+function rsiYouTubeCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can find and subscribe to Star Citizen on YouTube here: ' +
                 'https://www.youtube.com/user/RobertsSpaceInd';
   callback(message);
 }
 
-function rsiTwitterCommand(sender, bot, args, callback) {
+function rsiTwitterCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can find and follow Star Citizen on Twitter here: ' +
                 'https://twitter.com/RobertsSpaceInd';
   callback(message);
 }
 
-function rsiFacebookCommand(sender, bot, args, callback) {
+function rsiFacebookCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can find and like Star Citizen on Facebook here: ' +
                 'https://www.facebook.com/RobertsSpaceIndustries/';
   callback(message);
 }
 
-function rsiTwitchCommand(sender, bot, args, callback) {
+function rsiTwitchCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can find and follow Star Citizen on Twitch here: ' +
                 'https://twitch.tv/starcitizen';
   callback(message);
 }
 
-function rsiCommunityTwitchCommand(sender, bot, args, callback) {
+function rsiCommunityTwitchCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can find and follow CIG Community on Twitch here: ' +
                 'https://twitch.tv/cigcommunity';
   callback(message);
 }
 
-function aboutCommand(sender, bot, args, callback) {
+function aboutCommand(sender, bot, extraInfo, args, callback) {
   let message = 'I\'m INNBot, a Rogerian psychotherapist hired by the' +
                 ' Imperial News Network. You can chat for a therapy session' +
                 ' or tell me some commands. I\'m an open source' +
@@ -277,7 +277,7 @@ function aboutCommand(sender, bot, args, callback) {
   callback(message);
 }
 
-function mastermateCommand(sender, bot, args, callback) {
+function mastermateCommand(sender, bot, extraInfo, args, callback) {
   let message = 'MasterMate™ is the new hands-free kit invented by Shiver' +
                 ' Bathory so you can still play games, like Rocket League,' +
                 ' while making sure the little chap is looked after.' +
@@ -291,7 +291,7 @@ function mastermateCommand(sender, bot, args, callback) {
   callback(message);
 }
 
-function helpCommand(sender, bot, args, callback) {
+function helpCommand(sender, bot, extraInfo, args, callback) {
   let message = 'Here\'s all of my commands:\n\n';
   Object.keys(commands).forEach(commandName => {
     let otherInfo = commands[commandName];
@@ -303,7 +303,7 @@ function helpCommand(sender, bot, args, callback) {
   callback(message);
 }
 
-function statusCommand(sender, bot, args, callback) {
+function statusCommand(sender, bot, extraInfo, args, callback) {
   let message = 'I\'m doing great! I\'ve been running for %s without a hitch.' +
                 ' For more information about me, type !about.';
   let formattedMessage = format(message,
@@ -311,7 +311,7 @@ function statusCommand(sender, bot, args, callback) {
   callback(formattedMessage);
 }
 
-function loveMeCommand(sender, bot, args, callback) {
+function loveMeCommand(sender, bot, extraInfo, args, callback) {
   let message = 'I will never love you %s. You are a dick.';
   if (sender.id === '104895277856501760') {
     message = 'I will always love you, creator.';
@@ -319,7 +319,7 @@ function loveMeCommand(sender, bot, args, callback) {
   callback(format(message, sender.username));
 }
 
-function timeCommand(sender, bot, args, callback) {
+function timeCommand(sender, bot, extraInfo, args, callback) {
   let message = 'It it is currently %s UTC. And it is,\n\n' +
                 '%s at CIG LA in Los Angeles, California (%s),\n' +
                 '%s at CIG Austin in Austin, Texas (%s),\n' +
@@ -353,14 +353,14 @@ function timeCommand(sender, bot, args, callback) {
   callback(formattedMessage);
 }
 
-function run(message, bot, callback) {
+function run(message, bot, extraInfo, callback) {
   let messageContent = message.content;
   if (messageContent.startsWith('!')) {
     let parts = messageContent.split(' ');
     let commandName = parts[0].substring(1);
 
     if (commands.hasOwnProperty(commandName)) {
-      commands[commandName].fn(message.author, bot,
+      commands[commandName].fn(message.author, bot, extraInfo,
                                parts.slice(1), message => {
         callback(message, commandName);
       });

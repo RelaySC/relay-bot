@@ -8,8 +8,8 @@ const moment = require('moment');
 const fs = require('fs');
 const client = new Discordie();
 
-if (process.argv.length != 3) {
-  console.log('ERROR: You must supply a Discord API Token.');
+if (process.argv.length != 4) {
+  console.log('ERROR: You must supply a Discord API Token and Client ID.');
   process.exit(1);
 }
 
@@ -17,11 +17,13 @@ client.connect({
   token: process.argv[2]  // This should be the supplied API token.
 });
 
+let appID = process.argv[3];
+
 client.Dispatcher.on('GATEWAY_READY', e => {
   console.log('Connected as: ' + client.User.username);
   console.log('Add to Server URL: ' +
               'https://discordapp.com/oauth2/authorize?client_id=' +
-              client.User.id + '&scope=bot');
+              appID + '&scope=bot');
   client.User.setGame({name: 'imperialnews.network'});
   client.User.edit(null, null, fs.readFileSync('bot-avatar.jpg'));
 });
@@ -34,7 +36,8 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
       return;
     }
 
-    commands(e.message, client.User, (message, commandName) => {
+    commands(e.message, client.User, {appID: appID},
+             (message, commandName) => {
       console.log(currentTime +
                   format('Received "%s" command from "%s" (%s) in #%s on "%s."',
                          commandName, e.message.author.username,

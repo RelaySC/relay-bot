@@ -9,11 +9,11 @@ In order to use this you'll need at least NodeJS installed. It helps to have Git
 $ git clone https://github.com/ImperialNewsNetwork/inn-bot.git
 $ cd inn-bot
 $ npm install
-$ node run.js <bot_token>
+$ node run.js <bot_token> <app_id>
 ```
-Replace `<bot_token>` with your Bot User Token from [Discord Developer](https://discordapp.com/developers/applications/me). You can use the url below, replacing `<bot_id>` with the Bot User ID from the Developer page, to add it to a server you have 'Manage Server' permissions on.
+Replace `<bot_token>` with your Bot User Token and `<app_id>` with the Client ID from [Discord Developer](https://discordapp.com/developers/applications/me). You can use the url below, replacing `<app_id>` with the Client ID from the Developer page, to add it to a server you have 'Manage Server' permissions on.
 ```
-https://discordapp.com/oauth2/authorize?&client_id=<bot_id>&scope=bot
+https://discordapp.com/oauth2/authorize?&client_id=<app_id>&scope=bot
 ```
 You can then use the `!invite` command to get the URL in future.
 
