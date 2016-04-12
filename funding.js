@@ -7,7 +7,7 @@ const request = require('request');
 
 const errorMessage = 'I wasn\'t able to get that for you. Try again later.';
 
-const fundingFormat = formatNumber({prefix: '$'});
+const fundingFormat = formatNumber({prefix: '$', round: 2});
 const otherFormat = formatNumber({});
 
 function get(callback) {
