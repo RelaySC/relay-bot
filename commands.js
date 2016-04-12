@@ -188,7 +188,7 @@ function starmapCommand(sender, bot, args, callback) {
 function inviteCommand(sender, bot, args, callback) {
   let message = 'You can add me to your server by instructing someone with' +
                 ' the \"Manage Server\" permission to visit this page:\n' +
-                'https://discordpp.com/oauth2/authorize?client_id=' +
+                'https://discordapp.com/oauth2/authorize?client_id=' +
                 bot.id + '&scope=bot';
   callback(message);
 }
