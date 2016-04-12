@@ -252,14 +252,16 @@ function rsiYouTubeCommand(sender, bot, extraInfo, args, callback) {
 }
 
 function rsiTwitterCommand(sender, bot, extraInfo, args, callback) {
-  let message = 'You can find and follow Star Citizen on Twitter here: ' +
-                'https://twitter.com/RobertsSpaceInd';
+  let message = 'You can find and follow Star Citizen on Twitter at ' +
+                'https://twitter.com/RobertsSpaceInd and ' +
+                'https://twitter.com/squadron_42';
   callback(message);
 }
 
 function rsiFacebookCommand(sender, bot, extraInfo, args, callback) {
-  let message = 'You can find and like Star Citizen on Facebook here: ' +
-                'https://www.facebook.com/RobertsSpaceIndustries/';
+  let message = 'You can find and like Star Citizen on Facebook at ' +
+                'https://www.facebook.com/RobertsSpaceIndustries/ and ' +
+                'https://www.facebook.com/Squad42';
   callback(message);
 }
 
