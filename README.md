@@ -29,6 +29,8 @@ below.
 
 `!inn` - get the latest INN post.
 
+`!github` - check out INN GitHub.
+
 `!starmap` - check out the ARK Starmap!
 
 `!inntwitter` - follow INN on Twitter!

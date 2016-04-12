@@ -127,6 +127,11 @@ const commands = {
     help: 'Get the latest RSI posts.',
     hidden: false
   },
+  github: {
+    fn: githubCommand,
+    help: 'Check out INN\'s open source projects.',
+    hidden: false
+  },
   loveme: {
     fn: loveMeCommand,
     help: 'Get insulted.',
@@ -186,6 +191,12 @@ function inviteCommand(sender, bot, args, callback) {
 function orgCommand(sender, bot, args, callback) {
   let message = 'You can check out the INN Organization on RSI here: ' +
                 'https://robertsspaceindustries.com/orgs/INN';
+  callback(message);
+}
+
+function githubCommand(sender, bot, args, callback) {
+  let message = 'You can check out the INN\'s open source projects here: ' +
+                'https://github.com/ImperialNewsNetwork/inn-bot';
   callback(message);
 }
 
