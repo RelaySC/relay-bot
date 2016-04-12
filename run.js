@@ -18,6 +18,7 @@ client.connect({
 
 client.Dispatcher.on('GATEWAY_READY', e => {
   console.log('Connected as: ' + client.User.username);
+  client.User.setGame({name: 'imperialnews.network'});
 });
 
 client.Dispatcher.on('MESSAGE_CREATE', e => {
