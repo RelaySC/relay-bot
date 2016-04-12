@@ -136,6 +136,11 @@ const commands = {
     fn: loveMeCommand,
     help: 'Get insulted.',
     hidden: true
+  },
+  mastermate: {
+    fn: mastermateCommand,
+    help: 'It\'s the multitool you\'ve always wanted.',
+    hidden: true
   }
 };
 
@@ -269,6 +274,20 @@ function aboutCommand(sender, bot, args, callback) {
                 ' You can find out about the Imperial News Network here:' +
                 ' http://imperialnews.network.\n\n' +
                 'To find the commands I can run, type !help.';
+  callback(message);
+}
+
+function mastermateCommand(sender, bot, args, callback) {
+  let message = 'MasterMate™ is the new hands-free kit invented by Shiver' +
+                ' Bathory so you can still play games, like Rocket League,' +
+                ' while making sure the little chap is looked after.' +
+                ' MasterMate™ is making sure it\'s not just the goal you\'re' +
+                ' shooting at.\n\nWhy not pick up an expansion too?' +
+                ' MasterMate™ can be extended with Autoerotic Asphyxiation,' +
+                ' USB, Rift, A/C/, Asthma Edition and more!\n\n' +
+                ' Get your MasterMate™ for only $69.99 now at your local' +
+                ' banana market!\n*Does not include expansions. Standalone' +
+                ' expansions sold separately.*';
   callback(message);
 }
 
