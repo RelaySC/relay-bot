@@ -38,7 +38,7 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
                          e.message.author.id, e.message.channel.name,
                          e.message.guild.name));
       e.message.channel.sendMessage(message);
-    })
+    });
 
     if (client.User.isMentioned(e.message) || e.message.isPrivate) {
       // If our bot was mentioned or the message was in a DM.

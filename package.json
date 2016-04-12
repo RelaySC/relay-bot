@@ -32,5 +32,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ImperialNewsNetwork/inn-bot.git"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.1"
   }
 }

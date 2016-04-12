@@ -31,7 +31,7 @@ function get(url, callback) {
   feedparser.on('readable', () => {
     let item;
 
-    while (item = feedparser.read()) {
+    while ((item = feedparser.read())) {
       items.push(item);
     }
   });

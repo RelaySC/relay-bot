@@ -38,16 +38,16 @@ function get(callback) {
   req.on('end', () => {
     let content = JSON.parse(buffer);
 
-    if (content['success'] !== 1) {
+    if (content.success !== 1) {
       req.emit('error', new Error(errorMessage));
       return;
     }
 
-    let data = content['data'];
+    let data = content.data;
 
-    let funds = data['funds'] / 100;
-    let citizens = data['fans'];
-    let fleet = parseInt(data['fleet']);
+    let funds = data.funds / 100;
+    let citizens = data.fans;
+    let fleet = parseInt(data.fleet);
 
     let fundsDiff = funds - history.funds.value;
     let citizensDiff = citizens - history.citizens.value;

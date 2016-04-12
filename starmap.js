@@ -25,7 +25,7 @@ const types = {
   'BLACKHOLE': {singular: 'blackhole', plural: 'Blackholes'},
   'POI': {singular: 'point of interest', plural: 'Points of Interest'},
   'MANMADE': {singular: 'manmade object', plural: 'Manmade Objects'}
-}
+};
 
 function getTypeForDisplay(type) {
   if (types.hasOwnProperty(type)) {
@@ -39,14 +39,14 @@ function getSystemMessage(system) {
                 '*Size:* %s\n*Aggregated Population:* %s\n' +
                 '*Aggregated Economy:* %s\n*Aggregated Threat:* %s' +
                 '\n\n%s';
-  return format(message, system['name'],
-                getTypeForDisplay(system['type']).singular,
-                system['affiliation'][0]['name'],
-                sizeFormat(system['aggregated_size']),
-                otherFormat(system['aggregated_population']),
-                otherFormat(system['aggregated_economy']),
-                otherFormat(system['aggregated_danger']),
-                system['description']);
+  return format(message, system.name,
+                getTypeForDisplay(system.type).singular,
+                system.affiliation[0].name,
+                sizeFormat(system.aggregated_size),
+                otherFormat(system.aggregated_population),
+                otherFormat(system.aggregated_economy),
+                otherFormat(system.aggregated_danger),
+                system.description);
 }
 
 function getYesNoForDisplay(value) {
@@ -58,7 +58,7 @@ function getYesNoForDisplay(value) {
 }
 
 function getCelestialBodyNameForDisplay(celestialObject) {
-  let name = celestialObject['name'];
+  let name = celestialObject.name;
   if (name === null) {
     return 'N/A';
   }
@@ -70,21 +70,21 @@ function getCelestialBodyMessage(celestialObject, system) {
                 '*Name:* %s\n*Habitable:* %s\n' +
                 '*Fair Chance Act:* %s\n*Subtype:* %s' +
                 '\n\n%s';
-  return format(message, celestialObject['designation'],
-                getTypeForDisplay(celestialObject['type']).singular,
-                system['name'],
+  return format(message, celestialObject.designation,
+                getTypeForDisplay(celestialObject.type).singular,
+                system.name,
                 getCelestialBodyNameForDisplay(celestialObject),
-                getYesNoForDisplay(celestialObject['habitable']),
-                getYesNoForDisplay(celestialObject['fairchanceact']),
-                celestialObject['subtype']['name'],
-                celestialObject['description']);
+                getYesNoForDisplay(celestialObject.habitable),
+                getYesNoForDisplay(celestialObject.fairchanceact),
+                celestialObject.subtype.name,
+                celestialObject.description);
 }
 
 function getCelestialObject(system, celestialObjectName) {
-  for (let celestialObject of system['celestial_objects']) {
-    if (celestialObject['designation'] === celestialObjectName ||
-        celestialObject['code'] === celestialObjectName ||
-        celestialObject['name'] === celestialObjectName) {
+  for (let celestialObject of system.celestial_objects) {
+    if (celestialObject.designation === celestialObjectName ||
+        celestialObject.code === celestialObjectName ||
+        celestialObject.name === celestialObjectName) {
       return celestialObject;
     }
   }
@@ -92,17 +92,17 @@ function getCelestialObject(system, celestialObjectName) {
 }
 
 function getNameForDisplay(value, index, array) {
-  let name = value['name'];
+  let name = value.name;
   if (name !== null) {
     return name;
   }
-  return value['designation'];
+  return value.designation;
 }
 
 function getListOfCelestialBodies(system) {
   let byType = {};
-  for (let celestialObject of system['celestial_objects']) {
-    let type = celestialObject['type'];
+  for (let celestialObject of system.celestial_objects) {
+    let type = celestialObject.type;
 
     if (byType.hasOwnProperty(type)) {
         byType[type].push(celestialObject);
@@ -111,7 +111,7 @@ function getListOfCelestialBodies(system) {
     }
   }
 
-  let message = format('\n\nAlso in  the %s system:\n', system['name']);
+  let message = format('\n\nAlso in  the %s system:\n', system.name);
   for (let key of Object.keys(byType)) {
     message += format('**%s**: %s\n', getTypeForDisplay(key).plural,
                       byType[key].map(getNameForDisplay).join(', '));
@@ -141,17 +141,17 @@ function get(systemName, celestialObjectName, callback) {
   req.on('end', () => {
     let content = JSON.parse(data);
 
-    if (content['success'] !== 1) {
+    if (content.success !== 1) {
       req.emit('error', new Error(errorMessage));
       return;
     }
 
-    if (content['data']['rowcount'] === 0) {
+    if (content.data.rowcount === 0) {
       req.emit('error', new Error(errorMessage));
       return;
     }
 
-    let system = content['data']['resultset'][0];
+    let system = content.data.resultset[0];
 
     let message = '';
     if (typeof celestialObjectName === 'undefined') {
