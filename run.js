@@ -19,6 +19,9 @@ client.connect({
 
 client.Dispatcher.on('GATEWAY_READY', e => {
   console.log('Connected as: ' + client.User.username);
+  console.log('Add to Server URL: ' +
+              'https://discordpp.com/oauth2/authorize?client_id=' +
+              client.User.id + '&scope=bot');
   client.User.setGame({name: 'imperialnews.network'});
   client.User.edit(null, null, fs.readFileSync('bot-avatar.jpg'));
 });
