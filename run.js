@@ -57,12 +57,15 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
         // responses.
         let mention = '<@' + client.User.id + '>';
         messageContent = messageContent.replace(mention, '').trim();
+        console.log(currentTime +
+                    format('Message recieved from "%s" (%s) in #%s on "%s".',
+                           e.message.author.username, e.message.author.id,
+                           e.message.channel.name, e.message.guild.name));
+      } else {
+        console.log(currentTime +
+                    format('Private message recieved from "%s" (%s).',
+                           e.message.author.username, e.message.author.id));
       }
-
-      console.log(currentTime +
-                  format('Message recieved from "%s" (%s) in #%s on "%s".',
-                         e.message.author.username, e.message.author.id,
-                         e.message.channel.name, e.message.guild.name));
 
       let response = eliza.transform(messageContent);
       e.message.channel.sendMessage(response);
