@@ -147,6 +147,16 @@ const commands = {
     fn: mastermateCommand,
     help: 'It\'s the multitool you\'ve always wanted.',
     hidden: true
+  },
+  thebase: {
+    fn: baseRadioCommand,
+    help: 'Tune in to the Base Radio - Star Citizen\'s premier radio station.',
+    hidden: false
+  },
+  baseradio: {
+    fn: baseRadioCommand,
+    help: 'Tune in to the Base Radio - Star Citizen\'s premier radio station.',
+    hidden: true
   }
 };
 
@@ -280,6 +290,13 @@ function rsiCommunityTwitchCommand(sender, bot, extraInfo, args, callback) {
 function subredditCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can find the Star Citizen subreddit here: ' +
                 'https://reddit.com/r/starcitizen';
+  callback(message);
+}
+
+function baseRadioCommand(sender, bot, extraInfo, args, callback) {
+  let message = 'You can tune in to the Base Radio on Twitch at ' +
+                'https://www.twitch.tv/thebaseradio and find out more at ' +
+                'http://radio.starcitizenbase.com/';
   callback(message);
 }
 

@@ -33,6 +33,8 @@ below.
 
 `!subreddit` - check out the Star Citizen subreddit!
 
+`!thebase` - tune into the Base Radio!
+
 `!inntwitter` - follow INN on Twitter!
 
 `!innfb` - like INN on Facebook!
