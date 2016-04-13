@@ -8,16 +8,11 @@ const moment = require('moment');
 const fs = require('fs');
 const client = new Discordie();
 
-if (process.argv.length != 4) {
-  console.log('ERROR: You must supply a Discord API Token and Client ID.');
-  process.exit(1);
-}
-
 client.connect({
-  token: process.argv[2]  // This should be the supplied API token.
+  token: process.env.INNBOT_DISCORD_BOTUSER_TOKEN
 });
 
-let appID = process.argv[3];
+let appID = process.env.INNBOT_DISCORD_CLIENTID;
 
 client.Dispatcher.on('GATEWAY_READY', e => {
   console.log('Connected as: ' + client.User.username);

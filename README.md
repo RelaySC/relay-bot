@@ -7,7 +7,9 @@ In order to use this you'll need at least NodeJS installed. It helps to have Git
 $ git clone https://github.com/ImperialNewsNetwork/inn-bot.git
 $ cd inn-bot
 $ npm install
-$ node run.js <bot_token> <app_id>
+$ export INNBOT_DISCORD_BOTUSER_TOKEN=<bot_token>
+$ export INNBOT_DISCORD_CLIENTID=<app_id>
+$ node run.js
 ```
 Replace `<bot_token>` with your Bot User Token and `<app_id>` with the Client ID from [Discord Developer](https://discordapp.com/developers/applications/me). You can use the url below, replacing `<app_id>` with the Client ID from the Developer page, to add it to a server you have 'Manage Server' permissions on.
 ```
