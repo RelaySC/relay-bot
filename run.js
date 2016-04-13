@@ -38,11 +38,21 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
 
     commands(e.message, client.User, {appID: appID},
              (message, commandName) => {
-      console.log(currentTime +
-                  format('Received "%s" command from "%s" (%s) in #%s on "%s."',
-                         commandName, e.message.author.username,
-                         e.message.author.id, e.message.channel.name,
-                         e.message.guild.name));
+      if (e.message.isPrivate) {
+        console.log(currentTime +
+                    format('Received "%s" command in private message from ' +
+                           '"%s" (%s).',
+                           commandName, e.message.author.username,
+                           e.message.author.id));
+      } else {
+        console.log(currentTime +
+                    format('Received "%s" command from "%s" (%s) in #%s on ' +
+                           '"%s."',
+                           commandName, e.message.author.username,
+                           e.message.author.id, e.message.channel.name,
+                           e.message.guild.name));
+      }
+
       e.message.channel.sendMessage(message);
     });
 
@@ -62,6 +72,11 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
                            e.message.author.username, e.message.author.id,
                            e.message.channel.name, e.message.guild.name));
       } else {
+        if (messageContent.startsWith('!')) {
+          // We can't return inside the command callback so private messages.
+          // That are commands should be stopped here.
+          return;
+        }
         console.log(currentTime +
                     format('Private message recieved from "%s" (%s).',
                            e.message.author.username, e.message.author.id));
