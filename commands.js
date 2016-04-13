@@ -324,8 +324,8 @@ function helpCommand(sender, bot, extraInfo, args, callback) {
 function statusCommand(sender, bot, extraInfo, args, callback) {
   let message = 'I\'m doing great! I\'ve been running for %s without a hitch.' +
                 ' For more information about me, type !about.';
-  let formattedMessage = format(message,
-                                moment.duration(process.uptime()).humanize());
+  let uptime = humanizeDuration(process.uptime() * 1000, {round: true});
+  let formattedMessage = format(message, uptime);
   callback(formattedMessage);
 }
 
