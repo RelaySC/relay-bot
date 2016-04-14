@@ -62,3 +62,47 @@ below.
 `!about` - gives information on the bot.
 
 `!help` - gives list of all possible commands.
+
+## Setting up Google Calendar Integration
+By default, two commands fetch from Google Calendar, you can get an API Key by following these steps:
+
+1. Go to [Google Developers Console](https://console.developers.google.com/project) and create a new project for the bot.
+2. Enable [Google Calendar API](https://console.developers.google.com/apis/api/calendar/overview) for that project.
+3. Create [API Credentials](https://console.developers.google.com/apis/credentials) for the bot. You can choose any type of key - Server, Browser, Android or iOS - though we chose Server.
+4. Put the API key you get in the environment variable `DISCORD_GOOGLE_APIKEY`.
+
+## Contributing
+
+We'd love any contributions to the code and actively encourage people to fork, make modifications and create pull requests so we can merge any changes we like back into the bot.
+
+Keep in mind that any modified versions that are not merged back into this codebase should comply with the [GNU Affero General Public License v3.0](http://choosealicense.com/licenses/agpl-3.0/) that [we're using](https://github.com/ImperialNewsNetwork/inn-bot/blob/master/LICENSE.md).
+
+## Deploying
+When deploying into production, we recommend running on a Linux box and creating a dedicated system user to run the bot. On Ubuntu 15.10, we're using the following systemd unit file:
+
+```ini
+[Unit]
+Description=INN Discord Bot
+After=system.slice multi-user.target
+
+[Service]
+Type=simple
+User=innbot
+Group=innbot
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=innbot
+SyslogFacility=local0
+
+Environment=INNBOT_DISCORD_BOTUSER_TOKEN=<bot_token>
+Environment=INNBOT_DISCORD_CLIENTID=<app_id>
+Environment=INNBOT_GOOGLE_APIKEY=<google_api_key>
+
+WorkingDirectory=/home/innbot/inn-bot
+ExecStart=/usr/bin/node run.js
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
