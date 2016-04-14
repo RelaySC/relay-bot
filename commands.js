@@ -3,6 +3,7 @@
 const funding = require('./funding');
 const starmap = require('./starmap');
 const feed = require('./feeds');
+const calendar = require('./calendar');
 const moment = require('moment-timezone');
 const humanizeDuration = require('humanize-duration');
 const format = require('format');
@@ -174,10 +175,13 @@ function statsCommand(sender, bot, extraInfo, args, callback) {
 }
 
 function innCommand(sender, bot, extraInfo, args, callback) {
-  feed('http://imperialnews.network/feed/', message => {
-    let extraMessage = '\n**Check out the rest of INN\'s content at:** ' +
-                       'http://imperialnews.network/';
-    callback(message + extraMessage);
+  let extraMessage = '\n**Check out the rest of INN\'s content at:** ' +
+                     'http://imperialnews.network/';
+  feed('http://imperialnews.network/feed/', feedMessage => {
+    calendar('kbvcdsv2n7ro54s0cgdh48c7k8@group.calendar.google.com',
+             calendarMessage => {
+      callback(feedMessage + calendarMessage + extraMessage);
+    });
   });
 }
 
@@ -296,8 +300,11 @@ function subredditCommand(sender, bot, extraInfo, args, callback) {
 function baseRadioCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can tune in to the Base Radio on Twitch at ' +
                 'https://www.twitch.tv/thebaseradio and find out more at ' +
-                'http://radio.starcitizenbase.com/';
-  callback(message);
+                'http://radio.starcitizenbase.com/\n';
+  calendar('v9tpadn0kem7ecn9k03c2mp41o@group.calendar.google.com',
+           calendarMessage => {
+    callback(message + calendarMessage);
+  });
 }
 
 function aboutCommand(sender, bot, extraInfo, args, callback) {
