@@ -75,6 +75,8 @@ By default, two commands fetch from Google Calendar, you can get an API Key by f
 
 We'd love any contributions to the code and actively encourage people to fork, make modifications and create pull requests so we can merge any changes we like back into the bot.
 
+Before submitting a pull request, make sure your code doesn't have any issues with the `jshint` utility.
+
 Keep in mind that any modified versions that are not merged back into this codebase should comply with the [GNU Affero General Public License v3.0](http://choosealicense.com/licenses/agpl-3.0/) that [we're using](https://github.com/ImperialNewsNetwork/inn-bot/blob/master/LICENSE.md).
 
 ## Deploying
