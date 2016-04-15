@@ -35,3 +35,6 @@ jspm_packages
 
 # Development Environment Scripts
 .env.sh
+
+# VS Code
+*.VC.db
