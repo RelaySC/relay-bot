@@ -158,6 +158,11 @@ const commands = {
     fn: baseRadioCommand,
     help: 'Tune in to the Base Radio - Star Citizen\'s premier radio station.',
     hidden: true
+  },
+  improve: {
+    fn: improveCommand,
+    help: 'Suggest improvements for INNBot!',
+    hidden: false
   }
 };
 
@@ -220,6 +225,13 @@ function inviteCommand(sender, bot, extraInfo, args, callback) {
 function orgCommand(sender, bot, extraInfo, args, callback) {
   let message = 'You can check out the INN Organization on RSI here: ' +
                 'https://robertsspaceindustries.com/orgs/INN';
+  callback(message);
+}
+
+function improveCommand(sender, bot, extraInfo, args, callback) {
+  let message = 'You can suggest bot improvements by submitting ' +
+                'an issue here: ' +
+                'https://github.com/ImperialNewsNetwork/inn-bot/issues';
   callback(message);
 }
 
