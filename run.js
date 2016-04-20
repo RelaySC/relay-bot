@@ -30,6 +30,10 @@ client.Dispatcher.on('MESSAGE_CREATE', e => {
       // Don't reply to yourself or other bots.
       return;
     }
+    if (e.message.mention_everyone) {
+      // Don't reply to @everyone or @here.
+      return;
+    }
 
     commands(e.message, client.User, {appID: appID},
              (message, commandName) => {
