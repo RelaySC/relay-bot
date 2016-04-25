@@ -24,6 +24,11 @@ const commands = {
     help: 'Find out more about this bot.',
     hidden: false
   },
+  info: {
+    fn: aboutCommand,
+    help: 'Find out more about this bot.',
+    hidden: true
+  },
   stats: {
     fn: statsCommand,
     help: 'Check Star Citizen\'s funding levels, citizen and ship count.',
