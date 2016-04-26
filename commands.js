@@ -423,8 +423,6 @@ function run(message, bot, extraInfo, callback) {
                                parts.slice(1), message => {
         callback(message, commandName);
       });
-    } else {
-      callback('Command does not exist. Refer to !help for list of commands.');
     }
   }
 }
