@@ -7,6 +7,7 @@ const format = require('format');
 const moment = require('moment');
 const fs = require('fs');
 const client = new Discordie();
+const config = require('config');
 
 client.connect({
   token: process.env.INNBOT_DISCORD_BOTUSER_TOKEN
@@ -19,7 +20,7 @@ client.Dispatcher.on('GATEWAY_READY', e => {
   console.log('Add to Server URL: ' +
               'https://discordapp.com/oauth2/authorize?client_id=' +
               appID + '&scope=bot');
-  client.User.setGame({name: 'imperialnews.network'});
+  client.User.setGame({name: config.get('bot.gameName')});
   client.User.edit(null, null, fs.readFileSync('bot-avatar.jpg'));
 });
 

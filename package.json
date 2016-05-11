@@ -20,12 +20,14 @@
   },
   "license": "AGPL-3.0",
   "dependencies": {
+    "config": "^1.20.1",
     "discordie": "^0.4.4",
     "extend": "^3.0.0",
     "feedparser": "^1.1.4",
     "format": "^0.2.2",
     "format-number": "^2.0.1",
     "humanize-duration": "^3.7.0",
+    "js-yaml": "^3.6.0",
     "moment": "^2.12.0",
     "moment-timezone": "^0.5.3",
     "request": "^2.70.0"

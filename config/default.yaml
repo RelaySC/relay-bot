@@ -1,0 +1,12 @@
+bot:
+  name: INNBot
+  gameName: testing
+  description: >
+                I'm %s, a Rogerian psychotherapist hired by the
+                Imperial News Network. You can chat for a therapy session
+                or tell me some commands. I'm an open source
+                psychotherapist too, check my source out here: %s.
+                To find the commands I can run, type !help.
+  repositoryUrl: https://github.com/ImperialNewsNetwork/inn-bot
+  allowInvites: yes
+  
