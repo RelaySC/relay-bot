@@ -33,16 +33,21 @@ class ChatCommand extends Command {
         return super.isEligible(message, bot, config);
     }
     
-    respond(message, bot, config) {
-        let messageContents = message.content;
+    respond(message, bot, config, resolve, reject) {
+        // Strip out the command name.
+        let messageContents = this.stripMessage(message, config);
         
         // We need to strip out the mention (if it exists) before
         // preparing a response.
         let mention = '<@' + bot.id + '>';
         messageContents = messageContents.replace(mention, '').trim();
         
-        // Return eliza's response.
-        return eliza.transform(messageContents);
+        if (!messageContents) {
+            reject('Message should not be empty.');
+        } else {
+            // Return eliza's response.
+            resolve(eliza.transform(messageContents));   
+        }
     }
 }
 
