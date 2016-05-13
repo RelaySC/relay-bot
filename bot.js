@@ -16,7 +16,12 @@ class Bot {
         this.client.Dispatcher.on('GATEWAY_READY', (event) => this.ready(event));
         this.client.Dispatcher.on('MESSAGE_CREATE', (event) => this.handleMessage(event));
         
-        console.log('Bot has awakened.');
+        console.log('Bot Initialized.');
+        
+        this.registerFromFile('./builtins');
+        for (let file of config.get('commands.loadFrom')) {
+            this.registerFromFile(file);
+        }
     }
     
     connect() {
