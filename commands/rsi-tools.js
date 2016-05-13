@@ -9,7 +9,6 @@ const format = require('format');
 
 const funding = require('../helpers/funding');
 const feed = require('../helpers/feeds');
-const starmap = require('../helpers/starmap');
 const calendar = require('../helpers/calendar');
 
 class StatsCommand extends Command {
@@ -97,48 +96,6 @@ class RSICommand extends Command {
     }
 }
 
-class StarmapCommand extends Command {
-    constructor() {
-        super({
-            command: 'starmap',
-            description: 'Check out the ARK Starmap!',
-            hidden: false
-        });
-    }
-    
-    respond(message, bot, config, resolve, reject) {
-        let messageContents = this.stripMessage(message, config);
-        
-        if (!messageContents) {
-            // If we haven't been passed anything.
-            resolve('You can check out the ARK Starmap at: ' +
-                    'https://robertsspaceindustries.com/starmap');
-            return;
-        }
-        
-        let args = messageContents.split(' ');
-        
-        if (args.length === 1) {
-            // If we've been passed only a system name.
-            starmap(args[0], undefined).then((response) => {
-                resolve(response);
-            }, (error) => {
-                reject(error);
-            });
-        } else {
-            // If the user has passed us both a system name and a
-            // celestial object name.
-            let celestialObjectName = args.slice(1).join(' ');
-            
-            starmap(args[0], celestialObjectName).then((response) => {
-                resolve(response);
-            }, (error) => {
-                reject(error);
-            });
-        }
-    }
-}
-
 class TimeCommand extends Command {
     constructor() {
         super({
@@ -198,5 +155,4 @@ class IssueCommand extends Command {
     }
 }
 
-module.exports = [TimeCommand, StatsCommand, StarmapCommand, 
-                  RSICommand, IssueCommand];
+module.exports = [TimeCommand, StatsCommand, RSICommand, IssueCommand];

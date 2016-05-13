@@ -20,6 +20,7 @@ commands:
     - ./commands/inn.js
     - ./commands/rsi-social.js
     - ./commands/rsi-tools.js
+    - ./commands/starmap.js
   aliases:
     about:
       - info
