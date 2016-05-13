@@ -38,3 +38,6 @@ jspm_packages
 
 # VS Code
 *.VC.db
+
+# Configuration
+config/local.yaml
