@@ -12,7 +12,7 @@ bot:
   repositoryUrl: https://github.com/ImperialNewsNetwork/inn-bot
 commands:
   prefix: '!'
-  loadFrom:
+  sources:
     - ./commands/baseradio.js
     - ./commands/chat.js
     - ./commands/community.js

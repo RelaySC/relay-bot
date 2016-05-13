@@ -19,7 +19,7 @@ class Bot {
         console.log('Bot Initialized.');
         
         this.registerFromFile('./builtins');
-        for (let file of config.get('commands.loadFrom')) {
+        for (let file of config.get('commands.sources')) {
             this.registerFromFile(file);
         }
     }
