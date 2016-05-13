@@ -133,12 +133,13 @@ class Bot {
         let disabledCommands = config.get('commands.disabled');
 
         // Print the details of each command if it isn't a hidden command.
-        for (let key of Object.keys(this.commands)) { 
-            let command = this.commands[key];
-           
-            if (!command.hidden && !(command in disabledCommands)) {
-                message += format('!%s - %s\n', command.command,
-                                                command.description);
+        for (let command of this.commands) { 
+            let commandHelp = command.help();
+            
+            for (let help of commandHelp) {
+                if (!help.hidden && !(help.name in disabledCommands)) {
+                    message += format('!%s - %s\n', help.name, help.description);
+                }
             }
         };
 

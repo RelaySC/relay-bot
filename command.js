@@ -87,9 +87,20 @@ class Command extends EventEmitter {
         return false;
     }
     
-    respond (message, bot, config, resolve, reject) {
+    respond(message, bot, config, resolve, reject) {
         // Expected that this will be overriden by commands to provide functionality.
         resolve('');
+    }
+    
+    help() {
+        // This function can be overriden in order to provide different information
+        // to the help function when creating the help list.
+        // It can be used in special commands that provide multiple "virtual" commands.
+        return [{
+            name: this.command,
+            description: this.description,
+            hidden: this.hidden
+        }];
     }
     
 }
