@@ -27,7 +27,7 @@ class StatsCommand extends Command {
         // So the first time this is called we'll get a delta.
         funding().then((current) => {
             this.history = current;
-            console.log('Starmap: Received initial funding values.');
+            console.log('Funding: Received initial funding values.');
         }, (error) => {});
     }
     
