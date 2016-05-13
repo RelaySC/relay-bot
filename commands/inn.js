@@ -78,10 +78,8 @@ class INNCommand extends Command {
     }
     
     respond(message, bot, config, resolve, reject) {
-        let extraMessage = '\n**Check out the rest of INN\'s content at:** ' +
-                           'http://imperialnews.network/';
         feed('http://imperialnews.network/feed/').then((items) => {
-            calendar('kbvcdsv2n7ro54s0cgdh48c7k8@group.calendar.google.com').then((calendarMessage) => {
+            calendar('kbvcdsv2n7ro54s0cgdh48c7k8@group.calendar.google.com').then((events) => {
                 let itemsForDisplay = items.slice(0, 9);
                 let response = '**Check out recent INN content:**\n';
 
@@ -91,7 +89,22 @@ class INNCommand extends Command {
                                        item.title, pubDate, item.author);
                 }
 
-                resolve(response + calendarMessage + extraMessage);
+                response += '\n**Upcoming:**\n';
+                for (let event of events) {
+
+                    let start = moment.tz(event.start.dateTime, event.start.timeZone);
+                    if (event.start.hasOwnProperty('date')) {
+                        // If it is an all day event.
+                        start = moment(event.start.date);
+                    }
+
+                    response += format('%s\t*on %s in %s*\n',
+                                       event.summary, event.location, start.toNow(true));
+                }
+
+                response += '\n**Check out the rest of INN\'s content at:** ' +
+                            'http://imperialnews.network/';
+                resolve(response);
             }, (error) => {
                 reject(error);
             });

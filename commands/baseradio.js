@@ -1,6 +1,10 @@
 'use strict';
 
 const Command = require('../command');
+
+const format = require('format');
+const moment = require('moment-timezone');
+
 const calendar = require('../helpers/calendar');
 
 class BaseRadioCommand extends Command {
@@ -13,11 +17,17 @@ class BaseRadioCommand extends Command {
     }
     
     respond(message, bot, contents, resolve, reject) {
-        let response = 'You can tune in to the Base Radio on Twitch at ' +
-                       'https://www.twitch.tv/thebaseradio and find out more at ' +
-                       'http://radio.starcitizenbase.com/\n';
-        calendar('v9tpadn0kem7ecn9k03c2mp41o@group.calendar.google.com').then((calendarMessage) => {
-            resolve(response + calendarMessage);
+        calendar('v9tpadn0kem7ecn9k03c2mp41o@group.calendar.google.com').then((events) => {
+            let response = 'You can tune in to the Base Radio on Twitch at ' +
+                           'https://www.twitch.tv/thebaseradio and find out more at ' +
+                           'http://radio.starcitizenbase.com/\n\n**Upcoming:**\n';
+
+            for (let item of events) {
+                let start = moment.tz(item.start.dateTime, item.start.timeZone);
+                response += format('%s\t*in %s*\n', item.summary, start.toNow(true));
+            }
+
+            resolve(response);
         }, (error) => {
             reject(error);
         });
