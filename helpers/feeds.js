@@ -5,8 +5,6 @@ const format = require('format');
 const moment = require('moment-timezone');
 const FeedParser = require('feedparser');
 
-const errorMessage = 'I wasn\'t able to get that for you. Try again later.';
-
 function get(url) {
     return new Promise(function(resolve, reject) {
         // FeedParser works with the request module. We create the request
