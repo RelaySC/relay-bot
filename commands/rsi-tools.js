@@ -46,10 +46,12 @@ class RSICommand extends Command {
     }
     
     respond(message, bot, config, resolve, reject) {
-        feed('https://robertsspaceindustries.com/comm-link/rss', response => {
+        feed('https://robertsspaceindustries.com/comm-link/rss').then((response) => {
             let extraResponse = '\n**Check out the rest of the Comm-Link content at:** ' +
                        'https://robertsspaceindustries.com/comm-link/';
             resolve(response + extraResponse);
+        }, (error) => {
+            reject(error);
         });
     }
 }

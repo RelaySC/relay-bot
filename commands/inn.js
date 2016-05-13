@@ -76,9 +76,11 @@ class INNCommand extends Command {
     respond(message, bot, config, resolve, reject) {
         let extraMessage = '\n**Check out the rest of INN\'s content at:** ' +
                            'http://imperialnews.network/';
-        feed('http://imperialnews.network/feed/', feedMessage => {
+        feed('http://imperialnews.network/feed/').then((feedMessage) => {
             calendar('kbvcdsv2n7ro54s0cgdh48c7k8@group.calendar.google.com',
              calendarMessage => { resolve(feedMessage + calendarMessage + extraMessage); });
+        }, (error) => {
+            reject(error);
         });
     }
 }
