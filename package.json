@@ -37,7 +37,7 @@
     "url": "https://github.com/ImperialNewsNetwork/inn-bot.git"
   },
   "devDependencies": {
-    "jshint": "^2.9.1"
+    "jshint": "^2.9.2"
   },
   "private": true
 }

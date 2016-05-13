@@ -1,0 +1,4 @@
+settings:
+    token: INNBOT_DISCORD_BOTUSER_TOKEN
+    appId: INNBOT_DISCORD_CLIENTID
+    googleCalendarApiKey: INNBOT_GOOGLE_APIKEY
