@@ -1,14 +1,9 @@
 'use strict';
 
-const format = require('format');
-const formatNumber = require('format-number');
 const moment = require('moment');
 const request = require('request');
 
 const url = 'https://robertsspaceindustries.com/api/stats/getCrowdfundStats';
-
-const fundingFormat = formatNumber({prefix: '$', round: 2});
-const otherFormat = formatNumber({});
 
 function get() {   
     return new Promise(function(resolve, reject) {
@@ -54,43 +49,16 @@ function get() {
             let citizens = data.fans;
             let fleet = parseInt(data.fleet);
 
-            let fundsDiff = funds - history.funds.value;
-            let citizensDiff = citizens - history.citizens.value;
-            let fleetDiff = fleet - history.fleet.value;
-
-            let fundsSince = moment(history.funds.when).fromNow();
-            let citizensSince = moment(history.citizens.when).fromNow();
-            let fleetSince = moment(history.fleet.when).fromNow();
-
-            let response = 'Star Citizen is currently %s funded (+%s since %s).' +
-                        ' There are %s citizens (+%s since %s) and the UEE fleet' +
-                        ' is %s strong (+%s since %s).';
-            let formattedResponse = format(response,
-                                            fundingFormat(funds),
-                                            fundingFormat(fundsDiff), fundsSince,
-                                            otherFormat(citizens),
-                                            otherFormat(citizensDiff), citizensSince,
-                                            otherFormat(fleet),
-                                            otherFormat(fleetDiff), fleetSince);
-
             let now = moment().format();
-            history = {
+            let current = {
                 funds: { value: funds, when: now },
                 citizens: { value: citizens, when: now },
                 fleet: { value: fleet, when: now }
             };
-
-            resolve(formattedResponse);
+            
+            resolve(current);
         });
     });
 }
-
-// So that we have a initial value to compare against we calculate once when we load this.
-let history = {
-    funds: { value: 0, when: '1900-01-01T00:00:00-00:00' },
-    citizens: { value: 0, when: '1900-01-01T00:00:00-00:00' },
-    fleet: { value: 0, when: '1900-01-01T00:00:00-00:00' }
-};
-get();
 
 module.exports = get;

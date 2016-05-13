@@ -4,6 +4,7 @@ const Command = require('../command');
 
 const humanizeDuration = require('humanize-duration');
 const moment = require('moment-timezone');
+const formatNumber = require('format-number');
 const format = require('format');
 
 const funding = require('../helpers/funding');
@@ -18,18 +19,48 @@ class StatsCommand extends Command {
             description: 'Check Star Citizen\'s funding levels, citizen and ship count.',
             hidden: false
         });
+        
+        // We need to establish our number formatting settings.
+        this.fundingFormat = formatNumber({prefix: '$', round: 2});
+        this.otherFormat = formatNumber({});
+        
+        // We need to get the initial funding when we load this command.
+        // So the first time this is called we'll get a delta.
+        funding().then((current) => {
+            this.history = current;
+            console.log('Starmap: Received initial funding values.');
+        }, (error) => {});
     }
     
-    respond(message, bot, config, resolve, reject) {        
-        funding().then((response) => {
-            let extraResponse = ' It has been %s since the Star Citizen kickstarter.';
+    respond(message, bot, config, resolve, reject) {  
+        funding().then((current) => {
+            let fundsDiff = current.funds.value - this.history.funds.value;
+            let citizensDiff = current.citizens.value - this.history.citizens.value;
+            let fleetDiff = current.fleet.value - this.history.fleet.value;
+
+            let fundsSince = moment(this.history.funds.when).fromNow();
+            let citizensSince = moment(this.history.citizens.when).fromNow();
+            let fleetSince = moment(this.history.fleet.when).fromNow();
 
             let duration = moment.duration(moment().diff(moment('2012-10-18')));
             let humanizedDuration = humanizeDuration(duration.asMilliseconds(),
                                                      {round: true, units: ['mo', 'w']});
 
-            let extraResponseFormatted = format(extraResponse, humanizedDuration);
-            resolve(response + extraResponseFormatted);
+            let response = 'Star Citizen is currently %s funded (+%s since %s).' +
+                           ' There are %s citizens (+%s since %s) and the UEE fleet' +
+                           ' is %s strong (+%s since %s). It has been test since the' +
+                           ' Star Citizen kickstarter.';
+            let formattedResponse = format(response,
+                                           this.fundingFormat(current.funds.value),
+                                           this.fundingFormat(fundsDiff), fundsSince,
+                                           this.otherFormat(current.citizens.value),
+                                           this.otherFormat(citizensDiff), citizensSince,
+                                           this.otherFormat(current.fleet.value),
+                                           this.otherFormat(fleetDiff), fleetSince,
+                                           humanizedDuration);
+
+            this.history = current;
+            resolve(formattedResponse);
         }, (error) => {
             reject(error);
         });
