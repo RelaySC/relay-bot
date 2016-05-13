@@ -10,16 +10,9 @@ const config = require('config');
 let bot = new Bot(new Discordie());
 bot.registerFromFile('./builtins');
 
-let commandDirectories = config.get('commands.loadFrom');
-for (let directory of commandDirectories) {
-    let fullDirectory = path.join(__dirname, directory);
-    
-    for (let file of fs.readdirSync(fullDirectory)) {
-        let filePath = path.join(fullDirectory + '\\' + file);
-        
-        // All commands export either a single command or a list of commands.
-        bot.registerFromFile(filePath);
-    }
+let commandSources = config.get('commands.loadFrom');
+for (let file of commandSources) {
+    bot.registerFromFile(file);
 }
 
 bot.connect();

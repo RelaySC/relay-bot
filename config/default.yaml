@@ -13,7 +13,13 @@ bot:
 commands:
   prefix: '!'
   loadFrom:
-    - ./commands
+    - ./commands/baseradio.js
+    - ./commands/chat.js
+    - ./commands/community.js
+    - ./commands/fun.js
+    - ./commands/inn.js
+    - ./commands/rsi-social.js
+    - ./commands/rsi-tools.js
   aliases:
     about:
       - info
