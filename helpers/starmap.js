@@ -4,11 +4,7 @@ const request = require('request');
 const format = require('format');
 const formatNumber = require('format-number');
 
-const existsError = 'Sorry, I wasn\'t able to find this. Use the same ' +
-                  ' name and spelling as the ARC Starmap here:' +
-                  ' https://robertsspaceindustries.com/starmap';
-const errorMessage = 'I wasn\'t able to get that for you. Try again later.';
-const rsiSuccessError = 'There\'s an issue with the RSI site. Try again later.';
+const url = 'https://robertsspaceindustries.com/api/starmap/star-systems/';
 
 const sizeFormat = formatNumber({suffix: 'AU'});
 const otherFormat = formatNumber({});
@@ -119,56 +115,63 @@ function getListOfCelestialBodies(system) {
   return message;
 }
 
-function get(systemName, celestialObjectName, callback) {
-  const url = 'https://robertsspaceindustries.com/api/starmap/star-systems/';
-  let data = '';
-  let req = request.post(url + systemName.toUpperCase());
+function get(systemName, celestialObjectName) {
+    return new Promise(function(resolve, reject) {
+        let data = '';
+        let req = request.post(url + systemName.toUpperCase());
 
-  req.on('error', error => {
-    callback(errorMessage);
-  });
+        req.on('error', error => {
+            reject(error);
+        });
 
-  req.on('response', response => {
-    if (response.statusCode !== 200) {
-      req.emit('error', new Error(errorMessage));
-    }
-  });
+        req.on('response', response => {
+            if (response.statusCode !== 200) {
+            req.emit('error', new Error('Response Code was not 200.'));
+            }
+        });
 
-  req.on('data', body => {
-    data += body;
-  });
+        req.on('data', body => {
+            data += body;
+        });
 
-  req.on('end', () => {
-    let content = JSON.parse(data);
+        req.on('end', () => {
+            let content = JSON.parse(data);
 
-    if (content.success !== 1) {
-      req.emit('error', new Error(errorMessage));
-      return;
-    }
+            if (content.success !== 1) {
+                req.emit('error', new Error('There was an error in the response from RSI.'));
+                return;
+            }
 
-    if (content.data.rowcount === 0) {
-      req.emit('error', new Error(errorMessage));
-      return;
-    }
+            if (content.data.rowcount === 0) {
+                req.emit('error', new Error('Sorry, I wasn\'t able to find this. Use the same ' +
+                                            ' name and spelling as the ARC Starmap here:' +
+                                            ' https://robertsspaceindustries.com/starmap'));
+                return;
+            }
 
-    let system = content.data.resultset[0];
+            let system = content.data.resultset[0];
 
-    let message = '';
-    if (typeof celestialObjectName === 'undefined') {
-      message += getSystemMessage(system);
-    } else {
-      let celestialObject = getCelestialObject(system, celestialObjectName);
-      if (typeof celestialObject === 'undefined') {
-        callback(existsError);
-        return;
-      }
+            let message = '';
+            // We have an optional argument, celestialObjectName, that allows the results
+            // to be more specific, we need to check if it exists before we continue.
+            if (typeof celestialObjectName === 'undefined') {
+                message += getSystemMessage(system);
+            } else {
+                let celestialObject = getCelestialObject(system, celestialObjectName);
+                if (typeof celestialObject === 'undefined') {
+                    reject('Sorry, I wasn\'t able to find this. Use the same ' +
+                           ' name and spelling as the ARC Starmap here:' +
+                           ' https://robertsspaceindustries.com/starmap');
+                    return;
+                }
 
-      message += getCelestialBodyMessage(celestialObject, system);
-    }
+                message += getCelestialBodyMessage(celestialObject, system);
+            }
 
-    message += getListOfCelestialBodies(system);
-    callback(message);
-  });
+            message += getListOfCelestialBodies(system);
+            resolve(message);
+        });
+    });
 }
 
 module.exports = get;

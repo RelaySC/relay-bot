@@ -66,20 +66,33 @@ class StarmapCommand extends Command {
     }
     
     respond(message, bot, config, resolve, reject) {
-        let args = message.content.split(' ');
+        let messageContents = this.stripMessage(message, config);
         
-        if (args.length === 0) {
+        if (!messageContents) {
+            // If we haven't been passed anything.
             resolve('You can check out the ARK Starmap at: ' +
                     'https://robertsspaceindustries.com/starmap');
-        } else if (args.length === 1) {
-            starmap(args[0], undefined, message => {
-                resolve(message);
+            return;
+        }
+        
+        let args = messageContents.split(' ');
+        
+        if (args.length === 1) {
+            // If we've been passed only a system name.
+            starmap(args[0], undefined).then((response) => {
+                resolve(response);
+            }, (error) => {
+                reject(error);
             });
         } else {
+            // If the user has passed us both a system name and a
+            // celestial object name.
             let celestialObjectName = args.slice(1).join(' ');
             
-            starmap(args[0], celestialObjectName, message => {
-                resolve(message);
+            starmap(args[0], celestialObjectName).then((response) => {
+                resolve(response);
+            }, (error) => {
+                reject(error);
             });
         }
     }
