@@ -6,7 +6,7 @@ const request = require('request');
 const url = 'https://robertsspaceindustries.com/api/stats/getCrowdfundStats';
 
 function get() {   
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
         // We need to create a buffer to hold the data as it can
         // come back in multiple chunks.
         let buffer = '';

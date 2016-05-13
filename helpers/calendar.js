@@ -9,7 +9,7 @@ const url = 'https://www.googleapis.com/calendar/v3/calendars/%s/events' +
             '?maxResults=%d&timeMin=%s&singleEvents=%s&orderBy=%s&key=%s';
 
 function get(calendarId) {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
         let formattedUrl = format(url, encodeURIComponent(calendarId), 9,
                                   encodeURIComponent(moment().format()), 'true',
                                   'startTime', config.get('settings.googleCalendarApiKey'));

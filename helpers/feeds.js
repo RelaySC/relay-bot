@@ -6,7 +6,7 @@ const moment = require('moment-timezone');
 const FeedParser = require('feedparser');
 
 function get(url) {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
         // FeedParser works with the request module. We create the request
         // and pipe the results into FeedParser.
         let req = request(url);
