@@ -20,8 +20,8 @@ class StatsCommand extends Command {
         });
     }
     
-    respond(message, bot, config, resolve, reject) {
-        let response = funding(response => {
+    respond(message, bot, config, resolve, reject) {        
+        funding().then((response) => {
             let extraResponse = ' It has been %s since the Star Citizen kickstarter.';
 
             let duration = moment.duration(moment().diff(moment('2012-10-18')));
@@ -30,6 +30,8 @@ class StatsCommand extends Command {
 
             let extraResponseFormatted = format(extraResponse, humanizedDuration);
             resolve(response + extraResponseFormatted);
+        }, (error) => {
+            reject(error);
         });
     }
 }

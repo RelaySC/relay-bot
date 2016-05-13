@@ -5,85 +5,92 @@ const formatNumber = require('format-number');
 const moment = require('moment');
 const request = require('request');
 
-const errorMessage = 'I wasn\'t able to get that for you. Try again later.';
+const url = 'https://robertsspaceindustries.com/api/stats/getCrowdfundStats';
 
 const fundingFormat = formatNumber({prefix: '$', round: 2});
 const otherFormat = formatNumber({});
 
-function get(callback) {
-  const url = 'https://robertsspaceindustries.com/api/stats/getCrowdfundStats';
-  let buffer = '';
-  let req = request.post(url).form({
-    chart: "day",
-    fans: true,
-    funds: true,
-    alpha_slots: true,
-    fleet: true
-  });
+function get() {   
+    return new Promise(function(resolve, reject) {
+        // We need to create a buffer to hold the data as it can
+        // come back in multiple chunks.
+        let buffer = '';
+        let req = request.post(url).form({
+            chart: "day",
+            fans: true,
+            funds: true,
+            alpha_slots: true,
+            fleet: true
+        });
 
-  req.on('error', error => {
-    callback(errorMessage);
-  });
+        req.on('error', error => {
+            reject(error);
+        });
 
-  req.on('response', response => {
-    if (response.statusCode !== 200) {
-      req.emit('error', new Error(errorMessage));
-    }
-  });
+        // We need to check if the response from RSI was a success.
+        req.on('response', response => {
+            if (response.statusCode !== 200) {
+                req.emit('error', new Error('Response Code was not 200.'));
+            }
+        });
 
-  req.on('data', body => {
-    buffer += body;
-  });
+        req.on('data', body => {
+            buffer += body;
+        });
 
-  req.on('end', () => {
-    let content = JSON.parse(buffer);
+        req.on('end', () => {
+            let content = JSON.parse(buffer);
 
-    if (content.success !== 1) {
-      req.emit('error', new Error(errorMessage));
-      return;
-    }
+            // RSI's response contains a 'success' parameter, if it is not 1 then we error.
+            if (content.success !== 1) {
+                req.emit('error', new Error('There was an error in the response from RSI.'));
+                return;
+            }
 
-    let data = content.data;
+            let data = content.data;
 
-    let funds = data.funds / 100;
-    let citizens = data.fans;
-    let fleet = parseInt(data.fleet);
+            // We need to calculate the differences and time deltas.
+            let funds = data.funds / 100;
+            let citizens = data.fans;
+            let fleet = parseInt(data.fleet);
 
-    let fundsDiff = funds - history.funds.value;
-    let citizensDiff = citizens - history.citizens.value;
-    let fleetDiff = fleet - history.fleet.value;
+            let fundsDiff = funds - history.funds.value;
+            let citizensDiff = citizens - history.citizens.value;
+            let fleetDiff = fleet - history.fleet.value;
 
-    let fundsSince = moment(history.funds.when).fromNow();
-    let citizensSince = moment(history.citizens.when).fromNow();
-    let fleetSince = moment(history.fleet.when).fromNow();
+            let fundsSince = moment(history.funds.when).fromNow();
+            let citizensSince = moment(history.citizens.when).fromNow();
+            let fleetSince = moment(history.fleet.when).fromNow();
 
-    let response = 'Star Citizen is currently %s funded (+%s since %s).' +
-                   ' There are %s citizens (+%s since %s) and the UEE fleet' +
-                   ' is %s strong (+%s since %s).';
-    let formattedResponse = format(response,
-                                   fundingFormat(funds),
-                                   fundingFormat(fundsDiff), fundsSince,
-                                   otherFormat(citizens),
-                                   otherFormat(citizensDiff), citizensSince,
-                                   otherFormat(fleet),
-                                   otherFormat(fleetDiff), fleetSince);
+            let response = 'Star Citizen is currently %s funded (+%s since %s).' +
+                        ' There are %s citizens (+%s since %s) and the UEE fleet' +
+                        ' is %s strong (+%s since %s).';
+            let formattedResponse = format(response,
+                                            fundingFormat(funds),
+                                            fundingFormat(fundsDiff), fundsSince,
+                                            otherFormat(citizens),
+                                            otherFormat(citizensDiff), citizensSince,
+                                            otherFormat(fleet),
+                                            otherFormat(fleetDiff), fleetSince);
 
-    let now = moment().format();
-    history = {
-      funds: { value: funds, when: now },
-      citizens: { value: citizens, when: now },
-      fleet: { value: fleet, when: now }
-    };
+            let now = moment().format();
+            history = {
+                funds: { value: funds, when: now },
+                citizens: { value: citizens, when: now },
+                fleet: { value: fleet, when: now }
+            };
 
-    callback(formattedResponse);
-  });
+            resolve(formattedResponse);
+        });
+    });
 }
 
+// So that we have a initial value to compare against we calculate once when we load this.
 let history = {
-  funds: { value: 0, when: '1900-01-01T00:00:00-00:00' },
-  citizens: { value: 0, when: '1900-01-01T00:00:00-00:00' },
-  fleet: { value: 0, when: '1900-01-01T00:00:00-00:00' }
+    funds: { value: 0, when: '1900-01-01T00:00:00-00:00' },
+    citizens: { value: 0, when: '1900-01-01T00:00:00-00:00' },
+    fleet: { value: 0, when: '1900-01-01T00:00:00-00:00' }
 };
-get(message => {});
+get();
 
 module.exports = get;
