@@ -43,7 +43,7 @@ class Command extends EventEmitter {
     
     stripMessage(message, config) {
         let prefix = config.get('commands.prefix');
-        return message.content.replace(prefix + this.command, '');
+        return message.content.replace(prefix + this.command, '').trim();
     }
     
     isEligible(message, bot, config) {
