@@ -77,8 +77,11 @@ class INNCommand extends Command {
         let extraMessage = '\n**Check out the rest of INN\'s content at:** ' +
                            'http://imperialnews.network/';
         feed('http://imperialnews.network/feed/').then((feedMessage) => {
-            calendar('kbvcdsv2n7ro54s0cgdh48c7k8@group.calendar.google.com',
-             calendarMessage => { resolve(feedMessage + calendarMessage + extraMessage); });
+            calendar('kbvcdsv2n7ro54s0cgdh48c7k8@group.calendar.google.com').then((calendarMessage) => {
+                resolve(feedMessage + calendarMessage + extraMessage);
+            }, (error) => {
+                reject(error);
+            });
         }, (error) => {
             reject(error);
         });
