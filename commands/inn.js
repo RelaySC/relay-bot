@@ -1,6 +1,10 @@
 'use strict';
 
 const Command = require('../command');
+
+const moment = require('moment-timezone');
+const format = require('format');
+
 const feed = require('../helpers/feeds');
 const calendar = require('../helpers/calendar');
 
@@ -76,9 +80,18 @@ class INNCommand extends Command {
     respond(message, bot, config, resolve, reject) {
         let extraMessage = '\n**Check out the rest of INN\'s content at:** ' +
                            'http://imperialnews.network/';
-        feed('http://imperialnews.network/feed/').then((feedMessage) => {
+        feed('http://imperialnews.network/feed/').then((items) => {
             calendar('kbvcdsv2n7ro54s0cgdh48c7k8@group.calendar.google.com').then((calendarMessage) => {
-                resolve(feedMessage + calendarMessage + extraMessage);
+                let itemsForDisplay = items.slice(0, 9);
+                let response = '**Check out recent INN content:**\n';
+
+                for (let item of itemsForDisplay) {
+                    let pubDate = moment(item.pubDate).fromNow();
+                    response += format('%s\t*written %s by %s.*\n',
+                                       item.title, pubDate, item.author);
+                }
+
+                resolve(response + calendarMessage + extraMessage);
             }, (error) => {
                 reject(error);
             });

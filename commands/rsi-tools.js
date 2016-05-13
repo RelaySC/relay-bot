@@ -77,10 +77,20 @@ class RSICommand extends Command {
     }
     
     respond(message, bot, config, resolve, reject) {
-        feed('https://robertsspaceindustries.com/comm-link/rss').then((response) => {
-            let extraResponse = '\n**Check out the rest of the Comm-Link content at:** ' +
-                       'https://robertsspaceindustries.com/comm-link/';
-            resolve(response + extraResponse);
+        feed('https://robertsspaceindustries.com/comm-link/rss').then((items) => {
+            let itemsForDisplay = items.slice(0, 9);
+
+            let response = '**Check out some recent content:**\n';
+
+            for (let item of itemsForDisplay) {
+                let pubDate = moment(item.pubDate).fromNow();
+                response += format('%s\t*posted %s.*\n',
+                                   item.title, pubDate, item.author);
+            }
+            
+            response += '\n**Check out the rest of the Comm-Link content at:** ' +
+                        'https://robertsspaceindustries.com/comm-link/';
+            resolve(response);
         }, (error) => {
             reject(error);
         });

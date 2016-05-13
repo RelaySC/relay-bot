@@ -40,22 +40,7 @@ function get(url) {
         });
 
         feedparser.on('end', () => {
-            let itemsForDisplay = items.slice(0, 9);
-
-            let message = '**Check out some recent content:**\n';
-
-            for (let item of itemsForDisplay) {
-                let pubDate = moment(item.pubDate).fromNow();
-                if (item.author === null) {
-                    message += format('%s\t*posted %s.*\n',
-                                    item.title, pubDate, item.author);
-                } else {
-                    message += format('%s\t*written %s by %s.*\n',
-                                    item.title, pubDate, item.author);
-                }
-            }
-
-            resolve(message);
+            resolve(items);
         });
     });
 }
