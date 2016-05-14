@@ -56,7 +56,6 @@ class Command extends EventEmitter {
 
         if (this.command in disabledCommands && disableAliases) {
             // If command is disabled and we're also disabling any aliases.
-            console.log('not eligible disabled ' + this.command);
             return false;
         }
         
