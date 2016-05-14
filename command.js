@@ -62,7 +62,7 @@ class Command extends EventEmitter {
         // Does the message match this command explicitly?
         let prefix = config.get('commands.prefix');
         if (message.content.startsWith(prefix + this.command) && 
-                !(disabledCommands.indexOf(this.command) >= 0)) {
+                disabledCommands.indexOf(this.command) < 0) {
             // If command is a match and the base command isn't disabled.
             console.log(format('Direct match command "%s" with "%s".',
                                this.command, prefix + this.command));

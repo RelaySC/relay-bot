@@ -108,7 +108,7 @@ class RepositoryCommand extends Command {
             
             // Does the message match this command explicitly?
             if (message.content.startsWith(prefix + repositoryCommand) && 
-                    !(disabledCommands.indexOf(repositoryCommand) >= 0)) {
+                    disabledCommands.indexOf(repositoryCommand) < 0) {
                 // If command is a match and the base command isn't disabled.
                 console.log(format('Repository: Direct match command "%s" with "%s".',
                                    repositoryCommand, prefix + repositoryCommand));
