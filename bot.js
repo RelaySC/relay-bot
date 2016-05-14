@@ -154,7 +154,7 @@ class Bot {
         // Print help listing.
         let helpListing = '';
         for (let helpDocument of helpDocuments) {
-            if (!helpDocument.hidden && !(helpDocument.name in disabledCommands)) {
+            if (!helpDocument.hidden && !(disabledCommands.indexOf(helpDocument.name) >= 0)) {
                 let noOfSpaces = paddingPoint - (helpDocument.name.length + prefix.length);
                 let padding = Array(noOfSpaces).join(' ');
 
