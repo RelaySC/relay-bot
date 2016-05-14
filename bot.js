@@ -158,7 +158,7 @@ class Bot {
                 let noOfSpaces = paddingPoint - (helpDocument.name.length + prefix.length);
                 let padding = Array(noOfSpaces).join(' ');
 
-                helpListing += format('%s%s%s%s\n', prefix, helpDocument.name,
+                helpListing += format('%s%s%s\n', prefix + helpDocument.name,
                                   padding, helpDocument.description);
             }
         }
