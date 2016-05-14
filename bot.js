@@ -129,21 +129,42 @@ class Bot {
     }
     
     help(event) {
-        let message = 'Here\'s all of my commands:\n\n';
+        let message = 'Here\'s all of my commands:\n\n```';
+        
+        let helpCommandPadding = config.get('commands.helpCommandPadding');
         let disabledCommands = config.get('commands.disabled');
+        let prefix = config.get('commands.prefix');
 
-        // Print the details of each command if it isn't a hidden command.
+        // Collect the help documents from every command.
+        let helpDocuments = [];
         for (let command of this.commands) { 
-            let commandHelp = command.help();
-            
-            for (let help of commandHelp) {
-                if (!help.hidden && !(help.name in disabledCommands)) {
-                    message += format('!%s - %s\n', help.name, help.description);
-                }
-            }
-        };
+            helpDocuments.push.apply(helpDocuments, command.help());
+        }
 
-        return message;
+        // Find largest command name.
+        let largestCommandNameSize = 0;
+        for (let helpDocument of helpDocuments) {
+            let size = helpDocument.name.length + prefix.length;
+            if (largestCommandNameSize < size) {
+                largestCommandNameSize = size;
+            }
+        }
+        
+        // Calculate total padding amount.
+        let paddingPoint = largestCommandNameSize + helpCommandPadding;
+
+        // Print help listing.
+        for (let helpDocument of helpDocuments) {
+            if (!helpDocument.hidden && !(helpDocument.name in disabledCommands)) {
+                let noOfSpaces = paddingPoint - (helpDocument.name.length + prefix.length);
+                let padding = Array(noOfSpaces).join(' ');
+
+                message += format('%s%s%s%s\n', prefix, helpDocument.name,
+                                  padding, helpDocument.description);
+            }
+        }
+
+        return message + '```';
     }
 }
 

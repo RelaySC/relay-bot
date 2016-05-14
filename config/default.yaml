@@ -40,5 +40,6 @@ commands:
   allowReplyToSelf: false
   allowReplyToEveryone: false
   allowReplyInPrivate: true
+  helpCommandPadding: 10
 chat:
   disable: false
