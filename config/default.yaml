@@ -40,3 +40,5 @@ commands:
   allowReplyToSelf: false
   allowReplyToEveryone: false
   allowReplyInPrivate: true
+chat:
+  disable: false

@@ -17,6 +17,11 @@ class ChatCommand extends Command {
         // Chat is a unique "command" because it can respond to !chat but
         // it can also respond to a private message or a mention.
         
+        // Check if disabled from 'chat' configuration.
+        if (config.get('chat.disable')) {
+            return false;
+        }
+        
         let commandPrefix = config.get('commands.prefix');
         if (message.isPrivate && !message.content.startsWith(commandPrefix)) {
             // If the message is private and doesn't start with the command
