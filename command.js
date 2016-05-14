@@ -91,7 +91,7 @@ class Command extends EventEmitter {
         resolve('');
     }
     
-    help() {
+    help(config) {
         // This function can be overriden in order to provide different information
         // to the help function when creating the help list.
         // It can be used in special commands that provide multiple "virtual" commands.

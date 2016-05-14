@@ -118,7 +118,7 @@ class Bot {
         // here so we have access to the command list.
         if (event.message.content == '!help' && 
                 !config.get('commands.disableHelpCommand')) {
-            event.message.channel.sendMessage(this.help(event));
+            event.message.channel.sendMessage(this.help(event, config));
             console.log(format('Responded to "%s" with "help" command.',
                                event.message.author.username));
         }
@@ -128,7 +128,7 @@ class Bot {
         }
     }
     
-    help(event) {        
+    help(event, config) {        
         let helpCommandPadding = config.get('commands.helpCommandPadding');
         let disabledCommands = config.get('commands.disabled');
         let prefix = config.get('commands.prefix');
@@ -136,7 +136,7 @@ class Bot {
         // Collect the help documents from every command.
         let helpDocuments = [];
         for (let command of this.commands) { 
-            helpDocuments.push.apply(helpDocuments, command.help());
+            helpDocuments.push.apply(helpDocuments, command.help(config));
         }
 
         // Find largest command name.

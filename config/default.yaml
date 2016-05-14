@@ -21,6 +21,7 @@ commands:
     - ./commands/rsi-social.js
     - ./commands/rsi-tools.js
     - ./commands/starmap.js
+    - ./commands/repository.js
   aliases:
     about:
       - info
@@ -43,3 +44,13 @@ commands:
   helpCommandPadding: 10
 chat:
   disable: false
+repository:
+  sources:
+    - 'http://pegasus-dynamics.com/commands/json.php?PRETTY&DESC'
+  blacklist:
+    - help
+    - about
+    - inn
+    - rsi
+    - thebase
+    - time
