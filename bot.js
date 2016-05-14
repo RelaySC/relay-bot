@@ -116,9 +116,15 @@ class Bot {
         
         // If the global help command isn't disabled then we provide that
         // here so we have access to the command list.
-        if (event.message.content == '!help' && 
+        if (event.message.content.startsWith('!help') && 
                 !config.get('commands.disableHelpCommand')) {
-            event.message.channel.sendMessage(this.help(event, config));
+            let parts = event.message.content.split(' ');
+            let pageNumber = 0;
+            if (parts.length > 1) {
+                pageNumber = parts[1] - 1;
+            }
+                    
+            event.message.channel.sendMessage(this.help(pageNumber, event, config));
             console.log(format('Responded to "%s" with "help" command.',
                                event.message.author.username));
         }
@@ -128,16 +134,22 @@ class Bot {
         }
     }
     
-    help(event, config) {        
+    help(pageNumber, event, config) {        
         let helpCommandPadding = config.get('commands.helpCommandPadding');
         let disabledCommands = config.get('commands.disabled');
         let prefix = config.get('commands.prefix');
+        const pageSize = 28;
 
         // Collect the help documents from every command.
         let helpDocuments = [];
         for (let command of this.commands) { 
             helpDocuments.push.apply(helpDocuments, command.help(config));
         }
+
+        // Get current page.
+        let noOfPages = Math.ceil(helpDocuments.length / pageSize);
+        let currentIndex = pageSize * pageNumber;
+        helpDocuments = helpDocuments.slice(currentIndex, currentIndex + pageSize);
 
         // Find largest command name.
         let largestCommandNameSize = 0;
@@ -163,7 +175,8 @@ class Bot {
             }
         }
 
-        return format('Here\'s all of my commands:\n\n```%s```', helpListing); 
+        return format('Command Listing (Page %s of %s):\n\n```%s```',
+                      pageNumber + 1, noOfPages, helpListing); 
     }
 }
 
