@@ -22,6 +22,7 @@ commands:
     - ./commands/rsi-tools.js
     - ./commands/starmap.js
     - ./commands/repository.js
+    - ./commands/subreddit.js
   aliases:
     about:
       - info
@@ -43,4 +44,6 @@ commands:
   allowReplyInPrivate: true
   helpCommandPadding: 10
 chat:
+  disable: false
+subreddit:
   disable: false
