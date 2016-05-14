@@ -1,67 +1,151 @@
 # inn-bot
 Discord Bot for use in the Imperial News Network channel. Makes use of [elizabot.js](http://www.masswerk.at/elizabot/) to have natural language conversations and fetches data from [Roberts Space Industries](https://robertsspaceindustries.com/) for Star Citizen funding, citizens and UEE commands.
 
-## How to Use
-In order to use this you'll need at least NodeJS installed. It helps to have Git to clone the repository.
+## Quick Start
+In order to use this you'll need at least NodeJS installed. It helps to have Git to clone the repository. You should copy the configuration from `config/default.yaml` to `config/local.yaml` and configure as necessary.
 ```
 $ git clone https://github.com/ImperialNewsNetwork/inn-bot.git
 $ cd inn-bot
+$ cp config/default.yaml config/local.yaml
 $ npm install
 $ export INNBOT_DISCORD_BOTUSER_TOKEN=<bot_token>
 $ export INNBOT_DISCORD_CLIENTID=<app_id>
 $ node run.js
 ```
-Replace `<bot_token>` with your Bot User Token and `<app_id>` with the Client ID from [Discord Developer](https://discordapp.com/developers/applications/me). You can use the url below, replacing `<app_id>` with the Client ID from the Developer page, to add it to a server you have 'Manage Server' permissions on.
+Replace `<bot_token>` with your Bot User Token and `<app_id>` with the Client ID from [Discord Developer](https://discordapp.com/developers/applications/me). If you want these environment variables to persist between sessions then I reccomend that you add these lines to your `~/.bashrc`.
+
+It is reccomended that you also view the [Setting up Google Calendar Integration](#Setting up Google Calendar Integration) section so that commands that rely on that functionality work.
+
+You can use the url below, replacing `<app_id>` with the Client ID from the Developer page, to add it to a server you have 'Manage Server' permissions on.
 ```
 https://discordapp.com/oauth2/authorize?&client_id=<app_id>&scope=bot
 ```
-You can then use the `!invite` command to get the URL in future.
+You can then use the `!invite` command to get this URL in future.
 
-## Command List
-Some commands may not yet be implemented. But all currently planned commands are listed
-below.
+## Configuration
+inn-bot is configured in two ways - environment variables for sensitive information and a configuration file for everything else. inn-bot ships with a [`config/default.yaml`](config/default.yaml) configuration file, this should be copied and modified to the user's liking then saved as `config/local.yaml`.
 
-`!stats` - displays total funding, no. of citizens and no. of ships sold for Star Citizen and delta for each since last check.
+There are lots of configuration options available and custom commands can add their own configuration options - some options are explained below. 
 
-`!issue` - report an issue to the Issue Council.
+### Customizing the Bot
+At the top of the configuration file, you can configure the identity of the bot - so you don't have to change any code to use this bot elsewhere.
 
-`!org` - get a link to the INN Org on RSI.
+```yaml
+bot:
+  name: INNBot
+  avatarPath: ./assets/bot-avatar.jpg
+  gameName: testing
+  description: >
+                I'm INNBot, a Rogerian psychotherapist hired by the
+                Imperial News Network. You can chat for a therapy session
+                or tell me some commands. I'm an open source
+                psychotherapist too, check my source out here: 
+                https://github.com/ImperialNewsNetwork/inn-bot.
+                To find the commands I can run, type !help.
+  repositoryUrl: https://github.com/ImperialNewsNetwork/inn-bot
+```
 
-`!inn` - get the latest INN post.
+### Disabling Commands
+Commands can be individually disabled by adding them to the `commands.disabled` property in the configuration file.
 
-`!github` - check out INN GitHub.
+```yaml
+commands:
+  disabled:
+    - echo
+```
 
-`!starmap` - check out the ARK Starmap!
+If you don't want any of the commands from any of the sources, then you can remove that source entirely.
 
-`!subreddit` - check out the Star Citizen subreddit!
+### Aliasing Commands
+Commands can be aliased by adding the command to be aliased to the configuration file and then a list of the aliases.
 
-`!thebase` - tune into the Base Radio!
+```yaml
+commands:
+  aliases:
+    about:
+      - info
+    stats:
+      - funds
+      - citizens
+      - uee
+    issue:
+      - bug
+    thebase:
+      - baseradio
+```
+Here we can see an example where `about` is aliased as `info`; `stats` is aliased as `funds`, `citizens` and `uee`, `issue` is aliased as `bug` and `thebase` is aliased as `baseradio`. Aliases apply to repository commands.
 
-`!inntwitter` - follow INN on Twitter!
+## Commands
+Since inn-bot v2.0.0, there is a command system in place that allows the bot to be extended easily without modifying the core bot.
 
-`!innfb` - like INN on Facebook!
+### Creating a Command
+It's easy to create a new command, make a file anywhere - as long as the inn-bot system user has privileges - and then create a command that looks something like the one below. You should add this to the ```commands.sources``` property in the configuration file.
 
-`!innyt` - subcribe to INN on YouTube!
+You'll need to update the relative path to the [command module](command.js).
+```js
+'use strict';
 
-`!inntwitch` - follow INN on Twitch!
+const Command = require('../command'); // update this path
 
-`!rsitwitter` - follow Star Citizen on Twitter!
+class YouTubeCommand extends Command {
+    constructor() {
+        super({
+            command: 'rsiyt',
+            description: 'Subscribe to Star Citizen on YouTube!',
+            hidden: false
+        });
+    }
+    
+    respond(message, bot, config, resolve, reject) {
+        resolve('You can find and subscribe to Star Citizen on YouTube here: ' +
+                'https://www.youtube.com/user/RobertsSpaceInd');
+    }
+}
 
-`!rsifb` - like Star Citizen on Facebook!
+module.exports = [YouTubeCommand];
+```
+It's really easy to create a command. Every command needs a call to the constructor with it's name, description and if it's hidden - all of these are used in the `!help` command. After that, there are two main functions that you'll be able to override in order to create a new unique command - `isEligible(message, bot, config)` and `respond(message, bot, config, resolve, reject)`.
 
-`!rsiyt` - subcribe to Star Citizen on YouTube!
+`isEligible` is used to check if a command is eligible for being run, in the majority of cases you won't need to override this, by default it'll match your command and check if it's been disabled or aliased in the configuration too.
 
-`!rsitwitch` - follow Star Citizen on Twitch!
+If you do override this then you **should** make sure that your command respects the disabled commands and aliases in the configuration.
 
-`!rsicommunitytwitch` - follow CIG Community on Twitch!
+This function takes three parameters, `message`, `bot` and `config`. Both `message` and `bot` are from Discordie - the library we use for interfacing with Discord - [you can find the documentation for `message` here](https://qeled.github.io/discordie/#/docs/IMessage?_k=acbr2w) and [you can find the documentation for `bot` here](https://qeled.github.io/discordie/#/docs/IUser?_k=so347k) - this is the User that the bot is currently running as, so you can find the bot id and name. `config` is the [node-config](https://github.com/lorenwest/node-config) instance that is used for configuration. You can check for your own configuration options in there.
 
-`!time` - check the current time at CIG studios.
+`respond` is called if your command is found to be eligible to respond. `message`, `bot` and `config` are the same as in `isEligible`. `resolve` and `reject` are callbacks that should be used to return a message to be sent and to return a error, respectively.
 
-`!invite` - gives instructions on how to add this bot to your server.
+You should check out [the commands that ship with the bot](commands/) to see examples of this being used. 
 
-`!about` - gives information on the bot.
+### Command List
+Once installed, the list of available commands can be viewed with `!help [page number]`.
 
-`!help` - gives list of all possible commands.
+### Repositories
+Since v2.0.0, Command Repositories have been introduced. You can add a repository by adding the following to your configuration:
+```yaml
+repository:
+  sources:
+    - url
+  blacklist:
+    - list of command names
+```
+inn-bot's [`RepositoryCommand`](commands/repository.js) will load the commands and responses found at the given url and use them. The endpoint should be in the format as follows:
+```json
+[
+    {
+        "command": "command name",
+        "description": "help text",
+        "hidden": false,
+        "response": "what I should respond with"
+    },
+    ...
+]
+```
+All commands can be aliased and disabled like regular commands in the configuration.
+
+You can specify a blacklist of commands that will not be used if they conflict with names that the regular bot commands use (you wouldn't be able to use disable for this because that would disable the regular command).
+
+#### Approved Repositories
+Get in touch if you'd like your command repository to be listed here.
 
 ## Setting up Google Calendar Integration
 By default, two commands fetch from Google Calendar, you can get an API Key by following these steps:
@@ -72,7 +156,6 @@ By default, two commands fetch from Google Calendar, you can get an API Key by f
 4. Put the API key you get in the environment variable `DISCORD_GOOGLE_APIKEY`.
 
 ## Contributing
-
 We'd love any contributions to the code and actively encourage people to fork, make modifications and create pull requests so we can merge any changes we like back into the bot.
 
 Before submitting a pull request, make sure your code doesn't have any issues with the `jshint` utility.
@@ -108,3 +191,18 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 ```
+## Changelog
+**v2.0.0 - 14/05/2016**
+- Improved Command System.
+- Enhanced Configuration.
+- Subreddit Autolinking.
+- Command Repository Support.
+- Added help command pagination.
+- Changed elizabot chat into a command.
+- Refactored helper functions to return data rather than messages.
+- Moved starmap helper into the command class.
+
+View commits for a complete list.
+
+**v1.0.0 - 09/04/2016**
+- Initial Release.
