@@ -182,8 +182,8 @@ class Bot {
             }
         }
 
-        return format('Here\'s all the commands I have: (Page %s of %s):\n\n```%s```',
-                      pageNumber + 1, noOfPages, helpListing); 
+        return format('Here\'s are the commands I have (%s / %s):\n\n```%s```',
+                       pageNumber + 1, noOfPages, helpListing); 
     }
 }
 
