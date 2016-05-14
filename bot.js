@@ -140,6 +140,13 @@ class Bot {
         let prefix = config.get('commands.prefix');
         const pageSize = 28;
 
+        // Check if pageNumber is valid integer.
+        if (!isNaN(parseFloat(pageNumber)) && isFinite(pageNumber)) {
+            pageNumber = Math.round(parseFloat(pageNumber));
+        } else {
+            return 'You really think I\'d fall for a page number like that?';
+        }
+
         // Collect the help documents from every command.
         let helpDocuments = [];
         for (let command of this.commands) { 
@@ -175,7 +182,7 @@ class Bot {
             }
         }
 
-        return format('Command Listing (Page %s of %s):\n\n```%s```',
+        return format('Here\'s all the commands I have: (Page %s of %s):\n\n```%s```',
                       pageNumber + 1, noOfPages, helpListing); 
     }
 }
