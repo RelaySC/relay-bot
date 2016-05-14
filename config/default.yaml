@@ -1,7 +1,7 @@
 bot:
   name: INNBot
   avatarPath: ./assets/bot-avatar.jpg
-  gameName: testing
+  gameName: imperialnews.network
   description: >
                 I'm INNBot, a Rogerian psychotherapist hired by the
                 Imperial News Network. You can chat for a therapy session
