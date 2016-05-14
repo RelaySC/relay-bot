@@ -14,7 +14,7 @@ $ node run.js
 ```
 Replace `<bot_token>` with your Bot User Token and `<app_id>` with the Client ID from [Discord Developer](https://discordapp.com/developers/applications/me). If you want these environment variables to persist between sessions then I reccomend that you add these lines to your `~/.bashrc`.
 
-It is reccomended that you also view the [Setting up Google Calendar Integration](#Setting up Google Calendar Integration) section so that commands that rely on that functionality work.
+It is reccomended that you also view the [Setting up Google Calendar Integration](#setting-up-google-calendar-integration) section so that commands that rely on that functionality work.
 
 You can use the url below, replacing `<app_id>` with the Client ID from the Developer page, to add it to a server you have 'Manage Server' permissions on.
 ```
