@@ -44,13 +44,3 @@ commands:
   helpCommandPadding: 10
 chat:
   disable: false
-repository:
-  sources:
-    - 'http://pegasus-dynamics.com/commands/json.php?PRETTY&DESC'
-  blacklist:
-    - help
-    - about
-    - inn
-    - rsi
-    - thebase
-    - time
