@@ -128,9 +128,7 @@ class Bot {
         }
     }
     
-    help(event) {
-        let message = 'Here\'s all of my commands:\n\n```';
-        
+    help(event) {        
         let helpCommandPadding = config.get('commands.helpCommandPadding');
         let disabledCommands = config.get('commands.disabled');
         let prefix = config.get('commands.prefix');
@@ -154,17 +152,18 @@ class Bot {
         let paddingPoint = largestCommandNameSize + helpCommandPadding;
 
         // Print help listing.
+        let helpListing = '';
         for (let helpDocument of helpDocuments) {
             if (!helpDocument.hidden && !(helpDocument.name in disabledCommands)) {
                 let noOfSpaces = paddingPoint - (helpDocument.name.length + prefix.length);
                 let padding = Array(noOfSpaces).join(' ');
 
-                message += format('%s%s%s%s\n', prefix, helpDocument.name,
+                helpListing += format('%s%s%s%s\n', prefix, helpDocument.name,
                                   padding, helpDocument.description);
             }
         }
 
-        return message + '```';
+        return format('Here\'s all of my commands:\n\n```%s```', helpListing); 
     }
 }
 
