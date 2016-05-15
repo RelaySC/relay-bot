@@ -16,7 +16,7 @@ class Bot {
         this.client.Dispatcher.on('GATEWAY_READY', (event) => this.ready(event));
         this.client.Dispatcher.on('MESSAGE_CREATE', (event) => this.handleMessage(event));
         
-        console.log('Bot Initialized :: v2.0.0');
+        console.log('Bot Initialized :: v2.0.1');
         
         this.registerFromFile('./builtins');
         for (let file of config.get('commands.sources')) {
