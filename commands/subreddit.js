@@ -18,9 +18,12 @@ class SubredditCommand extends Command {
         if (config.has('subreddit.disable') && config.get('subreddit.disable')) {
             return;
         }
-        // We have a rough check here so that we don't use the
-        // regex for every message.
-        return /\b\/?r\/([A-Za-z_]{1,28})/gm.exec(message.content);
+
+        return /r\/([A-Za-z_]{1,28})/gm.exec(message.content) &&
+            message.content.indexOf('https://reddit.com/') < 0 &&
+            message.content.indexOf('https://www.reddit.com/') < 0 &&
+            message.content.indexOf('http://reddit.com/') < 0 && 
+            message.content.indexOf('http://www.reddit.com/') < 0;
     }
     
     respond(message, bot, config, resolve, reject) {
