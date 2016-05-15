@@ -192,7 +192,7 @@ Restart=always
 WantedBy=multi-user.target
 ```
 ## Changelog
-**v2.0.1 - 14/05/2016**
+**v2.0.1 - 15/05/2016**
 - Fixed issue with subreddit autolinking where it would link for proper links.
 
 **v2.0.0 - 14/05/2016**
