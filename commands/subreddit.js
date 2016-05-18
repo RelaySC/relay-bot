@@ -36,10 +36,12 @@ class SubredditCommand extends Command {
         } 
         
         if (matches.length == 1) {
-            resolve(format('I noticed you mentioned the following subreddit: %s',
+            resolve(format('I noticed %s mentioned the following subreddit: %s',
+                           message.author.username,
                            matches[0]));
         } else if (matches.length > 1) {
-            resolve(format('I noticed you mentioned the following subreddits: %s',
+            resolve(format('I noticed %s mentioned the following subreddits: %s',
+                           message.author.username,
                            matches.join(', ')));
         }
     }
