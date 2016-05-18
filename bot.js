@@ -151,6 +151,8 @@ class Bot {
         if (exists) {
             let reply = this.replies[event.messageId];   
             reply.delete();
+            console.log(format('Deleted reply to message "%s" after original message was deleted.',
+                               event.messageId));
         }
     }
     
