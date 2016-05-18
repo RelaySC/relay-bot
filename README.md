@@ -192,6 +192,10 @@ Restart=always
 WantedBy=multi-user.target
 ```
 ## Changelog
+**v2.0.3 - 18/05/2016**
+- Now includes who autolinked a subreddit in response.
+- Now deletes reply if original message is deleted.
+
 **v2.0.2 - 18/05/2016**
 - Fixed issue where aliases were being matched without the command prefix.
 
