@@ -54,14 +54,16 @@ class Command extends EventEmitter {
         let disabledCommands = config.get('commands.disabled');
         let disableAliases = config.get('commands.disableAliases');
 
+        let prefix = config.get('commands.prefix');
+        let messageParts = message.content.split(' ');
+
         if (disabledCommands.indexOf(this.command) >= 0 && disableAliases) {
             // If command is disabled and we're also disabling any aliases.
             return false;
         }
         
         // Does the message match this command explicitly?
-        let prefix = config.get('commands.prefix');
-        if (message.content.startsWith(prefix + this.command) && 
+        if (messageParts[0] == prefix + this.command && 
                 disabledCommands.indexOf(this.command) < 0) {
             // If command is a match and the base command isn't disabled.
             console.log(format('Direct match command "%s" with "%s".',
@@ -73,10 +75,10 @@ class Command extends EventEmitter {
         let aliases = config.get('commands.aliases');
         if (aliases.hasOwnProperty(this.command)) {
             // If this command is configured with some aliases.
-            let parts = message.content.split(' ');
-            let commandName = parts[0].replace(config.get('commands.prefix'), '');
+            let commandName = messageParts[0].replace(prefix, '');
             
-            if (aliases[this.command].indexOf(commandName) >= 0) {
+            if (aliases[this.command].indexOf(commandName) >= 0 &
+                    messageParts[0].indexOf(prefix) >= 0) {
                 console.log(format('Alias match command "%s" with "%s".',
                                    this.command, prefix + commandName));
                 return true;
