@@ -12,9 +12,11 @@ class Bot {
     constructor(client) {
         this.client = client;
         this.commands = [];
+        this.replies = {};
         
         this.client.Dispatcher.on('GATEWAY_READY', (event) => this.ready(event));
-        this.client.Dispatcher.on('MESSAGE_CREATE', (event) => this.handleMessage(event));
+        this.client.Dispatcher.on('MESSAGE_CREATE', (event) => this.handleMessageCreated(event));
+        this.client.Dispatcher.on('MESSAGE_DELETE', (event) => this.handleMessageDeleted(event));
         
         console.log('Bot Initialized :: v2.0.2');
         
@@ -59,7 +61,16 @@ class Bot {
                 let command = new CommandSubclass();
                 
                 command.on('response', (message, response) => {
-                   message.channel.sendMessage(response); 
+                   
+                   message.channel.sendMessage(response).then((reply) => {
+                       // If the message send was a success then save our reply
+                       // in a dictionary keyed by the message id we were replying to.
+                       this.replies[message.id] = reply;
+                   }, (error) => {
+                       console.log(format('Reply failed to send to "%s" with "%s"',
+                                          message.author.username, command.command));
+                   });
+ 
                    console.log(format('Responded to "%s" with "%s" command.',
                                       message.author.username, command.command));
                 });
@@ -74,7 +85,7 @@ class Bot {
         }
     }
     
-    handleMessage(event) {
+    handleMessageCreated(event) {
         // Check if we are replying to ourself.
         if (event.message.author.id == this.client.User.id && 
                 !config.get('commands.allowReplyToSelf')) {
@@ -131,6 +142,15 @@ class Bot {
         
         for (let command of this.commands) {
             command.run(event.message, this.client.User, config);
+        }
+    }
+    
+    handleMessageDeleted(event) {
+        // Find our reply to this message if it exists and delete it.
+        let exists = Object.keys(this.replies).indexOf(event.messageId) >= 0;
+        if (exists) {
+            let reply = this.replies[event.messageId];   
+            reply.delete();
         }
     }
     
