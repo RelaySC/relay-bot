@@ -31,6 +31,15 @@ class StatsCommand extends Command {
         }, (error) => {});
     }
     
+    differenceFormat(value, formatFn) {
+        let formattedValue = formatFn(value);
+        
+        if (!formattedValue.startsWith('-')) {
+            return '+' + formattedValue;
+        }
+        return formattedValue;
+    }
+    
     respond(message, bot, config, resolve, reject) {  
         funding().then((current) => {
             let fundsDiff = current.funds.value - this.history.funds.value;
@@ -45,17 +54,20 @@ class StatsCommand extends Command {
             let humanizedDuration = humanizeDuration(duration.asMilliseconds(),
                                                      {round: true, units: ['mo', 'w']});
 
-            let response = 'Star Citizen is currently %s funded (+%s since %s).' +
-                           ' There are %s citizens (+%s since %s) and the UEE fleet' +
-                           ' is %s strong (+%s since %s). It has been test since the' +
+            let response = 'Star Citizen is currently %s funded (%s since %s).' +
+                           ' There are %s citizens (%s since %s) and the UEE fleet' +
+                           ' is %s strong (%s since %s). It has been test since the' +
                            ' Star Citizen kickstarter.';
             let formattedResponse = format(response,
                                            this.fundingFormat(current.funds.value),
-                                           this.fundingFormat(fundsDiff), fundsSince,
+                                           this.differenceFormat(fundsDiff, this.fundingFormat),
+                                           fundsSince,
                                            this.otherFormat(current.citizens.value),
-                                           this.otherFormat(citizensDiff), citizensSince,
+                                           this.differenceFormat(citizensDiff, this.otherFormat),
+                                           citizensSince,
                                            this.otherFormat(current.fleet.value),
-                                           this.otherFormat(fleetDiff), fleetSince,
+                                           this.differenceFormat(fleetDiff, this.otherFormat),
+                                           fleetSince,
                                            humanizedDuration);
 
             this.history = current;
