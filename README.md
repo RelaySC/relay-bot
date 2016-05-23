@@ -192,6 +192,9 @@ Restart=always
 WantedBy=multi-user.target
 ```
 ## Changelog
+**v2.0.4 - 23/05/2016**
+- Now no longer outputs '+-' in `!stats` for a negative difference.
+
 **v2.0.3 - 18/05/2016**
 - Now includes who autolinked a subreddit in response.
 - Now deletes reply if original message is deleted.
