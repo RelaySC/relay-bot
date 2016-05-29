@@ -23,7 +23,7 @@ https://discordapp.com/oauth2/authorize?&client_id=<app_id>&scope=bot
 You can then use the `!invite` command to get this URL in future.
 
 ## Configuration
-inn-bot is configured in two ways - environment variables for sensitive information and a configuration file for everything else. inn-bot ships with a [`config/default.yaml`](config/default.yaml) configuration file, this should be copied and modified to the user's liking then saved as `config/local.yaml`.
+inn-bot is configured in two ways - environment variables for sensitive information and a configuration file for everything else. inn-bot ships with a [`config/default.yaml`](config/default.yaml) configuration file, this should be copied and modified to the user's liking then saved as `config/local.yaml`. Check out the [Deploying](#deploying) section for the recommended method of dealing with Environment Variables in production - for development, however, we recommend writing a small bash script in `.env.sh` with the Environment Variables.
 
 There are lots of configuration options available and custom commands can add their own configuration options - some options are explained below. 
 
@@ -180,9 +180,7 @@ StandardError=syslog
 SyslogIdentifier=innbot
 SyslogFacility=local0
 
-Environment=INNBOT_DISCORD_BOTUSER_TOKEN=<bot_token>
-Environment=INNBOT_DISCORD_CLIENTID=<app_id>
-Environment=INNBOT_GOOGLE_APIKEY=<google_api_key>
+EnvironmentFile=/home/innbot/inn-bot/.env
 
 WorkingDirectory=/home/innbot/inn-bot
 ExecStart=/usr/bin/node run.js
@@ -191,8 +189,18 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 ```
+
+We also create a `.env` file in the INNBot folder that contains the configuration Environment Variables:
+ 
+```ini
+INNBOT_DISCORD_BOTUSER_TOKEN=<bot_token>
+INNBOT_DISCORD_CLIENTID=<app_id>
+INNBOT_GOOGLE_APIKEY=<google_api_key>
+```
+
 ## Changelog
 **v2.0.5 - 29/05/2016**
+- Now recommending `EnvironmentFile` over `Environment` in systemd unit files.
 - Now no lists more pages than there are in `!help`.
 - Now no longer allows page numbers higher than the number of pages to be requested in `!help`.
 - Now checks for new/changed/removed repository commands every 5 minutes.
