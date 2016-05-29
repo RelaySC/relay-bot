@@ -6,6 +6,7 @@ const fs = require('fs');
 
 const config = require('config');
 const format = require('format');
+const schedule = require('node-schedule');
 
 class Bot {
     
@@ -58,7 +59,7 @@ class Bot {
                 
                 // If we've got a actual command then we hook up the
                 // events and add it to our list.
-                let command = new CommandSubclass();
+                let command = new CommandSubclass(schedule);
                 
                 command.on('response', (message, response) => {
                    

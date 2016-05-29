@@ -8,7 +8,7 @@ const format = require('format');
 
 class RepositoryCommand extends Command {
     
-    constructor() {
+    constructor(schedule) {
         // These values aren't really needed when the default help() isn't being 
         // used but are required.
         super({
@@ -16,14 +16,24 @@ class RepositoryCommand extends Command {
             description: 'Loads command definitions from online repositories.',
             hidden: true
         });
-        
-        this.repositoryCommands = {};
-        
-        // If we don't find any repositories then we log this and stop.
-        if (!config.has('repository.sources')) {
+
+        if (config.has('repository.sources')) {
+            console.log('Repository: Initial Loading of Repositories.')
+            this.load();
+
+            schedule.scheduleJob('0,5,10,15,20,25,30,35,40,45,50,55 * * * *', () => {
+                console.log('Repository: Reloading Repositories.');
+                this.load();
+            });
+        } else {
+            // If we don't find any repositories then we log this and don't schedule anything.
             console.log('Repository: No repositories configured.');
-            return;
+            this.repositoryCommands = {};
         }
+    }
+    
+    load() {
+        this.repositoryCommands = {};
         
         let repositoryUrls = config.get('repository.sources');
         // We load all our repository urls from the configuration when the
@@ -35,10 +45,11 @@ class RepositoryCommand extends Command {
                     this.repositoryCommands[commandName] = parsedCommands[commandName];
                 }
                 console.log(format('Repository: Loaded %s commands from "%s".',
-                                   Object.keys(parsedCommands).length, repositoryUrl));
+                                Object.keys(parsedCommands).length, repositoryUrl));
+                resolve(commands);            
             }, error => {
                 console.log(format('Repository: An error occured when loading "%s".\n\t%s',
-                                   repositoryUrl, error));
+                                    repositoryUrl, error));
             });
         }
     }
