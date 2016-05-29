@@ -192,6 +192,11 @@ Restart=always
 WantedBy=multi-user.target
 ```
 ## Changelog
+**v2.0.5 - 29/05/2016**
+- Now no lists more pages than there are in `!help`.
+- Now no longer allows page numbers higher than the number of pages to be requested in `!help`.
+- Now checks for new/changed/removed repository commands every 5 minutes.
+
 **v2.0.4 - 23/05/2016**
 - Now no longer outputs '+-' in `!stats` for a negative difference.
 
