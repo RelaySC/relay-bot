@@ -177,9 +177,13 @@ class Bot {
         }
 
         // Get current page.
-        let noOfPages = Math.ceil(helpDocuments.length / pageSize);
+        let noOfPages = Math.floor(helpDocuments.length / pageSize);
         let currentIndex = pageSize * pageNumber;
         helpDocuments = helpDocuments.slice(currentIndex, currentIndex + pageSize);
+        
+        if (pageNumber + 1 > noOfPages) {
+            return 'We don\'t have *that* many commands.';
+        }
 
         // Find largest command name.
         let largestCommandNameSize = 0;
