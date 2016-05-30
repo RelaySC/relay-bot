@@ -61,20 +61,7 @@ class Bot {
                 // events and add it to our list.
                 let command = new CommandSubclass(schedule);
                 
-                command.on('response', (message, response) => {
-                   
-                   message.channel.sendMessage(response).then((reply) => {
-                       // If the message send was a success then save our reply
-                       // in a dictionary keyed by the message id we were replying to.
-                       this.replies[message.id] = reply;
-                   }, (error) => {
-                       console.log(format('Reply failed to send to "%s" with "%s"',
-                                          message.author.username, command.command));
-                   });
- 
-                   console.log(format('Responded to "%s" with "%s" command.',
-                                      message.author.username, command.command));
-                });
+                command.on('response', (message, response) => this.respond(message, response));
                 command.on('error', (message, error) => {
                     console.log(format('Error occured in "%s" command responding to "%s".\n\t%s.',
                                        command.command, message.author.username, error));
@@ -84,6 +71,20 @@ class Bot {
                 console.log(format('Registered new command "%s".', command.command));
             }
         }
+    }
+    
+    respond(message, response) {
+        message.channel.sendMessage(response).then((reply) => {
+            // If the message send was a success then save our reply
+            // in a dictionary keyed by the message id we were replying to.
+            this.replies[message.id] = reply;
+            
+            console.log(format('Responded to "%s" with "%s" command.',
+                               message.author.username, command.command));
+        }, (error) => {
+            console.log(format('Reply failed to send to "%s" with "%s"',
+                               message.author.username, command.command));
+        });
     }
     
     handleMessageCreated(event) {
@@ -136,9 +137,7 @@ class Bot {
                 pageNumber = parts[1] - 1;
             }
                     
-            event.message.channel.sendMessage(this.help(pageNumber, event, config));
-            console.log(format('Responded to "%s" with "help" command.',
-                               event.message.author.username));
+            this.respond(event.message, this.help(pageNumber, event, config));
         }
         
         for (let command of this.commands) {
