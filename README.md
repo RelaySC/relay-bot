@@ -199,6 +199,9 @@ INNBOT_GOOGLE_APIKEY=<google_api_key>
 ```
 
 ## Changelog
+**v2.0.7 - 30/05/2016**
+- Commands are now case-insensitive.
+
 **v2.0.6 - 30/05/2016**
 - Fixed issue with `!help` command not being automatically removed if the original message was deleted.
 - Fixed issue with `!help` command not listing all commands.
