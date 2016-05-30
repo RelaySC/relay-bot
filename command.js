@@ -63,7 +63,7 @@ class Command extends EventEmitter {
         }
         
         // Does the message match this command explicitly?
-        if (messageParts[0] == prefix + this.command && 
+        if (messageParts[0].toLowerCase() == prefix + this.command && 
                 disabledCommands.indexOf(this.command) < 0) {
             // If command is a match and the base command isn't disabled.
             console.log(format('Direct match command "%s" with "%s".',
@@ -75,7 +75,7 @@ class Command extends EventEmitter {
         let aliases = config.get('commands.aliases');
         if (aliases.hasOwnProperty(this.command)) {
             // If this command is configured with some aliases.
-            let commandName = messageParts[0].replace(prefix, '');
+            let commandName = messageParts[0].replace(prefix, '').toLowerCase();
             
             if (aliases[this.command].indexOf(commandName) >= 0 &
                     messageParts[0].indexOf(prefix) >= 0) {
