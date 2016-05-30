@@ -19,7 +19,7 @@ class Bot {
         this.client.Dispatcher.on('MESSAGE_CREATE', (event) => this.handleMessageCreated(event));
         this.client.Dispatcher.on('MESSAGE_DELETE', (event) => this.handleMessageDeleted(event));
         
-        console.log('Bot Initialized :: v2.0.5');
+        console.log('Bot Initialized :: v2.0.6');
         
         this.registerFromFile('./builtins');
         for (let file of config.get('commands.sources')) {

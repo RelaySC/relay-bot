@@ -199,6 +199,10 @@ INNBOT_GOOGLE_APIKEY=<google_api_key>
 ```
 
 ## Changelog
+**v2.0.6 - 30/05/2016**
+- Fixed issue with `!help` command not being automatically removed if the original message was deleted.
+- Fixed issue with `!help` command not listing all commands.
+
 **v2.0.5 - 29/05/2016**
 - Now recommending `EnvironmentFile` over `Environment` in systemd unit files.
 - Now no lists more pages than there are in `!help`.
