@@ -12,9 +12,9 @@ $ export INNBOT_DISCORD_BOTUSER_TOKEN=<bot_token>
 $ export INNBOT_DISCORD_CLIENTID=<app_id>
 $ node run.js
 ```
-Replace `<bot_token>` with your Bot User Token and `<app_id>` with the Client ID from [Discord Developer](https://discordapp.com/developers/applications/me). If you want these environment variables to persist between sessions then I reccomend that you add these lines to your `~/.bashrc`.
+Replace `<bot_token>` with your Bot User Token and `<app_id>` with the Client ID from [Discord Developer](https://discordapp.com/developers/applications/me). If you want these environment variables to persist between sessions then I recommend that you add these lines to your `~/.bashrc`.
 
-It is reccomended that you also view the [Setting up Google Calendar Integration](#setting-up-google-calendar-integration) section so that commands that rely on that functionality work.
+It is recommended that you also view the [Setting up Google Calendar Integration](#setting-up-google-calendar-integration) section so that commands that rely on that functionality work.
 
 You can use the url below, replacing `<app_id>` with the Client ID from the Developer page, to add it to a server you have 'Manage Server' permissions on.
 ```
@@ -202,6 +202,7 @@ INNBOT_GOOGLE_APIKEY=<google_api_key>
 **v2.0.6 - 30/05/2016**
 - Fixed issue with `!help` command not being automatically removed if the original message was deleted.
 - Fixed issue with `!help` command not listing all commands.
+- Fixed README typos.
 
 **v2.0.5 - 29/05/2016**
 - Now recommending `EnvironmentFile` over `Environment` in systemd unit files.
