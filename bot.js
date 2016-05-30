@@ -172,17 +172,26 @@ class Bot {
         // Collect the help documents from every command.
         let helpDocuments = [];
         for (let command of this.commands) { 
-            helpDocuments.push.apply(helpDocuments, command.help(config));
+            let currentHelpDocuments = command.help(config);
+            
+            for (let helpDocument of currentHelpDocuments) {
+                if (!helpDocument.hidden && disabledCommands.indexOf(helpDocument.name) < 0) {
+                    helpDocuments.push(helpDocument);   
+                }   
+            }
         }
 
         // Get current page.
-        let noOfPages = Math.floor(helpDocuments.length / pageSize);
-        let currentIndex = pageSize * pageNumber;
-        helpDocuments = helpDocuments.slice(currentIndex, currentIndex + pageSize);
+        let noOfPages = Math.ceil(helpDocuments.length / pageSize);
         
+        // Ensure we're not asking for a page that doesn't exist.
         if (pageNumber + 1 > noOfPages) {
             return 'We don\'t have *that* many commands.';
         }
+        
+        // Filter to only the current page.
+        let currentIndex = pageSize * pageNumber;
+        helpDocuments = helpDocuments.slice(currentIndex, currentIndex + pageSize);        
 
         // Find largest command name.
         let largestCommandNameSize = 0;
@@ -199,13 +208,11 @@ class Bot {
         // Print help listing.
         let helpListing = '';
         for (let helpDocument of helpDocuments) {
-            if (!helpDocument.hidden && disabledCommands.indexOf(helpDocument.name) < 0) {
-                let noOfSpaces = paddingPoint - (helpDocument.name.length + prefix.length);
-                let padding = Array(noOfSpaces).join(' ');
+            let noOfSpaces = paddingPoint - (helpDocument.name.length + prefix.length);
+            let padding = Array(noOfSpaces).join(' ');
 
-                helpListing += format('%s%s%s\n', prefix + helpDocument.name,
-                                  padding, helpDocument.description);
-            }
+            helpListing += format('%s%s%s\n', prefix + helpDocument.name,
+                                padding, helpDocument.description);
         }
 
         return format('Here\'s are the commands I have (%s / %s):\n\n```%s```',
