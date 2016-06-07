@@ -144,5 +144,20 @@ class GitHubCommand extends Command {
     }
 }
 
-module.exports = [YouTubeCommand, FacebookCommand, TwitchCommand,
+class BulkheadsCommand extends Command {
+    constructor() {
+        super({
+            command: 'bulkheads',
+            description: 'Catch up with the latest craziness from the Imperitiam.',
+            hidden: false
+        });
+    }
+    
+    respond(message, bot, config, resolve, reject) {
+        resolve('Catch up with the latest craziness from the Imperitiam: ' +
+                'http://bulkheads.tv');
+    }
+}
+
+module.exports = [YouTubeCommand, FacebookCommand, TwitchCommand, BulkheadsCommand,
                   TwitterCommand, INNCommand, OrgCommand, GitHubCommand];
