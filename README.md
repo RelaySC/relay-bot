@@ -199,6 +199,9 @@ INNBOT_GOOGLE_APIKEY=<google_api_key>
 ```
 
 ## Changelog
+**v2.0.9 - 09/06/2016**
+- Now matches subreddits with numbers in their names.
+
 **v2.0.8 - 07/06/2016**
 - Added `!bulkheads` command.
 
