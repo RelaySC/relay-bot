@@ -19,7 +19,7 @@ class SubredditCommand extends Command {
             return;
         }
 
-        return /r\/([A-Za-z_]{1,28})/gm.exec(message.content) &&
+        return /r\/([A-Za-z_0-9]{1,28})/gm.exec(message.content) &&
             message.content.indexOf('https://reddit.com/') < 0 &&
             message.content.indexOf('https://www.reddit.com/') < 0 &&
             message.content.indexOf('http://reddit.com/') < 0 && 
@@ -27,7 +27,7 @@ class SubredditCommand extends Command {
     }
     
     respond(message, bot, config, resolve, reject) {
-        let subredditRegex = /\b\/?r\/([A-Za-z_]{1,28})/gm;
+        let subredditRegex = /\b\/?r\/([A-Za-z_0-9]{1,28})/gm;
         
         let matches = [];
         let match;
