@@ -199,6 +199,9 @@ INNBOT_GOOGLE_APIKEY=<google_api_key>
 ```
 
 ## Changelog
+**v2.0.10 - 19/06/2016**
+- No longer outputs `test` in place of the time since the kickstarter in the `!stats` command.
+
 **v2.0.9 - 09/06/2016**
 - Now matches subreddits with numbers in their names.
 
