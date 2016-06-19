@@ -56,7 +56,7 @@ class StatsCommand extends Command {
 
             let response = 'Star Citizen is currently %s funded (%s since %s).' +
                            ' There are %s citizens (%s since %s) and the UEE fleet' +
-                           ' is %s strong (%s since %s). It has been test since the' +
+                           ' is %s strong (%s since %s). It has been %s since the' +
                            ' Star Citizen kickstarter.';
             let formattedResponse = format(response,
                                            this.fundingFormat(current.funds.value),
