@@ -27,7 +27,7 @@ class SubredditCommand extends Command {
     }
     
     respond(message, bot, config, resolve, reject) {
-        let subredditRegex = /\b\/?r\/([A-Za-z_0-9]{1,28})/gm;
+        let subredditRegex = /\b\/?r\/([A-Za-z_0-9]{3,28})/gm;
         
         let matches = [];
         let match;
