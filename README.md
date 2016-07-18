@@ -199,6 +199,9 @@ INNBOT_GOOGLE_APIKEY=<google_api_key>
 ```
 
 ## Changelog
+**v2.0.11 - 18/07/2016**
+- No automatically links subreddits with names that are too short.
+
 **v2.0.10 - 19/06/2016**
 - No longer outputs `test` in place of the time since the kickstarter in the `!stats` command.
 
