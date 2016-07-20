@@ -11,7 +11,7 @@ class SubredditCommand extends Command {
            command: 'autolinksubreddit',
            description: 'Automatically links a subreddit when mentioned.',
            hidden: true 
-        });  
+        });
     }
     
     isEligible(message, bot, config) {
@@ -19,19 +19,14 @@ class SubredditCommand extends Command {
             return;
         }
 
-        return /r\/([A-Za-z_0-9]{1,28})/gm.exec(message.content) &&
-            message.content.indexOf('https://reddit.com/') < 0 &&
-            message.content.indexOf('https://www.reddit.com/') < 0 &&
-            message.content.indexOf('http://reddit.com/') < 0 && 
-            message.content.indexOf('http://www.reddit.com/') < 0;
+        return this.regex().test(message.content) && message.content.indexOf('http') < 0;
     }
     
     respond(message, bot, config, resolve, reject) {
-        let subredditRegex = /\b\/?r\/([A-Za-z_0-9]{3,28})/gm;
-        
         let matches = [];
         let match;
-        while ((match = subredditRegex.exec(message.content))) {
+        let regex = this.regex();
+        while ((match = regex.exec(message.content))) {
             matches.push('https://reddit.com/r/' + match[1]);
         } 
         
@@ -46,6 +41,10 @@ class SubredditCommand extends Command {
         }
     }
     
+    regex() {
+        return new RegExp(/(?: |^|reddit\.com)\/?r\/([A-Za-z_0-9]{3,28})/, 'gm');
+    }
+
 }
 
 module.exports = [SubredditCommand];
