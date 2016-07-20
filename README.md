@@ -199,6 +199,9 @@ INNBOT_GOOGLE_APIKEY=<google_api_key>
 ```
 
 ## Changelog
+**v2.0.12 - 20/07/2016**
+- Now no longer attempts to autolink URLs that contain `/r/` that are not from reddit.
+
 **v2.0.11 - 18/07/2016**
 - No automatically links subreddits with names that are too short.
 
