@@ -56,7 +56,7 @@ class FacebookCommand extends Command {
 class TwitchCommand extends Command {
     constructor() {
         super({
-            command: 'rsitwitch',
+            command: 'inntwitch',
             description: 'Follow INN on Twitch!',
             hidden: false
         });
