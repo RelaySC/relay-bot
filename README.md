@@ -225,6 +225,13 @@ INNBOT_GOOGLE_APIKEY=<google_api_key>
 ```
 
 ## Changelog
+**v2.1 - 25/08/2016**
+- Added a `!debug` command.
+- Will not reply to system messages.
+- Reduced number of decimal points in `!starmap` output.
+- Introduced copy meta-command for copying all messages in a channel to another automatically.
+- Introduced deleted response logging.
+
 **v2.0.13 - 29/07/2016**
 - Fixed INN Twitch command.
 
