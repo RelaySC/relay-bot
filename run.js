@@ -4,8 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const Bot = require('./bot');
-const Discordie = require('discordie');
 const config = require('config');
 
-let bot = new Bot(new Discordie());
+let bot = new Bot();
 bot.connect();

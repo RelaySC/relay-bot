@@ -4,6 +4,7 @@ const Command = require('./command');
 
 const fs = require('fs');
 
+const Discordie = require('discordie');
 const config = require('config');
 const format = require('format');
 const schedule = require('node-schedule');
@@ -11,7 +12,7 @@ const schedule = require('node-schedule');
 class Bot {
     
     constructor(client) {
-        this.client = client;
+        this.client = new Discordie();
         this.commands = [];
         this.replies = {};
         
@@ -39,6 +40,42 @@ class Bot {
         console.log(format('Connected as "%s", playing "%s".',
                            this.client.User.username,
                            this.client.User.gameName));
+
+        // Build up a list of the channels that we'll log deleted messages to.
+        console.log('Loading deleted messages log channels.');
+        this.deletedMessagesLogging = [];
+
+        if (!config.has('commands.deletedMessagesLogging')) {
+            console.log('No log channels defined.');
+            return;
+        }
+        let loggingConfig = config.get('commands.deletedMessagesLogging');
+        
+
+        for (let logOptions of loggingConfig) {
+            let channelId = logOptions.toChannel.toString();
+
+            // Load the channel based on the id.
+            console.log(format('Attempting to find channel "%s".',
+                               channelId))
+            let channel = this.client.Channels.get(channelId);
+
+            if (channel === null || typeof channel === 'undefined') {
+                // Try DirectMessageChannels collection.
+                console.log(format('Couldn\'t find channel "%s". ' +
+                                   'Attempting direct message channels.',
+                                   channelId));
+                channel = this.client.DirectMessageChannels.get(channelId);
+            }
+
+            // Log the channel details to the console and add to our list.
+            console.log(format('Loaded deleted message channel - "#%s" on "%s"',
+                               channel.name, channel.guild.name));
+            this.deletedMessagesLogging.push({
+                fromGuilds: logOptions.fromGuilds,
+                toChannel: channel    
+            });
+        }
     }
     
     registerFromFile(filename) {
@@ -151,8 +188,36 @@ class Bot {
         if (exists) {
             let reply = this.replies[event.messageId];   
             reply.delete();
+
+            // Log to console.
             console.log(format('Deleted reply to message "%s" after original message was deleted.',
                                event.messageId));
+
+            // Go through each of the deleted message logging configurations.
+            for (let logOption of this.deletedMessagesLogging) {
+                // Check if the guild this message was deleted from was part of the configuration.
+                if (logOption.fromGuilds.indexOf(event.message.guild.id) < 0) {
+                    console.log('Did not log in a channel as guild is not configured with logging channel.');
+                    continue;
+                }
+
+                // Check it wasn't deleted from the log channel.
+                if (logOption.toChannel.id === event.message.channel.id) {
+                    console.log('Did not log in a channel as message was deleted from logging channel.');
+                    continue;
+                }
+
+                let response = 'Deleted response to message from "%s" (%s) in "#%s" on "%s".\n' +
+                               '\n**Original Message:**\n```%s```\n**Bot Response:**\n```%s```';
+                logOption.toChannel.sendMessage(format(response,
+                                                event.message.author.username,
+                                                event.message.author.id,
+                                                event.message.channel.name,
+                                                event.message.guild.name,
+                                                event.message.content,
+                                                reply.content));
+                console.log('Logged to channel.');
+            }
         }
     }
     
