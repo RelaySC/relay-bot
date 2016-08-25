@@ -24,6 +24,7 @@ commands:
     - ./commands/starmap.js
     - ./commands/repository.js
     - ./commands/subreddit.js
+    - ./commands/debug.js
   aliases:
     about:
       - info
