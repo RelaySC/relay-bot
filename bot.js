@@ -162,7 +162,11 @@ class Bot {
             console.log('PM replies not permitted.');
             return;
         }
-        
+        // We don't reply to Discord.        
+        if (event.message.isSystem) {
+            console.log('Did not reply to system message.');
+            return;
+        }
         
         // If the global help command isn't disabled then we provide that
         // here so we have access to the command list.
