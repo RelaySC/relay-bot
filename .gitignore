@@ -41,6 +41,8 @@ jspm_packages
 
 # VS Code
 *.VC.db
+*.db-shm
+*.db-wal
 
 # Configuration
 config/local.yaml
