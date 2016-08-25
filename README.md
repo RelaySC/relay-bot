@@ -119,7 +119,7 @@ You should check out [the commands that ship with the bot](commands/) to see exa
 ### Command List
 Once installed, the list of available commands can be viewed with `!help [page number]`.
 
-### Repositories
+### Repository Command
 Since v2.0.0, Command Repositories have been introduced. You can add a repository by adding the following to your configuration:
 ```yaml
 repository:
@@ -147,8 +147,20 @@ You can specify a blacklist of commands that will not be used if they conflict w
 #### Approved Repositories
 Get in touch if you'd like your command repository to be listed here.
 
+### Copy Command
+The copy command is a meta-command that can be configured to copy all messages from one channel on a guild to another channel (on the same guild or another guild). It can be configured as so:
+
+```yml
+copy:
+  - fromChannel: 'from_channel' 
+    toChannel: 'to_channel'
+```
+
+You should replace the `from_channel` and `to_channel` parts with the IDs of the channels that you wish to use - you can get the channel IDs using the `!debug` command.
+
 ### Deleted Response Logging
 You can have all instances of the bot deleting it's response to a user for a given guild logged to a specific channel. This is useful for moderation purposes. Just add the following to the configuration.
+
 ```yml
 commands:
   ...

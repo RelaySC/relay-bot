@@ -14,18 +14,24 @@ class Bot {
     constructor(client) {
         this.client = new Discordie();
         this.commands = [];
+        this.versionNumber = 'v2.1';
         this.replies = {};
         
-        this.client.Dispatcher.on('GATEWAY_READY', (event) => this.ready(event));
+        this.client.Dispatcher.on('GATEWAY_READY', (event) => {
+            this.ready(event);
+
+            // Register commands.
+            this.registerFromFile('./builtins');
+            for (let file of config.get('commands.sources')) {
+                this.registerFromFile(file);
+            }
+
+            console.log('Bot Initialized :: ' + this.versionNumber);
+        });
         this.client.Dispatcher.on('MESSAGE_CREATE', (event) => this.handleMessageCreated(event));
         this.client.Dispatcher.on('MESSAGE_DELETE', (event) => this.handleMessageDeleted(event));
         
-        console.log('Bot Initialized :: v2.0.13');
-        
-        this.registerFromFile('./builtins');
-        for (let file of config.get('commands.sources')) {
-            this.registerFromFile(file);
-        }
+        console.log('Bot Initializing :: ' + this.versionNumber);
     }
     
     connect() {
@@ -96,7 +102,9 @@ class Bot {
                 
                 // If we've got a actual command then we hook up the
                 // events and add it to our list.
-                let command = new CommandSubclass(schedule);
+
+                // We pass in a scheduler and the client.
+                let command = new CommandSubclass(this.client, schedule);
                 
                 command.on('response', (message, response) => this.respond(message, response));
                 command.on('error', (message, error) => {

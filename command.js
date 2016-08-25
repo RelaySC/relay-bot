@@ -29,7 +29,9 @@ class Command extends EventEmitter {
                                                                       resolve, reject));
                 
                 p.then((result) => {
-                    this.emit('response', message, result);    
+                    if (typeof result !== 'undefined' && result !== null) {
+                        this.emit('response', message, result);
+                    }
                 }, (error) => {
                     this.emit('error', message, error);
                 });

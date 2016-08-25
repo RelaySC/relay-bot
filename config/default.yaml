@@ -16,7 +16,9 @@ commands:
     - ./commands/baseradio.js
     - ./commands/streamers.js
     - ./commands/chat.js
+    - ./commands/copy.js
     - ./commands/community.js
+    - ./commands/debug.js
     - ./commands/fun.js
     - ./commands/inn.js
     - ./commands/rsi-social.js
@@ -24,7 +26,6 @@ commands:
     - ./commands/starmap.js
     - ./commands/repository.js
     - ./commands/subreddit.js
-    - ./commands/debug.js
   aliases:
     about:
       - info
@@ -49,3 +50,4 @@ chat:
   disable: false
 subreddit:
   disable: false
+    
