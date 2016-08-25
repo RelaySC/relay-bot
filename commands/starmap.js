@@ -16,8 +16,8 @@ class StarmapCommand extends Command {
         
         this.url = 'https://robertsspaceindustries.com/api/starmap/star-systems/';
 
-        this.sizeFormat = formatNumber({suffix: 'AU'});
-        this.otherFormat = formatNumber({});
+        this.sizeFormat = formatNumber({suffix: 'AU', round: 2});
+        this.otherFormat = formatNumber({round: 2});
         
         this.types = {
             'SINGLE_STAR': {singular: 'single star', plural: 'Single Stars'},
