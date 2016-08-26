@@ -5,6 +5,7 @@ const Command = require('./command');
 const fs = require('fs');
 
 const Discordie = require('discordie');
+const Events = Discordie.Events;
 const config = require('config');
 const format = require('format');
 const moment = require('moment');
@@ -19,7 +20,7 @@ class Bot {
         this.replies = {};
         this.editLogs = {};
         
-        this.client.Dispatcher.on('GATEWAY_READY', (event) => {
+        this.client.Dispatcher.on(Events.GATEWAY_READY, (event) => {
             this.ready(event);
 
             // Register commands.
@@ -30,9 +31,9 @@ class Bot {
 
             console.log('Bot Initialized :: ' + this.versionNumber);
         });
-        this.client.Dispatcher.on('MESSAGE_CREATE', (event) => this.handleMessageCreated(event));
-        this.client.Dispatcher.on('MESSAGE_DELETE', (event) => this.handleMessageDeleted(event));
-        this.client.Dispatcher.on('MESSAGE_UPDATE', (event) => this.handleMessageUpdated(event));
+        this.client.Dispatcher.on(Events.MESSAGE_CREATE, (event) => this.handleMessageCreated(event));
+        this.client.Dispatcher.on(Events.MESSAGE_DELETE, (event) => this.handleMessageDeleted(event));
+        this.client.Dispatcher.on(Events.MESSAGE_UPDATE, (event) => this.handleMessageUpdated(event));
         
         console.log('Bot Initializing :: ' + this.versionNumber);
     }

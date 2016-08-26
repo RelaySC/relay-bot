@@ -1,6 +1,10 @@
 'use strict';
 
 const Command = require('../command');
+
+const Discordie = require('discordie');
+const ChannelTypes = Discordie.ChannelTypes;
+
 const format = require('format');
 
 class DebugCommand extends Command {
@@ -32,8 +36,8 @@ class DebugCommand extends Command {
                        '**Channels:**\n';
 
         for (let channel of message.guild.channels) {
-            let emote = channel.type === 'voice' ? ':speaker:' : ':keyboard:';
-            let channelName = (channel.type === 'text' ? '#' : '') + channel.name;
+            let emote = channel.type === ChannelTypes.GUILD_TEXT ? ':keyboard:' : ':speaker:';
+            let channelName = (channel.type === ChannelTypes.GUILD_TEXT ? '#' : '') + channel.name;
 
             response += format('- %s %s (%s)\n', emote, channelName, channel.id);
         }
