@@ -79,7 +79,8 @@ class Bot {
                                channel.name, channel.guild.name));
             this.deletedMessagesLogging.push({
                 fromGuilds: logOptions.fromGuilds,
-                toChannel: channel    
+                toChannel: channel,
+                type: logOptions.type
             });
         }
     }
@@ -197,39 +198,61 @@ class Bot {
     handleMessageDeleted(event) {
         // Find our reply to this message if it exists and delete it.
         let exists = Object.keys(this.replies).indexOf(event.messageId) >= 0;
+        let reply = null; // Potentially used later in logging.
         if (exists) {
-            let reply = this.replies[event.messageId];   
+            reply = this.replies[event.messageId];   
             reply.delete();
 
             // Log to console.
             console.log(format('Deleted reply to message "%s" after original message was deleted.',
                                event.messageId));
+        }
 
-            // Go through each of the deleted message logging configurations.
-            for (let logOption of this.deletedMessagesLogging) {
-                // Check if the guild this message was deleted from was part of the configuration.
-                if (logOption.fromGuilds.indexOf(event.message.guild.id) < 0) {
-                    console.log('Did not log in a channel as guild is not configured with logging channel.');
-                    continue;
-                }
+        // Go through each of the deleted message logging configurations.
+        for (let logOption of this.deletedMessagesLogging) {
 
-                // Check it wasn't deleted from the log channel.
-                if (logOption.toChannel.id === event.message.channel.id) {
-                    console.log('Did not log in a channel as message was deleted from logging channel.');
-                    continue;
-                }
-
-                let response = 'Deleted response to message from "%s" (%s) in "#%s" on "%s".\n' +
-                               '\n**Original Message:**\n```%s```\n**Bot Response:**\n```%s```';
-                logOption.toChannel.sendMessage(format(response,
-                                                event.message.author.username,
-                                                event.message.author.id,
-                                                event.message.channel.name,
-                                                event.message.guild.name,
-                                                event.message.content,
-                                                reply.content));
-                console.log('Logged to channel.');
+            // If we have don't have a type property and that type property isn't set to all.
+            // and if this message is a response anyway.
+            let logOptionSetToAll = logOption.hasOwnProperty('type') && logOption.type === 'all';
+            let botResponded = exists;
+            let weShouldLog = logOptionSetToAll || botResponded; 
+            if (!weShouldLog) {
+                continue;
             }
+
+            // Check if the guild this message was deleted from was part of the configuration.
+            if (logOption.fromGuilds.indexOf(event.message.guild.id) < 0) {
+                console.log('Did not log in a channel as guild is not configured with logging channel.');
+                continue;
+            }
+
+            // Check it wasn't deleted from the log channel.
+            if (logOption.toChannel.id === event.message.channel.id) {
+                console.log('Did not log in a channel as message was deleted from logging channel.');
+                continue;
+            }
+
+            let response = 'Deleted messages from "%s" (%s) in "#%s" on "%s".\n' +
+                           '\n**Message:**\n```%s```'
+            if (reply === null || typeof reply === 'undefined') {
+                logOption.toChannel.sendMessage(format(response, event.message.author.username,
+                                                       event.message.author.id,
+                                                       event.message.channel.name,
+                                                       event.message.guild.name,
+                                                       event.message.content));
+            } else {
+                response = 'Deleted response to message from "%s" (%s) in "#%s" on "%s".\n' +
+                           '\n**Original Message:**\n```%s```\n**Bot Response:**\n```%s```';
+                logOption.toChannel.sendMessage(format(response,
+                                                       event.message.author.username,
+                                                       event.message.author.id,
+                                                       event.message.channel.name,
+                                                       event.message.guild.name,
+                                                       event.message.content,
+                                                       reply.content));
+            }
+            
+            console.log('Logged to channel.');
         }
     }
     

@@ -168,10 +168,11 @@ commands:
       - fromGuilds:
           - 'guild_id'
         toChannel: 'channel_id'
+        type: responses
   ...
 ```
 
-Replace `guild_id` with the ID of a guild - you can specify multiple guilds. Replace `channel_id` with the ID of a channel. You can specify multiple guilds per output channel and as many pairs of guilds and output channels as you wish. Both the guild and channel IDs can be determined by running the `!debug` command.
+Replace `guild_id` with the ID of a guild - you can specify multiple guilds. Replace `channel_id` with the ID of a channel. You can specify multiple guilds per output channel and as many pairs of guilds and output channels as you wish. Both the guild and channel IDs can be determined by running the `!debug` command. You can optionally add the `type` property set to `all` which will log all deleted messages in a given guild.
 
 ## Setting up Google Calendar Integration
 By default, two commands fetch from Google Calendar, you can get an API Key by following these steps:
