@@ -7,6 +7,7 @@ const fs = require('fs');
 const Discordie = require('discordie');
 const config = require('config');
 const format = require('format');
+const moment = require('moment');
 const schedule = require('node-schedule');
 
 class Bot {
@@ -16,6 +17,7 @@ class Bot {
         this.commands = [];
         this.versionNumber = 'v2.1';
         this.replies = {};
+        this.editLogs = {};
         
         this.client.Dispatcher.on('GATEWAY_READY', (event) => {
             this.ready(event);
@@ -30,6 +32,7 @@ class Bot {
         });
         this.client.Dispatcher.on('MESSAGE_CREATE', (event) => this.handleMessageCreated(event));
         this.client.Dispatcher.on('MESSAGE_DELETE', (event) => this.handleMessageDeleted(event));
+        this.client.Dispatcher.on('MESSAGE_UPDATE', (event) => this.handleMessageUpdated(event));
         
         console.log('Bot Initializing :: ' + this.versionNumber);
     }
@@ -80,7 +83,8 @@ class Bot {
             this.deletedMessagesLogging.push({
                 fromGuilds: logOptions.fromGuilds,
                 toChannel: channel,
-                type: logOptions.type
+                type: logOptions.type,
+                include: logOptions.include
             });
         }
     }
@@ -196,6 +200,11 @@ class Bot {
     }
     
     handleMessageDeleted(event) {
+        if (event.message.author.id === this.client.User.id) {
+            // We don't care about our own deletions.
+            return;
+        }
+
         // Find our reply to this message if it exists and delete it.
         let exists = Object.keys(this.replies).indexOf(event.messageId) >= 0;
         let reply = null; // Potentially used later in logging.
@@ -232,7 +241,7 @@ class Bot {
                 continue;
             }
 
-            let response = 'Deleted messages from "%s" (%s) in "#%s" on "%s".\n' +
+            let response = 'Deleted message from "%s" (%s) in "#%s" on "%s".\n' +
                            '\n**Message:**\n```%s```'
             if (reply === null || typeof reply === 'undefined') {
                 logOption.toChannel.sendMessage(format(response, event.message.author.username,
@@ -256,6 +265,73 @@ class Bot {
         }
     }
     
+    handleMessageUpdated(event) {
+        if (event.message.author.id == this.client.User.id) {
+            // We don't care about our updates.
+            return;
+        }
+
+        for (let logOption of this.deletedMessagesLogging) {
+            // Check if we are set to log edits.
+            let logOptionSetToAll = logOption.hasOwnProperty('type') && logOption.type === 'all';
+            let logOptionSetToEdits = logOption.hasOwnProperty('include') && logOption.include === 'edits';
+
+            if (!(logOptionSetToAll && logOptionSetToEdits)) {
+                continue;
+            }
+
+            // Check if the guild this message was deleted from was part of the configuration.
+            if (logOption.fromGuilds.indexOf(event.message.guild.id) < 0) {
+                console.log('Did not log in a channel as guild is not configured with logging channel.');
+                continue;
+            }
+
+            // Check it wasn't deleted from the log channel.
+            if (logOption.toChannel.id === event.message.channel.id) {
+                console.log('Did not log in a channel as message was deleted from logging channel.');
+                continue;
+            }
+
+            // Create response.
+            let response = format('Edited message from "%s" (%s) in "#%s" on "%s"\n' +
+                                  '\n**Versions:**\n',
+                                  event.message.author.username, event.message.author.id,
+                                  event.message.channel.name, event.message.guild.name);
+
+            // Add each different edit.
+            for (let editedVersion of event.message.edits) {
+                // Format timestamp correctly - making sure correct timestamp is used.
+                let dateFormat = 'MMMM Do YYYY, h:mm:ss a';
+                let formattedTimestamp = moment(editedVersion.timestamp).format(dateFormat);
+
+                if(editedVersion.edited_timestamp !== null && 
+                        typeof editedVersion.edited_timestamp !== 'undefined') {
+                    formattedTimestamp = moment(editedVersion.edited_timestamp).format(dateFormat);
+                }
+
+                response += format('%s```%s``` \n\n', formattedTimestamp, editedVersion.content);
+            }
+            
+            // Check if we have logged this before, if so, update the log.
+            let exists = Object.keys(this.editLogs).indexOf(event.message.id) >= 0;
+            if (!exists) {
+                logOption.toChannel.sendMessage(response).then((reply) => {
+                    // If the message send was a success then save our reply
+                    // in a dictionary keyed by the message id we were replying to.
+                    this.editLogs[event.message.id] = reply;
+            
+                    console.log(format('Logged an edit by "%s".',
+                                       message.author.username));
+                }, (error) => {
+                    console.log(format('Failed in logging an edit by "%s".',
+                                       message.author.username));
+                });
+            } else {
+                this.editLogs[event.message.id].edit(response);
+            }
+        }
+    }
+
     help(pageNumber, event, config) {        
         let helpCommandPadding = config.get('commands.helpCommandPadding');
         let disabledCommands = config.get('commands.disabled');
