@@ -299,6 +299,12 @@ class Bot {
                                   event.message.author.username, event.message.author.id,
                                   event.message.channel.name, event.message.guild.name);
 
+            if (event.message.edits.length < 2) {
+                // Only log if we actually have edits. This event gets fired if
+                // Discord embeds things.
+                continue;
+            }
+
             // Add each different edit.
             for (let editedVersion of event.message.edits) {
                 // Format timestamp correctly - making sure correct timestamp is used.
