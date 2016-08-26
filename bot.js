@@ -15,7 +15,7 @@ class Bot {
     constructor(client) {
         this.client = new Discordie();
         this.commands = [];
-        this.versionNumber = 'v2.1';
+        this.versionNumber = 'v2.2';
         this.replies = {};
         this.editLogs = {};
         

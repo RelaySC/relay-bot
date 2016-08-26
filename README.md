@@ -227,6 +227,10 @@ INNBOT_GOOGLE_APIKEY=<google_api_key>
 ```
 
 ## Changelog
+**v2.2 - 26/08/2016**
+- Can now be configured to log all deleted messages.
+- Can now be configured to log all edits.
+
 **v2.1 - 25/08/2016**
 - Added a `!debug` command.
 - Will not reply to system messages.
