@@ -1,6 +1,6 @@
 {
   "name": "inn-bot",
-  "version": "2.0.0",
+  "version": "2.3.0",
   "description": "Discord Bot for use in the Imperial News Network channel.",
   "main": "run.js",
   "scripts": {
