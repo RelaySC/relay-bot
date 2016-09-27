@@ -129,10 +129,10 @@ class OrgCommand extends Command {
     }
 }
 
-class GitHubCommand extends Command {
+class GitLabCommand extends Command {
     constructor() {
         super({
-            command: 'github',
+            command: 'gitlab',
             description: 'Check out INN\'s open source projects.',
             hidden: false
         });
@@ -140,7 +140,7 @@ class GitHubCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can check out the INN\'s open source projects here: ' +
-                'https://github.com/ImperialNewsNetwork/inn-bot');
+                'https://gitlab.com/imperialnewsnetwork/inn-bot');
     }
 }
 
@@ -160,4 +160,4 @@ class BulkheadsCommand extends Command {
 }
 
 module.exports = [YouTubeCommand, FacebookCommand, TwitchCommand, BulkheadsCommand,
-                  TwitterCommand, INNCommand, OrgCommand, GitHubCommand];
+                  TwitterCommand, INNCommand, OrgCommand, GitLabCommand];

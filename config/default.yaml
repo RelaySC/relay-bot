@@ -7,9 +7,9 @@ bot:
                 Imperial News Network. You can chat for a therapy session
                 or tell me some commands. I'm an open source
                 psychotherapist too, check my source out here: 
-                https://github.com/ImperialNewsNetwork/inn-bot.
+                https://gitlab.com/imperialnewsnetwork/inn-bot.
                 To find the commands I can run, type !help.
-  repositoryUrl: https://github.com/ImperialNewsNetwork/inn-bot
+  repositoryUrl: https://gitlab.com/imperialnewsnetwork/inn-bot
 commands:
   prefix: '!'
   sources:
@@ -25,7 +25,6 @@ commands:
     - ./commands/rsi-tools.js
     - ./commands/starmap.js
     - ./commands/repository.js
-    - ./commands/subreddit.js
   aliases:
     about:
       - info
