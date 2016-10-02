@@ -1,4 +1,9 @@
 # Changelog
+**v2.3.1 - 02/10/2016**
+- Fixed issue with default config.
+- Bot now gets version number from package.json
+- Changed `!inn` calendar URL.
+
 **v2.3 - 27/09/2016**
 - Moved changelog from README.md to CHANGELOG.md.
 - Removed streamer commands.
