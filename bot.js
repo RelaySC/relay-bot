@@ -1,6 +1,7 @@
 'use strict';
 
 const Command = require('./command');
+const pkg = require('./package.json');
 
 const fs = require('fs');
 
@@ -16,7 +17,7 @@ class Bot {
     constructor(client) {
         this.client = new Discordie();
         this.commands = [];
-        this.versionNumber = 'v2.3';
+        this.versionNumber = 'v' + pkg.version;
         this.replies = {};
         this.editLogs = {};
         
