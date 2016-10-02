@@ -14,7 +14,6 @@ commands:
   prefix: '!'
   sources:
     - ./commands/baseradio.js
-    - ./commands/streamers.js
     - ./commands/chat.js
     - ./commands/copy.js
     - ./commands/community.js
