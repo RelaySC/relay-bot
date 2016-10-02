@@ -79,7 +79,7 @@ class INNCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         feed('http://imperialnews.network/feed/').then((items) => {
-            calendar('kbvcdsv2n7ro54s0cgdh48c7k8@group.calendar.google.com').then((events) => {
+            calendar('inn.sc_5gacj7dfkc14ikledscvp2mgfk@group.calendar.google.com').then((events) => {
                 let itemsForDisplay = items.slice(0, 9);
                 let response = '**Check out recent INN content:**\n';
 
