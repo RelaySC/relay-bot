@@ -35,6 +35,8 @@ commands:
       - bug
     thebase:
       - baseradio
+    packages:
+      - fastcart
   disabled:
     - echo
   disableAliases: false
