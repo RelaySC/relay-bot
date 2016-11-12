@@ -1,4 +1,9 @@
 # Changelog
+**v2.4.0 - 12/11/2016**
+- Now using inn.sc domain name.
+- Updated dependencies.
+- Added `!packages`/`!fastcart` command for Package Comparison Spreadsheet!
+
 **v2.3.1 - 02/10/2016**
 - Fixed issue with default config.
 - Bot now gets version number from package.json

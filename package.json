@@ -1,6 +1,6 @@
 {
   "name": "inn-bot",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "description": "Discord Bot for use in the INN channel.",
   "main": "run.js",
   "scripts": {
