@@ -1,5 +1,5 @@
 # inn-bot
-Discord Bot for use in the Imperial News Network channel. Makes use of [elizabot.js](http://www.masswerk.at/elizabot/) to have natural language conversations and fetches data from [Roberts Space Industries](https://robertsspaceindustries.com/) for Star Citizen funding, citizens and UEE commands.
+Discord Bot for use in the INN channel. Makes use of [elizabot.js](http://www.masswerk.at/elizabot/) to have natural language conversations and fetches data from [Roberts Space Industries](https://robertsspaceindustries.com/) for Star Citizen funding, citizens and UEE commands.
 
 ## Quick Start
 In order to use this you'll need at least NodeJS v6.0.0 installed. It helps to have Git to clone the repository. You should copy the configuration from `config/default.yaml` to `config/local.yaml` and configure as necessary.
@@ -36,10 +36,10 @@ bot:
   avatarPath: ./assets/bot-avatar.jpg
   gameName: testing
   description: >
-                I'm INNBot, a Rogerian psychotherapist hired by the
-                Imperial News Network. You can chat for a therapy session
-                or tell me some commands. I'm an open source
-                psychotherapist too, check my source out here: 
+                I'm INNBot, a Rogerian psychotherapist hired by INN.
+                You can chat for a therapy session or tell
+                me some commands. I'm an open source psychotherapist too,
+                check my source out here: 
                 https://gitlab.com/imperialnewsnetwork/inn-bot.
                 To find the commands I can run, type !help.
   repositoryUrl: https://gitlab.com/imperialnewsnetwork/inn-bot

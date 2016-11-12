@@ -1,12 +1,12 @@
 bot:
   name: INNBot
   avatarPath: ./assets/bot-avatar.jpg
-  gameName: imperialnews.network
+  gameName: inn.sc
   description: >
-                I'm INNBot, a Rogerian psychotherapist hired by the
-                Imperial News Network. You can chat for a therapy session
-                or tell me some commands. I'm an open source
-                psychotherapist too, check my source out here: 
+                I'm INNBot, a Rogerian psychotherapist hired by INN.
+                You can chat for a therapy session or tell
+                me some commands. I'm an open source psychotherapist too,
+                check my source out here: 
                 https://gitlab.com/imperialnewsnetwork/inn-bot.
                 To find the commands I can run, type !help.
   repositoryUrl: https://gitlab.com/imperialnewsnetwork/inn-bot

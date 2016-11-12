@@ -12,7 +12,7 @@ class YouTubeCommand extends Command {
     constructor() {
         super({
             command: 'innyt',
-            description: 'Subscribe to the Imperial News Network on YouTube!',
+            description: 'Subscribe to INN on YouTube!',
             hidden: false
         });
     }
@@ -78,7 +78,7 @@ class INNCommand extends Command {
     }
     
     respond(message, bot, config, resolve, reject) {
-        feed('http://imperialnews.network/feed/').then((items) => {
+        feed('http://inn.sc/feed/').then((items) => {
             calendar('inn.sc_5gacj7dfkc14ikledscvp2mgfk@group.calendar.google.com').then((events) => {
                 let itemsForDisplay = items.slice(0, 9);
                 let response = '**Check out recent INN content:**\n';
@@ -103,7 +103,7 @@ class INNCommand extends Command {
                 }
 
                 response += '\n**Check out the rest of INN\'s content at:** ' +
-                            'http://imperialnews.network/';
+                            'http://inn.sc/';
                 resolve(response);
             }, (error) => {
                 reject(error);
