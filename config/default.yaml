@@ -1,15 +1,15 @@
 bot:
-  name: INNBot
+  name: RelayBot
   avatarPath: ./assets/bot-avatar.jpg
-  gameName: imperialnews.network
+  gameName: relay.sc
   description: >
-                I'm INNBot, a Rogerian psychotherapist hired by the
-                Imperial News Network. You can chat for a therapy session
+                I'm RelayBot, a Rogerian psychotherapist hired by the
+                The Relay. You can chat for a therapy session
                 or tell me some commands. I'm an open source
                 psychotherapist too, check my source out here: 
-                https://gitlab.com/imperialnewsnetwork/inn-bot.
+                https://gitlab.com/Relay_SC/relay-bot.
                 To find the commands I can run, type !help.
-  repositoryUrl: https://gitlab.com/imperialnewsnetwork/inn-bot
+  repositoryUrl: https://gitlab.com/Relay_SC/relay-bot
 commands:
   prefix: '!'
   sources:
@@ -20,7 +20,7 @@ commands:
     - ./commands/community.js
     - ./commands/debug.js
     - ./commands/fun.js
-    - ./commands/inn.js
+    - ./commands/relay.js
     - ./commands/rsi-social.js
     - ./commands/rsi-tools.js
     - ./commands/starmap.js

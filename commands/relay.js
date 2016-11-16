@@ -11,77 +11,77 @@ const calendar = require('../helpers/calendar');
 class YouTubeCommand extends Command {
     constructor() {
         super({
-            command: 'innyt',
-            description: 'Subscribe to the Imperial News Network on YouTube!',
+            command: 'relayyt',
+            description: 'Subscribe to the Relay on YouTube!',
             hidden: false
         });
     }
     
     respond(message, bot, config, resolve, reject) {
-        resolve('You can find and subscribe to INN on YouTube here: ' +
-                'https://www.youtube.com/channel/UCCNuWjBJHxtwMCQosW-zicQ');
+        resolve('You can find and subscribe to Relay on YouTube here: ' +
+                '???');
     }
 }
 
 class TwitterCommand extends Command {
     constructor() {
         super({
-            command: 'inntwitter',
-            description: 'Follow INN on Twitter!',
+            command: 'relaytwitter',
+            description: 'Follow Relay on Twitter!',
             hidden: false
         });
     }
     
     respond(message, bot, config, resolve, reject) {
-        resolve('You can find and follow INN on Twitter at ' +
-                'https://twitter.com/inn_starcitizen');
+        resolve('You can find and follow Relay on Twitter at ' +
+                '???');
     }
 }
 
 class FacebookCommand extends Command {
     constructor() {
         super({
-            command: 'innfb',
-            description: 'Like INN on Facebook!',
+            command: 'relayfb',
+            description: 'Like Relay on Facebook!',
             hidden: false
         });
     }
     
     respond(message, bot, config, resolve, reject) {
-        resolve('You can find and like INN on Facebook at ' +
-                'https://www.facebook.com/ImperialNewsNetworkSC');
+        resolve('You can find and like Relay on Facebook at ' +
+                '???');
     }
 }
 
 class TwitchCommand extends Command {
     constructor() {
         super({
-            command: 'inntwitch',
-            description: 'Follow INN on Twitch!',
+            command: 'relaytwitch',
+            description: 'Follow Relay on Twitch!',
             hidden: false
         });
     }
     
     respond(message, bot, config, resolve, reject) {
-        resolve('You can find and follow INN on Twitch here: ' +
-                'https://twitch.tv/innlive');
+        resolve('You can find and follow Relay on Twitch here: ' +
+                '???');
     }
 }
 
-class INNCommand extends Command {
+class RelayCommand extends Command {
     constructor() {
         super({
-            command: 'inn',
-            description: 'Get the latest INN posts.',
+            command: 'relay',
+            description: 'Get the latest Relay posts.',
             hidden: false
         });
     }
     
     respond(message, bot, config, resolve, reject) {
-        feed('http://imperialnews.network/feed/').then((items) => {
+        feed('???').then((items) => {
             calendar('kbvcdsv2n7ro54s0cgdh48c7k8@group.calendar.google.com').then((events) => {
                 let itemsForDisplay = items.slice(0, 9);
-                let response = '**Check out recent INN content:**\n';
+                let response = '**Check out recent Relay content:**\n';
 
                 for (let item of itemsForDisplay) {
                     let pubDate = moment(item.pubDate).fromNow();
@@ -102,8 +102,8 @@ class INNCommand extends Command {
                                        event.summary, event.location, start.toNow(true));
                 }
 
-                response += '\n**Check out the rest of INN\'s content at:** ' +
-                            'http://imperialnews.network/';
+                response += '\n**Check out the rest of Relay\'s content at:** ' +
+                            'https://relay.sc/';
                 resolve(response);
             }, (error) => {
                 reject(error);
@@ -118,14 +118,14 @@ class OrgCommand extends Command {
     constructor() {
         super({
             command: 'org',
-            description: 'Get a link to the INN organization.',
+            description: 'Get a link to the Relay organization.',
             hidden: false
         });
     }
     
     respond(message, bot, config, resolve, reject) {
-        resolve('You can check out the INN Organization on RSI here: ' +
-                'https://robertsspaceindustries.com/orgs/INN');
+        resolve('You can check out the Relay Organization on RSI here: ' +
+                'https://robertsspaceindustries.com/orgs/RELAY');
     }
 }
 
@@ -133,14 +133,14 @@ class GitLabCommand extends Command {
     constructor() {
         super({
             command: 'gitlab',
-            description: 'Check out INN\'s open source projects.',
+            description: 'Check out Relay\'s open source projects.',
             hidden: false
         });
     }
     
     respond(message, bot, config, resolve, reject) {
-        resolve('You can check out the INN\'s open source projects here: ' +
-                'https://gitlab.com/imperialnewsnetwork/inn-bot');
+        resolve('You can check out the Relay\'s open source projects here: ' +
+                'https://gitlab.com/Relay_SC/');
     }
 }
 
@@ -160,4 +160,4 @@ class BulkheadsCommand extends Command {
 }
 
 module.exports = [YouTubeCommand, FacebookCommand, TwitchCommand, BulkheadsCommand,
-                  TwitterCommand, INNCommand, OrgCommand, GitLabCommand];
+                  TwitterCommand, RelayCommand, OrgCommand, GitLabCommand];

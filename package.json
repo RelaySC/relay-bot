@@ -1,7 +1,7 @@
 {
-  "name": "inn-bot",
-  "version": "2.3.0",
-  "description": "Discord Bot for use in the Imperial News Network channel.",
+  "name": "relay-bot",
+  "version": "3.0.0",
+  "description": "Discord Bot for use in the Relay channel.",
   "main": "run.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,7 +9,7 @@
   "keywords": [
     "bot",
     "discord",
-    "INN",
+    "Relay",
     "star",
     "citizen"
   ],
@@ -35,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/imperialnewsnetwork/inn-bot.git"
+    "url": "https://gitlab.com/Relay_SC/relay-bot.git"
   },
   "devDependencies": {
     "jshint": "^2.9.2"

@@ -1,4 +1,7 @@
 # Changelog
+**v3.0 - ??/??/????**
+- Switched to Relay
+
 **v2.3 - 27/09/2016**
 - Moved changelog from README.md to CHANGELOG.md.
 - Removed streamer commands.
@@ -16,7 +19,7 @@
 - Introduced deleted response logging.
 
 **v2.0.13 - 29/07/2016**
-- Fixed INN Twitch command.
+- Fixed Relay Twitch command.
 
 **v2.0.12 - 20/07/2016**
 - Now no longer attempts to autolink URLs that contain `/r/` that are not from reddit.

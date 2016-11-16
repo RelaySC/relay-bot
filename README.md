@@ -1,15 +1,15 @@
-# inn-bot
-Discord Bot for use in the Imperial News Network channel. Makes use of [elizabot.js](http://www.masswerk.at/elizabot/) to have natural language conversations and fetches data from [Roberts Space Industries](https://robertsspaceindustries.com/) for Star Citizen funding, citizens and UEE commands.
+# relay-bot
+Discord Bot for use in the Relay channel. Makes use of [elizabot.js](http://www.masswerk.at/elizabot/) to have natural language conversations and fetches data from [Roberts Space Industries](https://robertsspaceindustries.com/) for Star Citizen funding, citizens and UEE commands.
 
 ## Quick Start
 In order to use this you'll need at least NodeJS v6.0.0 installed. It helps to have Git to clone the repository. You should copy the configuration from `config/default.yaml` to `config/local.yaml` and configure as necessary.
 ```
-$ git clone https://gitlab.com/imperialnewsnetwork/inn-bot.git
-$ cd inn-bot
+$ git clone https://gitlab.com/Relay_SC/relay-bot.git
+$ cd relay-bot
 $ cp config/default.yaml config/local.yaml
 $ npm install
-$ export INNBOT_DISCORD_BOTUSER_TOKEN=<bot_token>
-$ export INNBOT_DISCORD_CLIENTID=<app_id>
+$ export RELAYBOT_DISCORD_BOTUSER_TOKEN=<bot_token>
+$ export RELAYBOT_DISCORD_CLIENTID=<app_id>
 $ node run.js
 ```
 Replace `<bot_token>` with your Bot User Token and `<app_id>` with the Client ID from [Discord Developer](https://discordapp.com/developers/applications/me). If you want these environment variables to persist between sessions then I recommend that you add these lines to your `~/.bashrc`.
@@ -23,7 +23,7 @@ https://discordapp.com/oauth2/authorize?&client_id=<app_id>&scope=bot
 You can then use the `!invite` command to get this URL in future.
 
 ## Configuration
-inn-bot is configured in two ways - environment variables for sensitive information and a configuration file for everything else. inn-bot ships with a [`config/default.yaml`](config/default.yaml) configuration file, this should be copied and modified to the user's liking then saved as `config/local.yaml`. Check out the [Deploying](#deploying) section for the recommended method of dealing with Environment Variables in production - for development, however, we recommend writing a small bash script in `.env.sh` with the Environment Variables.
+relay-bot is configured in two ways - environment variables for sensitive information and a configuration file for everything else. relay-bot ships with a [`config/default.yaml`](config/default.yaml) configuration file, this should be copied and modified to the user's liking then saved as `config/local.yaml`. Check out the [Deploying](#deploying) section for the recommended method of dealing with Environment Variables in production - for development, however, we recommend writing a small bash script in `.env.sh` with the Environment Variables.
 
 There are lots of configuration options available and custom commands can add their own configuration options - some options are explained below. 
 
@@ -32,17 +32,17 @@ At the top of the configuration file, you can configure the identity of the bot 
 
 ```yaml
 bot:
-  name: INNBot
+  name: RelayBot
   avatarPath: ./assets/bot-avatar.jpg
   gameName: testing
   description: >
-                I'm INNBot, a Rogerian psychotherapist hired by the
-                Imperial News Network. You can chat for a therapy session
+                I'm RelayBot, a Rogerian psychotherapist hired by the
+                The Relay. You can chat for a therapy session
                 or tell me some commands. I'm an open source
                 psychotherapist too, check my source out here: 
-                https://gitlab.com/imperialnewsnetwork/inn-bot.
+                https://gitlab.com/imperialnewsnetwork/relay-bot.
                 To find the commands I can run, type !help.
-  repositoryUrl: https://gitlab.com/imperialnewsnetwork/inn-bot
+  repositoryUrl: https://gitlab.com/imperialnewsnetwork/relay-bot
 ```
 
 ### Disabling Commands
@@ -76,10 +76,10 @@ commands:
 Here we can see an example where `about` is aliased as `info`; `stats` is aliased as `funds`, `citizens` and `uee`, `issue` is aliased as `bug` and `thebase` is aliased as `baseradio`. Aliases apply to repository commands.
 
 ## Commands
-Since inn-bot v2.0.0, there is a command system in place that allows the bot to be extended easily without modifying the core bot.
+Since relay-bot v2.0.0, there is a command system in place that allows the bot to be extended easily without modifying the core bot.
 
 ### Creating a Command
-It's easy to create a new command, make a file anywhere - as long as the inn-bot system user has privileges - and then create a command that looks something like the one below. You should add this to the ```commands.sources``` property in the configuration file.
+It's easy to create a new command, make a file anywhere - as long as the relay-bot system user has privileges - and then create a command that looks something like the one below. You should add this to the ```commands.sources``` property in the configuration file.
 
 You'll need to update the relative path to the [command module](command.js).
 ```js
@@ -128,7 +128,7 @@ repository:
   blacklist:
     - list of command names
 ```
-inn-bot's [`RepositoryCommand`](commands/repository.js) will load the commands and responses found at the given url and use them. The endpoint should be in the format as follows:
+relay-bot's [`RepositoryCommand`](commands/repository.js) will load the commands and responses found at the given url and use them. The endpoint should be in the format as follows:
 ```json
 [
     {
@@ -188,29 +188,29 @@ We'd love any contributions to the code and actively encourage people to fork, m
 
 Before submitting a pull request, make sure your code doesn't have any issues with the `jshint` utility.
 
-Keep in mind that any modified versions that are not merged back into this codebase should comply with the [GNU Affero General Public License v3.0](http://choosealicense.com/licenses/agpl-3.0/) that [we're using](https://gitlab.com/imperialnewsnetwork/inn-bot/blob/master/LICENSE.md).
+Keep in mind that any modified versions that are not merged back into this codebase should comply with the [GNU Affero General Public License v3.0](http://choosealicense.com/licenses/agpl-3.0/) that [we're using](https://gitlab.com/imperialnewsnetwork/relay-bot/blob/master/LICENSE.md).
 
 ## Deploying
 When deploying into production, we recommend running on a Linux box and creating a dedicated system user to run the bot. On Ubuntu 15.10, we're using the following systemd unit file:
 
 ```ini
 [Unit]
-Description=INN Discord Bot
+Description=Relay Discord Bot
 After=system.slice multi-user.target
 
 [Service]
 Type=simple
-User=innbot
-Group=innbot
+User=relay-bot
+Group=relay-bot
 
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=innbot
+SyslogIdentifier=relay-bot
 SyslogFacility=local0
 
-EnvironmentFile=/home/innbot/inn-bot/.env
+EnvironmentFile=/home/relay-bot/relay-bot/.env
 
-WorkingDirectory=/home/innbot/inn-bot
+WorkingDirectory=/home/relay-bot/relay-bot
 ExecStart=/usr/bin/node run.js
 Restart=always
 
@@ -218,10 +218,10 @@ Restart=always
 WantedBy=multi-user.target
 ```
 
-We also create a `.env` file in the INNBot folder that contains the configuration Environment Variables:
+We also create a `.env` file in the RelayBot folder that contains the configuration Environment Variables:
  
 ```ini
-INNBOT_DISCORD_BOTUSER_TOKEN=<bot_token>
-INNBOT_DISCORD_CLIENTID=<app_id>
-INNBOT_GOOGLE_APIKEY=<google_api_key>
+RELAYBOT_DISCORD_BOTUSER_TOKEN=<bot_token>
+RELAYBOT_DISCORD_CLIENTID=<app_id>
+RELAYBOT_GOOGLE_APIKEY=<google_api_key>
 ```
