@@ -2,6 +2,16 @@
 **v3.0 - ??/??/????**
 - Switched to Relay
 
+**v2.4.0 - 12/11/2016**
+- Now using inn.sc domain name.
+- Updated dependencies.
+- Added `!packages`/`!fastcart` command for Package Comparison Spreadsheet!
+
+**v2.3.1 - 02/10/2016**
+- Fixed issue with default config.
+- Bot now gets version number from package.json
+- Changed `!relay` calendar URL.
+
 **v2.3 - 27/09/2016**
 - Moved changelog from README.md to CHANGELOG.md.
 - Removed streamer commands.

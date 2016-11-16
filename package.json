@@ -20,25 +20,25 @@
   },
   "license": "AGPL-3.0",
   "dependencies": {
-    "config": "^1.20.1",
-    "discordie": "^0.8.0",
+    "config": "^1.24.0",
+    "discordie": "^0.9.0",
     "extend": "^3.0.0",
-    "feedparser": "^1.1.4",
+    "feedparser": "^1.1.5",
     "format": "^0.2.2",
     "format-number": "^2.0.1",
-    "humanize-duration": "^3.7.1",
-    "js-yaml": "^3.6.0",
-    "moment": "^2.13.0",
-    "moment-timezone": "^0.5.4",
-    "node-schedule": "^1.1.0",
-    "request": "^2.72.0"
+    "humanize-duration": "^3.9.1",
+    "js-yaml": "^3.7.0",
+    "moment": "^2.16.0",
+    "moment-timezone": "^0.5.9",
+    "node-schedule": "^1.2.0",
+    "request": "^2.78.0"
   },
   "repository": {
     "type": "git",
     "url": "https://gitlab.com/Relay_SC/relay-bot.git"
   },
   "devDependencies": {
-    "jshint": "^2.9.2"
+    "jshint": "^2.9.4"
   },
   "private": true
 }
