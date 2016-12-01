@@ -19,7 +19,7 @@ class YouTubeCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can find and subscribe to Relay on YouTube here: ' +
-                '???');
+                'https://www.youtube.com/channel/UCoMrKF4B1Of2bKHk8JbwfWQ');
     }
 }
 
@@ -34,7 +34,7 @@ class TwitterCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can find and follow Relay on Twitter at ' +
-                '???');
+                'https://twitter.com/relay_sc');
     }
 }
 
@@ -49,7 +49,7 @@ class FacebookCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can find and like Relay on Facebook at ' +
-                '???');
+                'https://www.facebook.com/profile.php?id=100014282176912');
     }
 }
 
@@ -64,7 +64,7 @@ class TwitchCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can find and follow Relay on Twitch here: ' +
-                '???');
+                'https://www.twitch.tv/relay_sc');
     }
 }
 
@@ -78,7 +78,7 @@ class RelayCommand extends Command {
     }
     
     respond(message, bot, config, resolve, reject) {
-        feed('???').then((items) => {
+        feed('https://relay.sc/feed/rss').then((items) => {
             calendar('inn.sc_5gacj7dfkc14ikledscvp2mgfk@group.calendar.google.com').then((events) => {
                 let itemsForDisplay = items.slice(0, 9);
                 let response = '**Check out recent Relay content:**\n';

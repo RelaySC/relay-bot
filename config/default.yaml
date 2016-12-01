@@ -37,6 +37,14 @@ commands:
       - baseradio
     packages:
       - fastcart
+    relayyt:
+      - innyt
+    relaytwitter:
+      - inntwitter
+    relayfb:
+      - innfb
+    relay:
+      - inn
   disabled:
     - echo
   disableAliases: false
