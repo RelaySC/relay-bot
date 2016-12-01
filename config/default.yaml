@@ -1,6 +1,6 @@
 bot:
   name: RelayBot
-  avatarPath: ./assets/bot-avatar.jpg
+  avatarPath: ./assets/bot-avatar.png
   gameName: relay.sc
   description: >
                 I'm RelayBot, a Rogerian psychotherapist hired by the
