@@ -47,7 +47,7 @@ class Bot {
     
     ready(event) {
         this.client.User.setGame({name: config.get('bot.gameName')});
-        this.client.User.edit(null, null, fs.readFileSync(config.get('bot.avatarPath')));
+        this.client.User.edit(null, config.get('bot.name'), fs.readFileSync(config.get('bot.avatarPath')));
         console.log(format('Connected as "%s", playing "%s".',
                            this.client.User.username,
                            this.client.User.gameName));
