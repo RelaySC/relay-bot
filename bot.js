@@ -115,6 +115,7 @@ class Bot {
                 
                 command.on('response', (message, response) => this.respond(message, response));
                 command.on('error', (message, error) => {
+                    message.channel.sendMessage('An error occured while running this command.');
                     console.log(format('Error occured in "%s" command responding to "%s".\n\t%s.',
                                        command.command, message.author.username, error));
                 });

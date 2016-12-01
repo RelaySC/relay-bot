@@ -106,7 +106,7 @@ class RelayCommand extends Command {
                             'https://relay.sc/';
                 resolve(response);
             }, (error) => {
-                reject(error);
+                reject(error, output='We weren\'t able to reach the calendar.');
             });
         }, (error) => {
             reject(error);
