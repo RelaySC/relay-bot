@@ -19,8 +19,8 @@ class BaseRadioCommand extends Command {
     respond(message, bot, contents, resolve, reject) {
         calendar('v9tpadn0kem7ecn9k03c2mp41o@group.calendar.google.com').then((events) => {
             let response = 'You can tune in to the Base Radio on Twitch at ' +
-                           'https://www.twitch.tv/thebaseradio and find out more at ' +
-                           'http://radio.starcitizenbase.com/\n\n**Upcoming:**\n';
+                           '<https://www.twitch.tv/thebaseradio> and find out more at ' +
+                           '<http://radio.starcitizenbase.com>/\n\n**Upcoming:**\n';
 
             for (let item of events) {
                 let start = moment.tz(item.start.dateTime, item.start.timeZone);
