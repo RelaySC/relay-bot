@@ -8,7 +8,7 @@ const format = require('format');
 
 class RepositoryCommand extends Command {
     
-    constructor(schedule) {
+    constructor(client, schedule) {
         // These values aren't really needed when the default help() isn't being 
         // used but are required.
         super({
