@@ -46,7 +46,6 @@ class RepositoryCommand extends Command {
                 }
                 console.log(format('Repository: Loaded %s commands from "%s".',
                                 Object.keys(parsedCommands).length, repositoryUrl));
-                resolve(commands);            
             }, error => {
                 console.log(format('Repository: An error occured when loading "%s".\n\t%s',
                                     repositoryUrl, error));
