@@ -156,7 +156,7 @@ class StarmapCommand extends Command {
                 if (content.data.rowcount === 0) {
                     req.emit('error', new Error('Sorry, I wasn\'t able to find this. Use the same ' +
                                                 ' name and spelling as the ARC Starmap here:' +
-                                                ' https://robertsspaceindustries.com/starmap'));
+                                                ' <https://robertsspaceindustries.com/starmap>'));
                     return;
                 }
 
@@ -173,7 +173,7 @@ class StarmapCommand extends Command {
                     if (typeof celestialObject === 'undefined') {
                         reject('Sorry, I wasn\'t able to find this. Use the same ' +
                             ' name and spelling as the ARC Starmap here:' +
-                            ' https://robertsspaceindustries.com/starmap');
+                            ' <https://robertsspaceindustries.com/starmap>');
                         return;
                     }
 
@@ -192,7 +192,7 @@ class StarmapCommand extends Command {
         if (!messageContents) {
             // If we haven't been passed anything.
             resolve('You can check out the ARK Starmap at: ' +
-                    'https://robertsspaceindustries.com/starmap');
+                    '<https://robertsspaceindustries.com/starmap>');
             return;
         }
         

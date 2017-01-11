@@ -100,7 +100,7 @@ class RSICommand extends Command {
             }
             
             response += '\n**Check out the rest of the Comm-Link content at:** ' +
-                        'https://robertsspaceindustries.com/comm-link/';
+                        '<https://robertsspaceindustries.com/comm-link/>';
             resolve(response);
         }, (error) => {
             reject(error);
@@ -163,7 +163,7 @@ class IssueCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can report a in-game bug or issue to the Issue Council: ' +
-                'https://robertsspaceindustries.com/community/issue-council');
+                '<https://robertsspaceindustries.com/community/issue-council>');
     }
 }
 

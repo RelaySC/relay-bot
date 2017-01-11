@@ -13,7 +13,7 @@ class SubredditCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can find the Star Citizen subreddit here: ' +
-                'https://reddit.com/r/starcitizen');
+                '<https://reddit.com/r/starcitizen>');
     }
 }
 
@@ -28,7 +28,7 @@ class PackagesCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can find the amazing package comparison spreadsheet by fastcart at: ' +
-                'https://docs.google.com/spreadsheets/d/1ojxR84DJlX9i7Zu0ZrYkWPhKQUYIcK5bx5Ia8fQgimY/edit?usp=sharing');
+                '<https://docs.google.com/spreadsheets/d/1ojxR84DJlX9i7Zu0ZrYkWPhKQUYIcK5bx5Ia8fQgimY/edit?usp=sharing>');
     }
 }
 

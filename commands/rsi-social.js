@@ -13,7 +13,7 @@ class YouTubeCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can find and subscribe to Star Citizen on YouTube here: ' +
-                'https://www.youtube.com/user/RobertsSpaceInd');
+                '<https://www.youtube.com/user/RobertsSpaceInd>');
     }
 }
 
@@ -28,8 +28,8 @@ class TwitterCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can find and follow Star Citizen on Twitter at ' +
-                'https://twitter.com/RobertsSpaceInd and ' +
-                'https://twitter.com/squadron_42');
+                '<https://twitter.com/RobertsSpaceInd> and ' +
+                '<https://twitter.com/squadron_42>');
     }
 }
 
@@ -44,8 +44,8 @@ class FacebookCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can find and like Star Citizen on Facebook at ' +
-                'https://www.facebook.com/RobertsSpaceIndustries/ and ' +
-                'https://www.facebook.com/Squad42');
+                '<https://www.facebook.com/RobertsSpaceIndustries/> and ' +
+                '<https://www.facebook.com/Squad42>');
     }
 }
 
@@ -60,7 +60,7 @@ class TwitchCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can find and follow Star Citizen on Twitch here: ' +
-                'https://twitch.tv/starcitizen');
+                '<https://twitch.tv/starcitizen>');
     }
 }
 
@@ -75,7 +75,7 @@ class CommunityTwitchCommand extends Command {
     
     respond(message, bot, config, resolve, reject) {
         resolve('You can find and follow CIG Community on Twitch here: ' +
-                'https://twitch.tv/cigcommunity');
+                '<https://twitch.tv/cigcommunity>');
     }
 }
 
