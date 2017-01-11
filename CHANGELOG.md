@@ -1,5 +1,10 @@
 # Changelog
-**v3.0 - ??/??/????**
+**v3.1 - 11/01/2017**
+- Updated dependencies.
+- Fixed bugs with repository.
+- Links no longer embed. Thanks Bulder!
+
+**v3.0 - 01/12/2016**
 - Switched to Relay
 
 **v2.4.0 - 12/11/2016**
