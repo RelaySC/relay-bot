@@ -113,7 +113,7 @@ class Bot {
                 // We pass in a scheduler and the client.
                 let command = new CommandSubclass(this.client, schedule);
                 
-                command.on('response', (message, response) => this.respond(message, response));
+                command.on('response', (message, response) => this.respond(message, response, command));
                 command.on('error', (message, error) => {
                     message.channel.sendMessage('An error occured while running this command.');
                     console.log(format('Error occured in "%s" command responding to "%s".\n\t%s.',
@@ -126,7 +126,7 @@ class Bot {
         }
     }
     
-    respond(message, response) {
+    respond(message, response, command) {
         message.channel.sendMessage(response).then((reply) => {
             // If the message send was a success then save our reply
             // in a dictionary keyed by the message id we were replying to.
