@@ -1,4 +1,8 @@
 # Changelog
+**v3.1.1 - 12/01/2017**
+- Fixed command matching bug.
+- Fixed logging error.
+
 **v3.1 - 11/01/2017**
 - Updated dependencies.
 - Fixed bugs with repository.
