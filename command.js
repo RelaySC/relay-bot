@@ -79,7 +79,7 @@ class Command extends EventEmitter {
             // If this command is configured with some aliases.
             let commandName = messageParts[0].replace(prefix, '').toLowerCase();
             
-            if (aliases[this.command].indexOf(commandName) >= 0 &
+            if (aliases[this.command].indexOf(commandName) >= 0 &&
                     messageParts[0].indexOf(prefix) >= 0) {
                 console.log(format('Alias match command "%s" with "%s".',
                                    this.command, prefix + commandName));

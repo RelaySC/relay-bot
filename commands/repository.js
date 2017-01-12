@@ -117,7 +117,7 @@ class RepositoryCommand extends Command {
             }
             
             // Does the message match this command explicitly?
-            if (message.content.toLowerCase().startsWith(prefix + repositoryCommand) && 
+            if (message.content.toLowerCase() == prefix + repositoryCommand && 
                     disabledCommands.indexOf(repositoryCommand) < 0) {
                 // If command is a match and the base command isn't disabled.
                 console.log(format('Repository: Direct match command "%s" with "%s".',
@@ -136,7 +136,8 @@ class RepositoryCommand extends Command {
                 let parts = message.content.split(' ');
                 let commandName = parts[0].replace(config.get('commands.prefix'), '').toLowerCase();
                 
-                if (aliases[repositoryCommand].indexOf(commandName) >= 0) {
+                if (aliases[repositoryCommand].indexOf(commandName) >= 0 &&
+                        parts[0].indexOf(prefix) >= 0) {
                     console.log(format('Repository: Alias match command "%s" with "%s".',
                                        repositoryCommand, prefix + commandName));
                     // See comment in direct match above.
